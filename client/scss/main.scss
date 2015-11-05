@@ -1,0 +1,37 @@
+@import 'variables';
+
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
+body {
+  background: $offwhite;
+}
+
+.card {
+  background: $white;
+  position: relative;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 1rem;
+}
+.wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+.flex-container {
+  position: relative;
+  display: flex;
+  padding: 1rem;
+}
+.sidebar {
+  margin-right: 1rem;
+  flex: 0 0 15rem;
+}
+.main-content {
+  flex: 1;
+}
+

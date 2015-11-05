@@ -1,9 +1,17 @@
 <template name="mainLayout">
   <header>
-    <h1>Flutter</h1>
+    <h1><a href="/">Flutter</a></h1>
   </header>
+  <div class="wrapper flex-container">
+    <div class="sidebar">
+      {{>Template.dynamic template=sidebar}}
+    </div>
+    <main class="main-content">
+      {{>Template.dynamic template=main}}
+    </main>
+  </div>
   <main>
-    {{>Template.dynamic template=content}}
+    
   </main>
   <footer>2015 Flutter Group Inc.</footer>
 </template>
