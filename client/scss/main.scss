@@ -9,6 +9,10 @@ body {
   background: $offwhite;
 }
 
+html, body, input, button, textarea, select {
+  font-family: 'Ubuntu', sans-serif;
+}
+
 .card {
   background: $white;
   position: relative;
