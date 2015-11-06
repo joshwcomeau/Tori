@@ -13,11 +13,21 @@ html, body, input, button, textarea, select {
   font-family: 'Ubuntu', sans-serif;
 }
 
+h1 {
+  font-size: 2.5rem;
+  color: $darkgray;
+}
+h2 {
+  font-size: 2rem;
+  color: $darkgray;
+}
+
 .card {
   background: $white;
   position: relative;
   border-radius: 0.25rem;
-  border: 1px solid rgba(0,0,0,0.1);
+  border-right: 1px solid $lightgray;
+  border-bottom: 2px solid $lightgray;
   padding: 1rem;
 }
 .wrapper {
@@ -41,6 +51,19 @@ html, body, input, button, textarea, select {
 
 header {
   position: relative;
+  background: $gray;
+  
+  .main-logo {
+    margin: 0 1rem;
+    font-size: 3rem;
+    font-weight: $fw-heavy;
+    line-height: 2em;
+    
+    a {
+      text-decoration: none;
+      color: $crimson;
+    }
+  }
   
   .login {
     position: absolute;
