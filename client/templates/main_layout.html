@@ -1,21 +1,12 @@
 <template name="mainLayout">
-  <header>
-    <div class="main-logo"><a href="/">Tori</a></div>
-    <div class="login">
-      {{> loginButtons align="right"}}
-    </div>
-  </header>
-  <div class="wrapper flex-container">
-    <div class="sidebar">
-      {{>Template.dynamic template=sidebar}}
-    </div>
-    <main class="main-content">
-      {{>Template.dynamic template=main}}
-    </main>
+  {{> header}}
+  <div class="sidebar">
+    {{>Template.dynamic template=sidebar}}
   </div>
-  <main>
-    
-  </main>
-  
-  <footer>2015 Flutter Group Inc.</footer>
+  <div class="main-content">
+    {{>Template.dynamic template=main}}
+    <footer>2015 Flutter Group Inc.</footer>
+  </div>
+
+
 </template>
