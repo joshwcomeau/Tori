@@ -2,6 +2,9 @@
   <div class="modal {{#if composing}}active{{/if}}">
     <div class="modal-backdrop"></div>
     <div id="compose" class="modal-window">
+      <div class="close">
+        {{> close}}
+      </div>
       <h2 class="title">Compose a Haiku</h2>
       <div class="haiku-box">
         <div class="haiku-text vertically-centered horizontally-centered" contenteditable="true">
@@ -10,5 +13,4 @@
       </div>
     </div>
   </div>
-  
 </template>
