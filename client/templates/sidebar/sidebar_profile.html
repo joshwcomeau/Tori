@@ -1,13 +1,12 @@
 <template name="sidebarProfile">
-  <div class="profile-image" style="background-image: url('{{profileImage}}')">
+  <div class="profile-image" style="background-image: url('{{profile.image}}')">
     
   </div>
   <h5>{{ username }}</h5>
   <p>
-    Aspiring poet who leaves everything to the imagination. Font of cats, cars and cabins.
+    {{ profile.summary }}
   </p>
   <p class="link">
     <i class="fa fa-link"></i> {{ profile.url }}
   </p>
-  <button>Follow</button>
 </template>

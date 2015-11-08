@@ -1,0 +1,27 @@
+<template name="profileHaiku">
+  <li>
+    <div class="haiku">
+      <div class="haiku-line">
+        {{line1}}
+      </div>
+      <div class="haiku-line">
+        {{line2}}
+      </div>
+      <div class="haiku-line">
+        {{line3}}
+      </div>
+    </div>
+
+    <ul class="haiku-actions">
+      <li>
+        <i class="fa fa-reply"></i><span class="count"></span>
+      </li>
+      <li>
+        <i class="fa fa-retweet"></i><span class="count">{{retweets}}</span>
+      </li>
+      <li>
+        <i class="fa fa-heart"></i><span class="count">{{likes}}</span>
+      </li>
+    </ul>
+  </li>
+</template>

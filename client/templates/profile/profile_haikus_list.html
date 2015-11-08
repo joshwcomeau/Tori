@@ -1,0 +1,11 @@
+<template name="profileHaikusList">
+  {{#if Template.subscriptionsReady}}
+    <div class="haikus card">
+      <ul class="haikus-list">
+        {{#each haikus}}
+          {{> profileHaiku}}
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+</template>

@@ -1,11 +1,32 @@
 Template.sidebar.onCreated(function() {
-  this.autorun( () => this.subscribe('activeProfile', FlowRouter.getParam('profile_name')) );
+  this.autorun( () => {
+    this.subscribe('activeProfile', FlowRouter.getParam('profile_name'));
+    this.subscribe('followingActiveProfile', FlowRouter.getParam('profile_name'));
+  });
 });
 
 Template.sidebar.helpers({
-  user: function() {
+  profile: function() {
     var profile_name = FlowRouter.getParam('profile_name');
-    var profile = Meteor.users.findOne({ username: profile_name }) || {};
-    return profile;
+    return Meteor.users.findOne({ username: profile_name }) || {};
+  },
+  isFollowing: function() {
+    return Util.isCurrentUserFollowing(FlowRouter.getParam('profile_name'));
+  }
+});
+
+Template.sidebar.events({
+  "click .follow": function() {
+    Meteor.call('toggleFollowing', FlowRouter.getParam('profile_name'));
+  },
+  "mouseover .follow": function(ev) {
+    if ( Util.isCurrentUserFollowing(FlowRouter.getParam('profile_name')) ) {
+      ev.target.innerText = "Unfollow";
+    }
+  },
+  "mouseout .follow": function(ev) {
+    if ( Util.isCurrentUserFollowing(FlowRouter.getParam('profile_name')) ) {
+      ev.target.innerText = "Following";
+    }
   }
 });

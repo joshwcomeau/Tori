@@ -1,5 +1,15 @@
 <template name="sidebar">
-
-  {{> sidebarProfile user }}
-
+  {{#if Template.subscriptionsReady}}
+    {{> sidebarProfile profile }}
+    
+    {{#if currentUser}}
+      <button class="follow {{#if isFollowing}}following{{/if}}">
+        {{#if isFollowing}}
+          Following
+        {{else}}
+          Follow
+        {{/if}}
+      </button>
+    {{/if}}
+  {{/if}}
 </template>

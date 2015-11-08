@@ -34,11 +34,23 @@
     margin: 1.5rem 0;
   }
   
-  button {
+  .follow {
     border: 0;
     outline: 0;
     border-radius: 2rem;
     background: rgba(0,0,0,0.1);
-    padding: 0.5rem 2rem;
+    padding: 0.5rem;
+    width: $size-sidebar * 0.5;
+    
+    &.following {
+      background: $yellow;
+      transition: 0.5s;
+      font-weight: $fw-medium;
+      
+      &:hover {
+        background: $orange;
+        transition: 0.2s;
+      }
+    }
   }
 }

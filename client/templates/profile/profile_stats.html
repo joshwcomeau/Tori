@@ -1,22 +1,26 @@
 <template name="profileStats">
-  <div class="stats card">
-    <ul class="flex">
-      <li class="selected">
-        <h6>Haikus</h6>
-        <h4>{{ haikus }}</h4>
-      </li>
-      <li>
-        <h6>Followers</h6>
-        <h4>{{ followers }}</h4>
-      </li>
-      <li>
-        <h6>Following</h6>
-        <h4>{{ following }}</h4>
-      </li>
-      <li>
-        <h6>Impact</h6>
-        <h4>{{ impact }}</h4>
-      </li>
-    </ul>
-  </div>
+  {{#if Template.subscriptionsReady}}
+    {{#with profile}}
+      <div class="stats card">
+        <ul class="flex">
+          <li class="selected">
+            <h6>Haikus</h6>
+            <h4>{{ haikus }}</h4>
+          </li>
+          <li>
+            <h6>Followers</h6>
+            <h4>{{ followers }}</h4>
+          </li>
+          <li>
+            <h6>Following</h6>
+            <h4>{{ following }}</h4>
+          </li>
+          <li>
+            <h6>Impact</h6>
+            <h4>{{ impact }}</h4>
+          </li>
+        </ul>
+      </div>
+    {{/with}}
+  {{/if}}
 </template>
