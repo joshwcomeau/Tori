@@ -25,3 +25,4 @@ accounts-ui
 fortawesome:fontawesome
 momentjs:moment
 matb33:collection-hooks
+reactive-var

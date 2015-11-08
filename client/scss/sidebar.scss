@@ -34,22 +34,37 @@
     margin: 1.5rem 0;
   }
   
-  .follow {
+  button {
     border: 0;
     outline: 0;
     border-radius: 2rem;
-    background: rgba(0,0,0,0.1);
     padding: 0.5rem;
     width: $size-sidebar * 0.5;
     
+    &.follow {
+      background: rgba(0,0,0,0.1);
+      
+      &:before {
+        content: 'Follow';
+      }
+    }
+    
     &.following {
       background: $yellow;
-      transition: 0.5s;
+      transition: background 0.5s;
       font-weight: $fw-medium;
+      
+      &:before {
+        content: 'Following';
+      }
       
       &:hover {
         background: $orange;
-        transition: 0.2s;
+        transition: background 0.2s;
+        
+        &:before {
+          content: 'Unfollow';
+        }
       }
     }
   }

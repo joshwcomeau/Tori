@@ -16,17 +16,7 @@ Template.sidebar.helpers({
 });
 
 Template.sidebar.events({
-  "click .follow": function() {
+  "click button": function() {
     Meteor.call('toggleFollowing', FlowRouter.getParam('profile_name'));
-  },
-  "mouseover .follow": function(ev) {
-    if ( Util.isCurrentUserFollowing(FlowRouter.getParam('profile_name')) ) {
-      ev.target.innerText = "Unfollow";
-    }
-  },
-  "mouseout .follow": function(ev) {
-    if ( Util.isCurrentUserFollowing(FlowRouter.getParam('profile_name')) ) {
-      ev.target.innerText = "Following";
-    }
   }
 });

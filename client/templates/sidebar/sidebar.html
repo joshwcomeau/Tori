@@ -3,13 +3,7 @@
     {{> sidebarProfile profile }}
     
     {{#if currentUser}}
-      <button class="follow {{#if isFollowing}}following{{/if}}">
-        {{#if isFollowing}}
-          Following
-        {{else}}
-          Follow
-        {{/if}}
-      </button>
+      <button class="{{#if isFollowing}}following{{else}}follow{{/if}}"></button>
     {{/if}}
   {{/if}}
 </template>
