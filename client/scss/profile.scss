@@ -1,0 +1,74 @@
+@import 'variables';
+
+#profile {
+  padding: 2rem;
+  
+  .stats {
+    
+    li {
+      flex: 1;
+      text-align: center;
+      padding: 1.25rem;
+      
+      &.selected {
+        border-bottom: 5px solid $grass;
+      }
+    }
+    h4 {
+      margin: 0;
+      font-weight: $fw-heavy;
+      font-size: 1.2rem;
+      color: #222;
+      
+    }
+    h6 {
+      text-transform: uppercase;
+      font-weight: $fw-light;
+      color: $mediumgray;
+      font-size: 0.8rem;
+      margin: 0;
+    }
+  }
+  
+  .haikus {
+    margin-top: 2rem;
+    font-weight: $fw-medium;
+    
+    .haikus-list > li {
+      position: relative;
+      height: 11rem;
+      border-bottom: 1px solid $lightgray;
+
+      .haiku {
+        position: absolute;
+        text-align: right;
+        font-size: 1.3rem;
+        right: 2.2rem;
+        bottom: 2rem;
+      }
+      
+      .haiku-actions {
+        position: absolute;
+        left: 0rem;
+        bottom: 0;
+        height: 2rem;
+        line-height: 2rem;
+        color: $darkgray;
+        
+        li {
+          display: inline-block;
+          padding: 0 1rem;
+          
+          
+          .count {
+            display: inline-block;
+            padding-left: 0.5rem;
+          }
+        }
+      }
+    }
+    
+    
+    
+  }
+}

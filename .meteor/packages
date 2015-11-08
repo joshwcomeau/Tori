@@ -22,3 +22,5 @@ kadira:blaze-layout
 fourseven:scss
 accounts-password
 accounts-ui
+fortawesome:fontawesome
+momentjs:moment

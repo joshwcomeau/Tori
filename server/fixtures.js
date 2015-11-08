@@ -1,0 +1,59 @@
+if ( Haikus.find().count() === 0 ) {
+  // Create two users
+  let poetId = Meteor.users.insert({
+    username: 'ThePoet',
+    profile:  {
+      displayName: 'The Malevolent Poet',
+      summary: 'Aspiring poet who leaves everything to the imagination. Fond of cats, cars and cabins.'
+    },
+    // Denormalized data
+    haikus: 1,
+    followers: 417,
+    following: 83
+  });
+  let poet = Meteor.users.findOne(poetId);
+  
+  let rollingHillsId = Meteor.users.insert({
+    username: 'rollinghills',
+    profile: {
+      displayName: 'Lush Rolling Hills',
+      summary: 'Inspiration: Shakespear, Wordsworth, Mia Angelou.'
+    },
+    haikus: 2,
+    followers: 24,
+    following: 1034
+  });
+  let rollingHills = Meteor.users.findOne(rollingHillsId);
+  
+  Haikus.insert({
+    line1: 'Going to the store',
+    line2: 'shopping for groceries',
+    line3: 'still waters run deep',
+    authorId: poetId,
+    authorName: poet.profile.displayName,
+    createdAt: moment().subtract(4, 'minutes').toISOString(),
+    retweets: 4,
+    likes: 9
+  });
+  
+  Haikus.insert({
+    line1: 'Green frog',
+    line2: 'is your body also',
+    line3: 'freshly painted?',
+    authorId: rollingHillsId,
+    authorName: rollingHills.profile.displayName,
+    createdAt: moment().subtract(2, 'hours').toISOString(),
+    likes: 2
+  });
+  
+  Haikus.insert({
+    line1: 'Without flowing wine',
+    line2: 'How to enjoy lovely',
+    line3: 'Cherry blossom trees?',
+    authorId: rollingHillsId,
+    authorName: rollingHills.profile.displayName,
+    createdAt: moment().subtract(3, 'days').toISOString(),
+    retweets: 12
+  });
+  
+}

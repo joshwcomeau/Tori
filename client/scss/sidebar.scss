@@ -1,0 +1,44 @@
+@import 'variables';
+
+.sidebar {
+  position: absolute;
+  z-index: 10;
+  height: 100%;
+  width: $size-sidebar;
+  background: $green;
+  padding-top: $size-header + 2rem;
+  color: #FFF;
+  text-align: center;
+  
+  .profile-image {
+    position: relative;
+    margin: 0 auto;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 100%;
+    background-size: cover;
+    background-position: center center;
+    border: 3px solid $white;
+  }
+  
+  h5 {
+    margin: 0.4rem 0;
+    font-size: 1.3rem;
+  }
+  
+  p {
+    padding: 0 1rem;
+  }
+  
+  .link {
+    margin: 1.5rem 0;
+  }
+  
+  button {
+    border: 0;
+    outline: 0;
+    border-radius: 2rem;
+    background: rgba(0,0,0,0.1);
+    padding: 0.5rem 2rem;
+  }
+}

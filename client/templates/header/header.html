@@ -1,7 +1,19 @@
 <template name="header">
   <header>
+    <div class="left-nav">
+      <div class="new-haiku">
+        <button class='filled'>
+          <i class="fa fa-pencil"></i>
+        </button>
+      </div>
+    </div>
+      
     <div class="main-logo">
       {{> logo }}
+    </div>
+    
+    <div class="right-nav">
+      {{> loginButtons align="right"}}
     </div>
   </header>
   
