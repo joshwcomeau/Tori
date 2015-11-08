@@ -1,0 +1,2 @@
+Template.profileStats.helpers({
+});

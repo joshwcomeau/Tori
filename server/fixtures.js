@@ -4,12 +4,14 @@ if ( Haikus.find().count() === 0 ) {
     username: 'ThePoet',
     profile:  {
       displayName: 'The Malevolent Poet',
-      summary: 'Aspiring poet who leaves everything to the imagination. Fond of cats, cars and cabins.'
+      summary: 'Aspiring poet who leaves everything to the imagination. Fond of cats, cars and cabins.',
+      profileImage: '/images/default_avatar.jpg',
+      url: 'www.tori.com/ThePoet'
     },
-    // Denormalized data
-    haikus: 1,
-    followers: 417,
-    following: 83
+    haikus: 0,
+    followers: 0,
+    following: 0,
+    impact: 3.4
   });
   let poet = Meteor.users.findOne(poetId);
   
@@ -17,19 +19,22 @@ if ( Haikus.find().count() === 0 ) {
     username: 'rollinghills',
     profile: {
       displayName: 'Lush Rolling Hills',
-      summary: 'Inspiration: Shakespear, Wordsworth, Mia Angelou.'
+      summary: 'Inspiration: Shakespear, Wordsworth, Mia Angelou.',
+      profileImage: '/images/default_avatar.jpg',
+      url: 'www.tori.com/rollinghills'
     },
-    haikus: 2,
-    followers: 24,
-    following: 1034
+    haikus: 0,
+    followers: 0,
+    following: 0,
+    impact: 1.2
   });
   let rollingHills = Meteor.users.findOne(rollingHillsId);
   
-  Haikus.insert({
+  let haiku_id = Haikus.insert({
     line1: 'Going to the store',
     line2: 'shopping for groceries',
     line3: 'still waters run deep',
-    authorId: poetId,
+    userId: poetId,
     authorName: poet.profile.displayName,
     createdAt: moment().subtract(4, 'minutes').toISOString(),
     retweets: 4,
@@ -40,7 +45,7 @@ if ( Haikus.find().count() === 0 ) {
     line1: 'Green frog',
     line2: 'is your body also',
     line3: 'freshly painted?',
-    authorId: rollingHillsId,
+    userId: rollingHillsId,
     authorName: rollingHills.profile.displayName,
     createdAt: moment().subtract(2, 'hours').toISOString(),
     likes: 2
@@ -50,10 +55,21 @@ if ( Haikus.find().count() === 0 ) {
     line1: 'Without flowing wine',
     line2: 'How to enjoy lovely',
     line3: 'Cherry blossom trees?',
-    authorId: rollingHillsId,
+    userId: rollingHillsId,
     authorName: rollingHills.profile.displayName,
     createdAt: moment().subtract(3, 'days').toISOString(),
     retweets: 12
   });
   
+  Follows.insert({
+    fromUserId: rollingHillsId,
+    toUserId:   poetId
+  });
+  
+  Likes.insert({
+    haikuId: haiku_id,
+    fromUserId: rollingHillsId
+  });
+  
+  console.log("Fixture data inserted!")
 }
