@@ -1,0 +1,39 @@
+@import 'variables';
+
+#compose {
+  .haiku-box {
+    position: relative;
+    width: 100%;
+    height: 10rem;
+    background: rgba(0,0,0,0.05);
+    outline: none;
+    margin: 1rem 0;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    
+    .vertically-centered {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+    .horizontally-centered {
+      text-align: center;
+    }
+
+    .haiku-text {
+      position: relative;
+      outline: none;
+      font-size: 1.5rem;
+      font-weight: $fw-medium;
+            
+    }
+    .placeholder {
+      position: absolute;
+      width: 100%;
+      font-size: 1.4rem;
+      opacity: 0.6;
+      pointer-events:none;
+    }
+  }
+}

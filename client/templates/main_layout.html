@@ -1,5 +1,6 @@
 <template name="mainLayout">
   {{> header}}
+  
   <div class="sidebar">
     {{>Template.dynamic template=sidebar}}
   </div>
@@ -7,6 +8,8 @@
     {{>Template.dynamic template=main}}
     <footer>2015 Flutter Group Inc.</footer>
   </div>
-
+  
+  <!-- MODALS. Hidden by default -->
+  {{> compose}}
 
 </template>

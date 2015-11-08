@@ -1,0 +1,14 @@
+<template name="compose">
+  <div class="modal {{#if composing}}active{{/if}}">
+    <div class="modal-backdrop"></div>
+    <div id="compose" class="modal-window">
+      <h2 class="title">Compose a Haiku</h2>
+      <div class="haiku-box">
+        <div class="haiku-text vertically-centered horizontally-centered" contenteditable="true">
+        </div>
+        <span class="placeholder vertically-centered horizontally-centered">Write Your Haiku...</span>
+      </div>
+    </div>
+  </div>
+  
+</template>

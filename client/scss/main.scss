@@ -50,3 +50,50 @@ ul {
 
 }
 
+// TODO: Mobile styles for modals
+.modal {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  
+  &.active {
+    display: block;
+  }
+  
+  .modal-backdrop {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+  }
+  
+  .modal-window {
+    position: absolute;
+    top: $size-header - 1rem;
+    left: 0;
+    right: 0;
+    width: 750px;
+    margin: auto;
+    padding: 2rem;
+    background: $white;
+    border-radius: 3px;
+    box-shadow: 5px 8px 15px rgba(0,0,0,0.16);
+    
+    .title {
+      color: $grass;
+      font-size: 2rem;
+      margin: 0;
+      padding: 0;
+      font-weight: $fw-medium;
+    }
+  }
+  
+  
+}
