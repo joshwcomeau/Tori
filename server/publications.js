@@ -14,3 +14,10 @@ Meteor.publish('followingActiveProfile', function(profile_name) {
     toUserId: user_id
   });
 });
+
+Meteor.publish('myLikesForHaiku', function(haiku_id) {
+  return Likes.find({
+    haikuId: haiku_id,
+    fromUserId: this.userId
+  });
+});

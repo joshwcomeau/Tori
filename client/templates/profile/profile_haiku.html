@@ -19,8 +19,9 @@
       <li>
         <i class="fa fa-retweet"></i><span class="count">{{retweets}}</span>
       </li>
-      <li>
-        <i class="fa fa-heart"></i><span class="count">{{likes}}</span>
+      <li class="{{#if doesLike}}liked{{else}}not-liked{{/if}}">
+        <button class="like"><i class="fa fa-heart"></i></button>
+        <span class="count">{{likes}}</span>
       </li>
     </ul>
   </li>

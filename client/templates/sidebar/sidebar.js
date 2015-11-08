@@ -16,7 +16,8 @@ Template.sidebar.helpers({
 });
 
 Template.sidebar.events({
-  "click button": function() {
+  "click button": function(ev, instance) {
+    console.log("Instance", instance)
     Meteor.call('toggleFollowing', FlowRouter.getParam('profile_name'));
   }
 });
