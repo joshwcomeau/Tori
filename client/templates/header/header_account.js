@@ -1,13 +1,26 @@
 Template.headerAccount.onCreated(function() {
   this.menuName = 'headerAccount';
-  
-  // TODO: DRY this up, it exists in two places.
-  // Close the menu when a click event is registered anywhere outside the menu
-  $(window).on('mouseup', (ev) => {
-    this.loginMenuOpen.set(false);
-  });
-  
-
+  UiUtils.menu.registerWindowClickHandler();
 });
 
-Template.headerAccount.helpers({})
+Template.headerAccount.helpers({
+  menuOpen: function() {
+    return UiUtils.menu.isMenuActive(Template.instance().menuName);
+  },
+  profileLink: function() {
+    return `/${this.username}`
+  }
+});
+
+Template.headerAccount.events({
+  'mouseup .account-menu': function(ev, instance) {
+    ev.stopPropagation();
+  },
+  'mouseup .account-thumb': function(ev, instance) {
+    ev.stopPropagation();
+    UiUtils.menu.activate(instance.menuName);
+  },
+  'click a': function(ev, instance) {
+    UiUtils.menu.deactivate();
+  }
+})

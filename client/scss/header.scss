@@ -108,6 +108,52 @@ header {
         background-position: center center;
         border-radius: 100%;
       }
+      
+      .account-menu-blocker {
+        top: $size-header;
+      }
+      
+      .account-menu {
+        top: $size-header + 0.4rem;
+        right: 1rem;
+        white-space: nowrap;
+        padding: 0.3rem 0;
+        
+        a {
+          display: block;
+          padding: 0.4rem 1.5rem;
+          border-bottom: 1px solid $lightgray;
+          color: #111;
+          
+          &:last-of-type {
+            border-bottom: 0;
+          }
+
+          
+          &:hover {
+            text-decoration: none;
+            background: $green;
+            color: $white;
+            
+            strong, span {
+              color: $white;
+            }
+          }
+        }
+      
+        .profile-link {
+          span {
+            font-weight: $fw-light;
+            color: $darkgray;
+            font-size: 0.7rem;
+          }
+        }
+        
+        .log-out-link {
+          font-size: 0.7rem;
+          font-weight: $fw-medium;
+        }
+      }
     }
     
     .header-log-in {
