@@ -23,5 +23,28 @@ Template.headerLogIn.events({
   'mouseup .log-in-text': function(ev, instance) {
     ev.stopPropagation();
     instance.loginMenuOpen.set( !instance.loginMenuOpen.get() );
+  },
+  'submit .log-in-form': function(ev, instance) {
+    ev.preventDefault();
+    
+    let $form = $(ev.target);
+    let email_or_username = $form.find('[name=email_username]').val();
+    let password = $form.find('[name=password]').val();
+    
+    // TODO: some form of basic validation.
+    
+    Meteor.loginWithPassword(email_or_username, password, function(error) {
+      console.log("Login context", this);
+      
+      if ( error ) {
+        // TODO: Error handling
+        console.error( "Error logging in:", error );
+      } else if ( !Meteor.user() ){
+        console.error( "No formal error logging in, but we aren't logged in =(");
+      } else {
+        // Success! Just close the window.
+        instance.loginMenuOpen.set(false);
+      }
+    });
   }
 })
