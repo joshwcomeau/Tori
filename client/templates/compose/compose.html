@@ -2,15 +2,31 @@
   <div class="modal {{#if composing}}active{{/if}}">
     <div class="modal-backdrop"></div>
     <div id="compose" class="modal-window">
-      <div class="close">
-        {{> close}}
-      </div>
-      <h2 class="title">Compose a Haiku</h2>
-      <div class="haiku-box">
-        <div class="haiku-text vertically-centered horizontally-centered" contenteditable="true">
+      <form class="post-haiku">
+        
+        
+        <div class="close">
+          {{> close}}
         </div>
-        <span class="placeholder vertically-centered horizontally-centered">Write Your Haiku...</span>
-      </div>
+        <h2 class="title">Compose a Haiku</h2>
+        <div class="haiku-box" style="{{#if backgroundImage}}background-image: {{backgroundImage}};{{/if}}">
+          <div class="haiku-text vertically-centered horizontally-centered" contenteditable="true">
+          </div>
+          <span class="placeholder vertically-centered horizontally-centered">Write Your Haiku...</span>
+        </div>
+        <div class="background-select">
+          <!-- Crazy formatting is to avoid whitespace added between spans -->
+          <span class="label">Select Background:
+          </span><span class="preset background-select-none selected">
+          </span><span class="preset background-select-1">
+          </span><span class="preset background-select-2">
+          </span><span class="preset background-select-3">
+          </span><span class="preset background-select-4">
+          </span><span class="background-select-custom"></span>
+        </div>
+        
+        <button class='submit-haiku'>Post</button>
+      </form>
     </div>
   </div>
 </template>

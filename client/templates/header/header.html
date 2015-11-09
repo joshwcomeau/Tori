@@ -1,11 +1,13 @@
 <template name="header">
   <header>
     <div class="left-nav">
-      <div class="compose-button">
-        <button class='filled'>
-          <i class="fa fa-pencil"></i>
-        </button>
-      </div>
+      {{#if currentUser}}
+        <div class="compose-button">
+          <button class='filled'>
+            <i class="fa fa-pencil"></i>
+          </button>
+        </div>
+      {{/if}}
     </div>
       
     <div class="main-logo">
@@ -13,7 +15,12 @@
     </div>
     
     <div class="right-nav">
-      {{> loginButtons align="right"}}
+      {{> headerSearch }}
+      {{#if currentUser}}
+        {{> headerAccount }}
+      {{else}}
+        {{> headerLogIn }}
+      {{/if}}
     </div>
   </header>
   

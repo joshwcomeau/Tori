@@ -83,13 +83,73 @@ header {
   .right-nav {
     position: absolute;
     top: 0;
-    right: 1rem;
+    right: 2rem;
     bottom: 0;
+    
+    .header-log-in {
+      position: relative;
+      
+      .log-in-text {
+        margin: 0;
+        cursor: pointer;
+      }
+      
+      .log-in-menu {
+        position: absolute;
+        top: $size-header + 0.4rem;
+        right: -0.5rem;
+        padding: 1.5rem;
+        background: $white;
+        box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+        line-height: 1rem;
+        width: 20rem;
+        
+        // Little pointer-triangle
+        &:before {
+          content: '';
+          position: absolute;
+          z-index: 2;
+          top: -10px;
+          right: 8px;
+          width: 0;
+          height: 0;
+          border-left: 10px solid transparent;
+          border-right: 10px solid transparent;
+          border-bottom: 10px solid $white;
+        }
+        &:after {
+          content: '';
+          position: absolute;
+          z-index: 1;
+          top: -11px;
+          right: 7px;
+          width: 0;
+          height: 0;
+          border-left: 11px solid transparent;
+          border-right: 11px solid transparent;
+          border-bottom: 11px solid rgba(0,0,0,0.1);
+        }
+        
+        h5 {
+          margin: 0;
+          font-weight: $fw-light;
+          font-size: 1rem;
+        }
+        
+        form {
+          margin: 0.6rem 0;
+        }
+        
+        input {
+          width: 100%;
+          padding: 7px;
+          font-size: 0.8rem;
+          border-radius: 3px;
+          border: 1px solid darken($lightgray, 10%);
+          margin-bottom: 0.25rem;
+        }
+      }
+    }
   }
   
-  .login {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-  }
 }

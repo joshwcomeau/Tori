@@ -5,13 +5,17 @@
     position: relative;
     width: 100%;
     height: 10rem;
-    background: rgba(0,0,0,0.05);
+    background: $white;
     outline: none;
     margin: 1rem 0;
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
     cursor: text;
+    background-position: center center;
+    background-size: cover;
+    box-shadow: 2px 1px 3px rgba(0,0,0,0.1);
+    border-radius: 2px;
     
     .vertically-centered {
       top: 50%;
@@ -27,14 +31,72 @@
       outline: none;
       font-size: 1.5rem;
       font-weight: $fw-medium;
-            
     }
+    
     .placeholder {
       position: absolute;
       width: 100%;
       font-size: 1.4rem;
       opacity: 0.6;
       pointer-events:none;
+    }
+  }
+  
+  .background-select {
+    line-height: 1.5rem;
+    font-weight: $fw-medium;
+    color: #444;
+    font-size: 0.8rem;
+    
+    span {
+      background-position: center center;
+    }
+    .label {
+      margin-right: 0.5rem;
+    }
+    .preset {
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 1px solid #000;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 0.25rem;
+      
+      &.selected {
+        border: 2px solid $green;
+      }
+    }
+    
+    .background-select-1 {
+      background-image: url('/images/sample-background-1.jpg');
+    }
+    .background-select-2 {
+      background-image: url('/images/sample-background-2.jpg');
+    }
+    .background-select-3 {
+      background-image: url('/images/sample-background-3.jpg');
+    }
+    .background-select-4 {
+      background-image: url('/images/sample-background-4.jpg');
+    }
+  }
+  
+  .submit-haiku {
+    position: relative;
+    display: block;
+    background: $green;
+    padding: 0.75rem 4rem;
+    margin: 2rem auto 0;
+    border: 0px;
+    border-radius: 3rem;
+    color: $white;
+    font-weight: $fw-heavy;
+    outline: none;
+    transition: background 0.5s;
+    
+    &:hover {
+      background: $grass;
+      transition: background 0.2s;
     }
   }
 }
