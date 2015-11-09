@@ -22,5 +22,11 @@ Template.headerAccount.events({
   },
   'click a': function(ev, instance) {
     UiUtils.menu.deactivate();
+  },
+  'click .log-out-link': function(ev, instance) {
+    Meteor.logout(function(err) {
+      // TODO: Error handling
+      if (err) console.error( "Error logging out:", err );
+    });
   }
 })

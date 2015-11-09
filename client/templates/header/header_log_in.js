@@ -30,10 +30,10 @@ Template.headerLogIn.events({
     
     // TODO: some form of basic validation.
     
-    Meteor.loginWithPassword(email_or_username, password, (error) => {
-      if ( error ) {
+    Meteor.loginWithPassword(email_or_username, password, (err) => {
+      if ( err ) {
         // TODO: Error handling
-        console.error( "Error logging in:", error );
+        console.error( "Error logging in:", err );
       } else if ( !Meteor.user() ){
         console.error( "No formal error logging in, but we aren't logged in =(");
       } else {
