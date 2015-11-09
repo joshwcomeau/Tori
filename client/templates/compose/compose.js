@@ -1,6 +1,6 @@
 Template.compose.onCreated(function() {
   this.backgroundImage = new ReactiveVar(null);
-  this.uploader = new Slingshot.Upload("medicalFile");
+  this.uploader = new Slingshot.Upload("background");
 });
 
 
@@ -26,27 +26,29 @@ Template.compose.events({
   
   'click .preset': function(ev, instance) {
     $thumb = $(ev.target);
-    let image_url = $thumb.css('background-image');
-    instance.backgroundImage.set(image_url);
+    let image_css = $thumb.css('background-image');
+    instance.backgroundImage.set(image_css);
     
     // Add the 'selected' class to this thumbnail
     $('.preset').removeClass('selected');
-    $thumb.addClass('selected')
+    $thumb.addClass('selected');
   },
   
-  'change .upload-background-button': function(ev, instance) {
+  'change .upload-background': function(ev, instance) {
     ev.preventDefault();
         
-    let file = document.getElementById('files-upload-button').files[0];
+    let file = ev.target.files[0];
     
-    instance.uploader.send(file, (error, downloadUrl) => {
+    instance.uploader.send(file, (error, image_url) => {
       if (error) {
         console.error('Error uploading', instance.uploader.xhr.response);
         alert (error);
       } else {
-        Meteor.call('uploadFile', downloadUrl, (err, fileId) => {
-          console.log("Client callback for file upload", err, fileId);
-        });
+        console.log("Uploaded file!", image_url);
+        
+        let image_css = `url('${image_url}')`;
+        instance.backgroundImage.set(image_css)
+        
       }
     });
   },
