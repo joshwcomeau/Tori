@@ -3,27 +3,32 @@
     <div class="log-in-text">
       Have an account?&nbsp;&nbsp;<strong>Sign In</strong>
     </div>
-    <div class="log-in-menu">
-      <h5>Email Login</h5>
-      <form class="log-in-form">
-        <input type="text" name="email_username" placeholder="Email or Username">
-        <input type="password" name="password" placeholder="Password">
-        <button class="tori-login">Sign In</button>
-      </form>
-      <div class="divider" data-text="or"></div>
-      <div class="oauth-buttons">
-        <button class="twitter-login">
-          <i class="fa fa-twitter"></i>
-          Sign In With Twitter
-        </button>
-        <button class="google-login">
-          <i class="fa fa-google-plus"></i>
-          Sign In With Google
-        </button>
+    {{#if menuOpen}}
+      <div class="log-in-menu">
+        <h5>Email Login</h5>
+        <form class="log-in-form">
+          <input type="text" name="email_username" placeholder="Email or Username">
+          <input type="password" name="password" placeholder="Password">
+          <button class="tori-login">Sign In</button>
+        </form>
+        <div class="divider" data-text="or"></div>
+        <div class="oauth-buttons">
+          <button class="twitter-login">
+            <i class="fa fa-twitter"></i>
+            Sign In With Twitter
+          </button>
+          <button class="google-login">
+            <i class="fa fa-google-plus"></i>
+            Sign In With Google
+          </button>
 
+        </div>
+        <div class="divider" data-text="Don't have an account?"></div>
+        <a href="/register" class="register-link">Register now</a>
       </div>
-      <div class="divider" data-text="Don't have an account?"></div>
-      <a href="/register" class="register-link">Register now</a>
-    </div>
+      <div class="log-in-menu-blocker">
+        
+      </div>
+    {{/if}}
   </div>
 </template>
