@@ -16,11 +16,13 @@
     
     <div class="right-nav">
       {{> headerSearch }}
-      {{#if currentUser}}
+      <!-- {{#if currentUser}}
         {{> headerAccount currentUser }}
       {{else}}
         {{> headerLogIn }}
-      {{/if}}
+      {{/if}} -->
+      
+      {{> loginButtons align="right"}}
     </div>
   </header>
   

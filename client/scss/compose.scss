@@ -50,17 +50,20 @@
     
     span {
       background-position: center center;
+      float: left;
+      height: 1.5rem;
+      line-height: 1.5rem;
     }
     .label {
       margin-right: 0.5rem;
     }
     .preset {
       width: 1.5rem;
-      height: 1.5rem;
       border: 1px solid #000;
       display: inline-block;
-      vertical-align: middle;
+      vertical-align: bottom;
       margin-right: 0.25rem;
+      border-radius: 2px;
       
       &.selected {
         border: 2px solid $green;
@@ -79,7 +82,43 @@
     .background-select-4 {
       background-image: url('/images/sample-background-4.jpg');
     }
+    
+    .background-select-custom {
+      position: relative;
+      
+      input[type=file] {
+        color: transparent;
+        outline: none;
+        margin: 0;
+        height: 100%;
+        
+        &::-webkit-file-upload-button {
+          visibility: hidden;
+        }
+        
+        &:before {
+          content: 'Custom';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          vertical-align: bottom;
+          display: inline-block;
+          background: $green;
+          border-radius: 2px;
+          padding: 0 1rem;
+          line-height: 1.5rem;
+          outline: none;
+          color: $white;
+          -webkit-user-select: none;
+          cursor: pointer;
+          font-weight: $fw-heavy;
+          font-size: 10pt;
+        }
+      }
+    }
   }
+
   
   .submit-haiku {
     position: relative;

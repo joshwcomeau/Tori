@@ -4,7 +4,6 @@
     <div id="compose" class="modal-window">
       <form class="post-haiku">
         
-        
         <div class="close">
           {{> close}}
         </div>
@@ -14,7 +13,7 @@
           </div>
           <span class="placeholder vertically-centered horizontally-centered">Write Your Haiku...</span>
         </div>
-        <div class="background-select">
+        <div class="background-select clearfix">
           <!-- Crazy formatting is to avoid whitespace added between spans -->
           <span class="label">Select Background:
           </span><span class="preset background-select-none selected">
@@ -22,7 +21,13 @@
           </span><span class="preset background-select-2">
           </span><span class="preset background-select-3">
           </span><span class="preset background-select-4">
-          </span><span class="background-select-custom"></span>
+          </span><span class="background-select-custom">
+            <input type="file">
+          </span>
+        </div>
+        
+        <div class="clearfix">
+          
         </div>
         
         <button class='submit-haiku'>Post</button>

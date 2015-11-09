@@ -1,6 +1,8 @@
 Template.compose.onCreated(function() {
   this.backgroundImage = new ReactiveVar(null);
+  this.uploader = new Slingshot.Upload("medicalFile");
 });
+
 
 Template.compose.helpers({
   composing: function() {
@@ -11,14 +13,17 @@ Template.compose.helpers({
   }
 });
 
+
 Template.compose.events({
   'click .close': () => { Session.set('composingHaiku', undefined); },
+  
   'click .haiku-box': () => {
     // We want to transfer focus to the text element, which can be positioned
     // more precisely.
     $(".placeholder").hide();
     $(".haiku-text").focus();
   },
+  
   'click .preset': function(ev, instance) {
     $thumb = $(ev.target);
     let image_url = $thumb.css('background-image');
@@ -28,6 +33,24 @@ Template.compose.events({
     $('.preset').removeClass('selected');
     $thumb.addClass('selected')
   },
+  
+  'change .upload-background-button': function(ev, instance) {
+    ev.preventDefault();
+        
+    let file = document.getElementById('files-upload-button').files[0];
+    
+    instance.uploader.send(file, (error, downloadUrl) => {
+      if (error) {
+        console.error('Error uploading', instance.uploader.xhr.response);
+        alert (error);
+      } else {
+        Meteor.call('uploadFile', downloadUrl, (err, fileId) => {
+          console.log("Client callback for file upload", err, fileId);
+        });
+      }
+    });
+  },
+  
   'submit .post-haiku': function(ev, instance) {
     console.log("Form submitted")
     ev.preventDefault();
@@ -39,8 +62,6 @@ Template.compose.events({
       .replace(/<\/div>/gi, '')
       .replace(/<div>/gi, '<br>')
       .split('<br>');
-    
-    console.log('instance', instance)
     
     if ( haiku_lines.length > 3 ) {
       // TODO: Error handling and displaying for too many lines
@@ -57,12 +78,10 @@ Template.compose.events({
       line3: haiku_lines[2]
     };
 
-    
     if ( instance.backgroundImage.get() ) {
       attributes.backgroundImage = instance.backgroundImage.get();
     }
     
-    console.log("Submitting haiku", attributes);
     Meteor.call('postHaiku', attributes);
     
     Session.set('composingHaiku', false);

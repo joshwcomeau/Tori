@@ -56,6 +56,13 @@ ul {
 .flex {
   display: flex;
 }
+.clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
 .card {
   background: $white;
   border-radius: 2px;
