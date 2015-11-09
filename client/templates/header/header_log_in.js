@@ -1,14 +1,11 @@
 Template.headerLogIn.onCreated(function() {
-  this.loginMenuOpen = new ReactiveVar(false);
-  // Close the menu when a click event is registered anywhere outside the menu
-  $(window).on('mouseup', (ev) => {
-    this.loginMenuOpen.set(false);
-  });
+  this.menuName = 'headerLogin';
+  UiUtils.menu.registerWindowClickHandler();
 });
 
 Template.headerLogIn.helpers({
   menuOpen: function() {
-    return Template.instance().loginMenuOpen.get();
+    return UiUtils.menu.isMenuActive(Template.instance().menuName);
   }
 })
 
@@ -22,7 +19,7 @@ Template.headerLogIn.events({
   },
   'mouseup .log-in-text': function(ev, instance) {
     ev.stopPropagation();
-    instance.loginMenuOpen.set( !instance.loginMenuOpen.get() );
+    UiUtils.menu.activate(instance.menuName);
   },
   'submit .log-in-form': function(ev, instance) {
     ev.preventDefault();
@@ -33,9 +30,7 @@ Template.headerLogIn.events({
     
     // TODO: some form of basic validation.
     
-    Meteor.loginWithPassword(email_or_username, password, function(error) {
-      console.log("Login context", this);
-      
+    Meteor.loginWithPassword(email_or_username, password, (error) => {
       if ( error ) {
         // TODO: Error handling
         console.error( "Error logging in:", error );

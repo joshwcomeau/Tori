@@ -83,63 +83,51 @@ header {
   .right-nav {
     position: absolute;
     top: 0;
-    right: 2rem;
+    right: 0;
     bottom: 0;
+    
+    .header-account {
+      position: relative;
+      width: $size-header;
+      height: $size-header;
+      border-left: 1px solid $lightgray;
+      
+      .account-thumb {
+        position: absolute;
+        display: block;
+        outline: none;
+        width: $size-header-button;
+        height: $size-header-button;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        border: 0;
+        background-size: cover;
+        background-position: center center;
+        border-radius: 100%;
+      }
+    }
     
     .header-log-in {
       position: relative;
       
       .log-in-text {
         margin: 0;
+        padding-right: 2rem;
         font-size: 0.8rem;
         cursor: pointer;
       }
       
       .log-in-menu-blocker {
-        position: fixed;
-        z-index: -1;
         top: $size-header;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.3);
       }
       
       .log-in-menu {
-        position: absolute;
         top: $size-header + 0.4rem;
-        right: -0.5rem;
-        padding: 1.5rem;
-        background: $white;
-        box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
-        line-height: 1rem;
+        right: 1.5rem;
         width: 20rem;
-        
-        // Little pointer-triangle
-        &:before {
-          content: '';
-          position: absolute;
-          z-index: 2;
-          top: -10px;
-          right: 8px;
-          width: 0;
-          height: 0;
-          border-left: 10px solid transparent;
-          border-right: 10px solid transparent;
-          border-bottom: 10px solid $white;
-        }
-        &:after {
-          content: '';
-          position: absolute;
-          z-index: 1;
-          top: -11px;
-          right: 7px;
-          width: 0;
-          height: 0;
-          border-left: 11px solid transparent;
-          border-right: 11px solid transparent;
-          border-bottom: 11px solid rgba(0,0,0,0.1);
-        }
         
         h5 {
           margin: 0;

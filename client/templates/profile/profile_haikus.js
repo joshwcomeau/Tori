@@ -4,7 +4,7 @@ Template.profileHaikus.onCreated(function() {
 
 Template.profileHaikus.helpers({
   haikus: function() {
-    profile = Util.findUserByProfileName( FlowRouter.getParam('profile_name') );
+    profile = UserUtils.findUserByProfileName( FlowRouter.getParam('profile_name') );
     
     return Haikus.find({
       userId: profile._id

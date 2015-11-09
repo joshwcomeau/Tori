@@ -150,6 +150,47 @@ ul {
       font-weight: $fw-medium;
     }
   }
+}
+
+.dropdown-menu {
+  position: absolute;
+  padding: 1.5rem;
+  background: $white;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+  line-height: 1rem;
   
-  
+  // Little pointer-triangle
+  &:before {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: -10px;
+    right: 8px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid $white;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: -11px;
+    right: 7px;
+    width: 0;
+    height: 0;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-bottom: 11px solid rgba(0,0,0,0.2);
+  }
+}
+.dropdown-menu-blocker {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.3);
 }

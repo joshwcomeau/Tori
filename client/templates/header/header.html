@@ -17,7 +17,7 @@
     <div class="right-nav">
       {{> headerSearch }}
       {{#if currentUser}}
-        {{> headerAccount }}
+        {{> headerAccount currentUser }}
       {{else}}
         {{> headerLogIn }}
       {{/if}}

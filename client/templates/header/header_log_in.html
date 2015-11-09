@@ -4,7 +4,8 @@
       Have an account?&nbsp;&nbsp;<strong>Sign In</strong>
     </div>
     {{#if menuOpen}}
-      <div class="log-in-menu">
+      <div class="dropdown-menu-blocker log-in-menu-blocker"></div>
+      <div class="dropdown-menu log-in-menu">
         <h5>Email Login</h5>
         <form class="log-in-form">
           <input type="text" name="email_username" placeholder="Email or Username">
@@ -21,13 +22,9 @@
             <i class="fa fa-google-plus"></i>
             Sign In With Google
           </button>
-
         </div>
         <div class="divider" data-text="Don't have an account?"></div>
         <a href="/register" class="register-link">Register now</a>
-      </div>
-      <div class="log-in-menu-blocker">
-        
       </div>
     {{/if}}
   </div>

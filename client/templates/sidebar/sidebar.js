@@ -11,7 +11,7 @@ Template.sidebar.helpers({
     return Meteor.users.findOne({ username: profile_name }) || {};
   },
   isFollowing: function() {
-    return Util.isCurrentUserFollowing(FlowRouter.getParam('profile_name'));
+    return UserUtils.isCurrentUserFollowing(FlowRouter.getParam('profile_name'));
   }
 });
 

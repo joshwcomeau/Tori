@@ -4,6 +4,6 @@ Template.profileStats.onCreated(function() {
 
 Template.profileStats.helpers({
   profile: function() {
-    return Util.findUserByProfileName( FlowRouter.getParam('profile_name') );
+    return UserUtils.findUserByProfileName( FlowRouter.getParam('profile_name') );
   }
 });
