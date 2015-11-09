@@ -23,6 +23,15 @@ h2 {
   color: $darkgray;
 }
 
+a {
+  color: $green;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 ul {
   margin: 0;
   padding: 0;
@@ -47,7 +56,33 @@ ul {
   background: $white;
   border-radius: 2px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+}
 
+.divider {
+  position: relative;
+  height: 2rem;
+  text-align: center;
+  
+  &:before {
+    content: attr(data-text);
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+    padding: 0 0.6rem;
+    line-height: 2rem;
+    background: $white;
+    font-size: 0.8rem;
+    font-weight: $fw-medium;
+  }
+  
+  &:after {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid darken($lightgray, 10%);
+  }
 }
 
 // TODO: Mobile styles for modals
