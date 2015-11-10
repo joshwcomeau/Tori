@@ -23,6 +23,7 @@ fourseven:scss
 accounts-password
 accounts-ui
 fortawesome:fontawesome
+erasaur:meteor-lodash
 momentjs:moment
 matb33:collection-hooks
 reactive-var

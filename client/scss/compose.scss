@@ -31,6 +31,12 @@
       outline: none;
       font-size: 1.5rem;
       font-weight: $fw-medium;
+      
+      span {
+        &:hover {
+          border-bottom: 2px solid #F00;
+        }
+      }
     }
     
     .placeholder {
