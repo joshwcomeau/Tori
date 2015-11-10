@@ -53,20 +53,29 @@ Template.compose.events({
     });
   },
   
+  'keydown .haiku-text': function(ev, instance) {
+    // Make 'enter' key spawn double-BRs instead of DIVs.
+    if (ev.keyCode === 13) {
+      // insert 2 br tags (if only one br tag is inserted the cursor won't go to the next line)
+      document.execCommand('insertHTML', false, '<br><br>');
+      // prevent the default behaviour of return key pressed
+      return false;
+    }
+  },
+  
   'keyup .haiku-text': function(ev, instance) {
     let text = $(ev.target).html();
     
-    // Filter out HTML tags
-    text = text
-      .replace('&nbsp;', ' ')
-      .replace(/<div>/gi, ' ')
-      .replace(/<\/div>/gi, ' ')
-      .replace(/<br>/gi, ' ');
+    // Split into lines
+    let lines = _.compact(text.split('<br>'));
     
-    let words = _.compact(text.split(' '));
+    // Break each line into an array of its syllables
+    lines = lines.map( (line) => {
+      let words = _.compact(line.split(' '))
+      return _.flatten(words.map( word => ParseSyllables(word) ));
+    });
     
-    
-    console.log(words)
+    console.log( lines );
   },
   
   'submit .post-haiku': function(ev, instance) {
