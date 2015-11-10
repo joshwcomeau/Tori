@@ -105,6 +105,7 @@
         outline: none;
         margin: 0;
         height: 100%;
+        width: 80px; // Preventing spillover beyond the button.
         
         &.selected {
           &:before {
