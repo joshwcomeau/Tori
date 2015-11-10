@@ -16,19 +16,21 @@
         <div class="background-select clearfix">
           <!-- Crazy formatting is to avoid whitespace added between spans -->
           <span class="label">Select Background:
-          </span><span class="preset background-select-none selected">
-          </span><span class="preset background-select-1">
-          </span><span class="preset background-select-2">
-          </span><span class="preset background-select-3">
-          </span><span class="preset background-select-4">
+          </span><span class="background-select-option preset background-select-none selected">
+          </span><span class="background-select-option preset background-select-1">
+          </span><span class="background-select-option preset background-select-2">
+          </span><span class="background-select-option preset background-select-3">
+          </span><span class="background-select-option preset background-select-4">
           </span><span class="background-select-custom">
-            <input type="file" class="upload-background">
+            <input type="file" class="background-select-option upload-background">
           </span>
         </div>
         
         <div class="clearfix">
           
         </div>
+        
+        <div style="width: 100%; height: 200px; background-image: {{url}}"></div>
         
         <button class='submit-haiku'>Post</button>
       </form>

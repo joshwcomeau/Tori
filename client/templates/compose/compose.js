@@ -8,38 +8,70 @@ Template.compose.helpers({
   composing: function() {
     return Session.get('composingHaiku');
   },
+  url: function() {
+    return ComposeUtils.wrapImageUrl(Template.instance().uploader.url(true));
+  },
   backgroundImage: function() {
+    // if ( Template.instance().uploader ) {
+    //
+    //   console.log('in helper:', Template.instance().uploader, Template.instance().uploader.url(true) );
+    // }
+    //
     return Template.instance().backgroundImage.get();
   }
 });
 
 
 Template.compose.events({
+  /**
+   *  Close the 'compose' modal.
+   *  Data is kept, it's just hidden from view.
+   **/
   'click .close': () => Session.set('composingHaiku', undefined),
   
-  'click .haiku-box': () => {
+  /**
+   *  Focus the pseudo-textarea to begin typing
+   **/
+  'click .haiku-box': (ev) => {
     // We want to transfer focus to the text element, which can be positioned
     // more precisely.
     $(".placeholder").hide();
     $(".haiku-text").focus();
+    // TODO: Update this when the 'set' method is improved.
+    // ComposeUtils.setCursorOffset(ev.target);
   },
   
+  /**
+   *  Select one of the preset background images. Instantly updates the textarea.
+   **/
   'click .preset': function(ev, instance) {
     $thumb = $(ev.target);
     let image_css = $thumb.css('background-image');
     instance.backgroundImage.set(image_css);
     
     // Add the 'selected' class to this thumbnail
-    $('.preset').removeClass('selected');
+    $('.background-select-option').removeClass('selected');
     $thumb.addClass('selected');
   },
   
+  /**
+   *  Upload your own background image instead of using a preset.
+   *  Uploads the file to S3 but latency-compensates by displaying it immediately.
+   **/
   'change .upload-background': function(ev, instance) {
     ev.preventDefault();
-        
-    let file = ev.target.files[0];
     
-    instance.uploader.send(file, (error, image_url) => {
+    // Latency compensation
+    let temp_image = ComposeUtils.wrapImageUrl( instance.uploader.url(true) );
+    instance.backgroundImage.set( temp_image );
+    console.log("Setting temp image", temp_image, instance.uploader.url(true) );
+    
+    // Mark the 'upload' button (instead of one of the preset thumbs) as selected.
+    $('.background-select-option').removeClass('selected');
+    $(ev.target).addClass('selected');
+    
+    // Send to S3!
+    instance.uploader.send(ev.target.files[0], (error, image_url) => {
       if (error) {
         console.error('Error uploading', instance.uploader.xhr.response);
         alert (error);
