@@ -38,7 +38,7 @@ Template.headerLogIn.events({
         console.error( "No formal error logging in, but we aren't logged in =(");
       } else {
         // Success! Just close the window.
-        instance.loginMenuOpen.set(false);
+        UiUtils.menu.deactivate();
       }
     });
   }

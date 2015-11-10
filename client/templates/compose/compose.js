@@ -53,6 +53,22 @@ Template.compose.events({
     });
   },
   
+  'keyup .haiku-text': function(ev, instance) {
+    let text = $(ev.target).html();
+    
+    // Filter out HTML tags
+    text = text
+      .replace('&nbsp;', ' ')
+      .replace(/<div>/gi, ' ')
+      .replace(/<\/div>/gi, ' ')
+      .replace(/<br>/gi, ' ');
+    
+    let words = _.compact(text.split(' '));
+    
+    
+    console.log(words)
+  },
+  
   'submit .post-haiku': function(ev, instance) {
     console.log("Form submitted")
     ev.preventDefault();
