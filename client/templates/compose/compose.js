@@ -64,20 +64,22 @@ Template.compose.events({
   },
   
   'keyup .haiku-text': function(ev, instance) {
+    
+    let key_pressed = ev.keyCode;
+    
+    // Ignore arrow keys, shift key, delete/backspace
+    if ( _.includes([8, 16, 37, 38, 39, 40, 46], key_pressed) ) return
+    
     let text = $(ev.target).html();
     
     // Remove any <span>s added for illustrative purposes
     text = text.replace(/<[\/]?span>/gi, '');
-    
-    console.log("Replaced text", text);
     
     // If the most recent action was a new line, we need to ignore and preserve it
     let endsWithBreak = _.endsWith(text, '<br><br>');
     
     // Split into lines
     let lines = _.compact(text.split('<br>'));
-    
-    console.log("split lines", lines)
     
     // Break each line into an array of its words
     lines = lines.map( line => {
@@ -104,32 +106,20 @@ Template.compose.events({
     lines = lines.join("<br>");
     
     // Replace any removed final linebreak
-    if ( endsWithBreak ) lines += "<br><br>"
+    if ( endsWithBreak ) lines += "<br><br>";
     
-    console.log("lines:", lines)
+    let initialCursorOffset = ComposeUtils.getCursorOffset(ev.target);
     
-    // // Break eah
-    // lines = lines.map( (line) => {
-    //   let words = _.compact(line.split(' '))
-    //   return _.flatten(words.map( word => ParseSyllables(word) ));
-    // });
-    //
-    // console.log("Syllable lines", lines)
-    //
-    // // TODO: Add the little numbers to count each syllable per line.
-    //
-    // // Find each syllable, in the original text, and wrap it in a span.
-    //
-    // // Flatten the lines, for simplicity. We no longer need a 2D array.
-    // let wrapped_syllables = lines.map( (line) => {
-    //   return line.map( syllable => `<span class='syllable'>${syllable}</span>`).join
-    // }).join('<br>');
-    //
-    // console.log("wrapped_syllables", wrapped_syllables)
-    //
+    
+    console.log("Before changing", initialCursorOffset);
+    
     $(ev.target).html(lines);
     
-    Utils.jumpToEnd(ev.target);
+    console.log(initialCursorOffset);
+    
+    ComposeUtils.setCursorOffset(ev.target, initialCursorOffset);
+    
+    console.log("After setting:", ComposeUtils.getCursorOffset(ev.target));
     
   },
   
