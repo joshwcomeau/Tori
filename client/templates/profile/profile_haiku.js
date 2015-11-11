@@ -6,7 +6,7 @@ Template.profileHaiku.onCreated(function() {
 });
 
 Template.profileHaiku.helpers({
-  doesLike: function(arg1, arg2) {
+  doesLike: function() {
     return Likes.findOne({ haikuId: this._id })
   }
 });

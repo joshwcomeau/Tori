@@ -89,7 +89,7 @@ button {
     position: absolute;
     background: transparent;
     border: 0;
-    border-bottom: 3px solid $mediumgray;
+    border-bottom: 1px solid $mediumgray;
     z-index: 2;
     left: 0;
     right: 0;
@@ -99,14 +99,14 @@ button {
     outline: none;
     
     &:focus, &:valid {
-      border-bottom: 3px solid $blue;
+      border-bottom: 3px solid $green;
     }
     
     &:focus + label, &:valid + label {
       transform: translate(0,-24px);
       font-size: 0.7em;
       transition: 0.2s;
-      color: $blue;
+      color: $green;
     }
   }
   
@@ -185,6 +185,15 @@ button {
   background-color: $green;
 }
 
+.note {
+  background: $beige;
+  padding: 1.5rem;
+}
+
+.hide {
+  display: none;
+}
+
 // TODO: Mobile styles for modals
 .modal {
   position: fixed;
@@ -248,6 +257,21 @@ button {
       margin: 0;
       padding: 0;
       font-weight: $fw-medium;
+    }
+  }
+}
+
+form {
+  .error-message {
+    display: none;
+  }
+  
+  .has-error {
+    input {
+      border-bottom: $orange;
+    }
+    .error-message {
+      display: block;
     }
   }
 }

@@ -1,7 +1,7 @@
 @import 'variables';
 
 #register {
-  padding: 2rem;
+  padding: 3.5rem;
   
   .card {
     max-width: 600px;
@@ -52,6 +52,22 @@
         font-size: 1.5rem;
         line-height: 3rem;
       }
+    }
+  }
+  
+  .handle-display {
+    margin-top: 1rem;
+    border-radius: 2px;
+    text-align: center;
+    font-weight: 300;
+    
+    a {
+      font-weight: 500;
+      color: $blue;
+    }
+    
+    small {
+      opacity: 0.8;
     }
   }
 }
