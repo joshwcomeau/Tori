@@ -42,15 +42,100 @@ ul {
   list-style-type: none;
 }
 
+button {
+  position: relative;
+  height: 2.3rem;
+  padding-top: 4px;
+  border-radius: 3px;
+  border: 0;
+  outline: none;
+  color: $white;
+  background: $green;
+  font-weight: 500;
+  transition: background 0.5s;
+  
+  &:hover {
+    background: darken($green, 8%);
+    transition: background 0.2s;
+  }
+  
+  i.fa {
+    position: absolute;
+    top: 0;
+    left: 0.65rem;
+    line-height: 2.3rem;
+    font-size: 1rem;
+  }
+  
+  &.twitter {
+    background: $twitterblue;
+    &:hover {
+      background: darken($twitterblue, 8%);
+    }
+  }
+  &.google {
+    background: $googlered;
+    &:hover {
+      background: darken($googlered, 8%);
+    }
+  }
+}
+
+.floating-input {
+  position: relative;
+  height: 4rem;
+  
+  input {
+    position: absolute;
+    background: transparent;
+    border: 0;
+    border-bottom: 3px solid $mediumgray;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 1.5rem;
+    width: 100%;
+    outline: none;
+    
+    &:focus, &:valid {
+      border-bottom: 3px solid $blue;
+    }
+    
+    &:focus + label, &:valid + label {
+      transform: translate(0,-24px);
+      font-size: 0.7em;
+      transition: 0.2s;
+      color: $blue;
+    }
+  }
+  
+  label {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 1.5rem;
+    line-height: 2.5rem;
+    transition: 0.4s;
+    color: $mediumgray;
+  }
+}
+
 #wrapper {
   position: relative;
   min-height: 100%;
 }
 .main-content {
   position: relative;
+  padding-bottom: 10rem;
   z-index: 1;
-  padding-left: $size-sidebar;
   padding-top: $size-header;
+  
+  &.with-sidebar {
+    padding-left: $size-sidebar;
+  }
 }
 
 .flex {
@@ -94,6 +179,10 @@ ul {
     right: 0;
     border-bottom: 1px solid darken($lightgray, 10%);
   }
+}
+
+.bg-green {
+  background-color: $green;
 }
 
 // TODO: Mobile styles for modals

@@ -197,52 +197,13 @@ header {
         }
         
         button {
-          position: relative;
           width: 100%;
-          height: 2.3rem;
           font-size: 0.85rem;
-          border-radius: 3px;
-          border: 0;
-          outline: none;
-          color: $white;
           margin-top: 0.5rem;
-          font-weight: $fw-medium;
-          transition: background 0.5s;
-          
-          &:hover {
-            transition: background 0.2s;
-          }
-          
-          i {
-            position: absolute;
-            top: 0;
-            left: 0.65rem;
-            line-height: 2.3rem;
-            font-size: 1rem;
-          }
-        }
-        
-        .tori-login {
-          background: $green;
-          &:hover {
-            background: darken($green, 8%);
-          }
         }
         
         .oauth-buttons {
           margin-bottom: 0.5rem;
-        }
-        .twitter-login {
-          background: $twitterblue;
-          &:hover {
-            background: darken($twitterblue, 8%);
-          }
-        }
-        .google-login {
-          background: $googlered;
-          &:hover {
-            background: darken($googlered, 8%);
-          }
         }
         
         .register-link {
