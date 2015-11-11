@@ -1,6 +1,11 @@
 Template.register.onCreated(function() {
   this.user = new ReactiveDict('user');
   this.errors = new ReactiveDict('errors');
+
+  ValidationUtils.registerValidations(Template.register, 'keyup', {
+    '#username':  ['required', 'alphanumeric'],
+    '#email':     ['required', 'email']
+  });
 });
 
 Template.register.helpers({
@@ -15,17 +20,8 @@ Template.register.events({
   'keyup .user-field': (ev, instance) => {
     let field = ev.target.id;
     let value = ev.target.value;
-    
+
     instance.user.set(field, value);
-    
-    if ( ev.target.attributes['data-validate-alphanumeric'] ) {
-      console.log("Validating", value, ValidationUtils.alphanumeric(value))
-      if ( !ValidationUtils.alphanumeric(value) ) {
-        instance.errors.set(ev.target.id, "This field can only contain letters, numbers and dashes.")
-      } else {
-        instance.errors.set(ev.target.id, undefined);
-      }
-    }
   }
-  
+
 });
