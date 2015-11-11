@@ -13,14 +13,18 @@ Template.register.helpers({
 
 Template.register.events({
   'keyup .user-field': (ev, instance) => {
-    instance.user.set(ev.target.id, ev.target.value);
+    let field = ev.target.id;
+    let value = ev.target.value;
     
-    // I've set up some generic error handling using data-attributes in the template.
-    console.log(ev);
+    instance.user.set(field, value);
     
     if ( ev.target.attributes['data-validate-alphanumeric'] ) {
-      // TODO: Validations.
-      instance.errors.set(ev.target.id, "This field can only contain letters, numbers and dashes.")
+      console.log("Validating", value, ValidationUtils.alphanumeric(value))
+      if ( !ValidationUtils.alphanumeric(value) ) {
+        instance.errors.set(ev.target.id, "This field can only contain letters, numbers and dashes.")
+      } else {
+        instance.errors.set(ev.target.id, undefined);
+      }
     }
   }
   

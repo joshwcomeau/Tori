@@ -81,48 +81,6 @@ button {
   }
 }
 
-.floating-input {
-  position: relative;
-  height: 4rem;
-  
-  input {
-    position: absolute;
-    background: transparent;
-    border: 0;
-    border-bottom: 1px solid $mediumgray;
-    z-index: 2;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 1.5rem;
-    width: 100%;
-    outline: none;
-    
-    &:focus, &:valid {
-      border-bottom: 3px solid $green;
-    }
-    
-    &:focus + label, &:valid + label {
-      transform: translate(0,-24px);
-      font-size: 0.7em;
-      transition: 0.2s;
-      color: $green;
-    }
-  }
-  
-  label {
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 1.5rem;
-    line-height: 2.5rem;
-    transition: 0.4s;
-    color: $mediumgray;
-  }
-}
-
 #wrapper {
   position: relative;
   min-height: 100%;
@@ -264,16 +222,72 @@ button {
 form {
   .error-message {
     display: none;
+    position: relative;
+    color: $orange;
+    padding: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
   }
   
   .has-error {
     input {
-      border-bottom: $orange;
+      border-bottom: 3px solid $orange !important;
     }
     .error-message {
       display: block;
     }
+    
+    &.floating-input {
+      input + label {
+        transform: translate(0,-24px);
+        font-size: 0.7em;
+        transition: 0.2s;
+        color: $orange !important;
+      }
+    }
+    
   }
+  
+  .floating-input {
+    position: relative;
+    margin-top: 1.5rem;
+    
+    input {
+      position: relative;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid $mediumgray;
+      z-index: 2;
+      width: 100%;
+      height: 2.5rem;
+      padding: 0 0.5rem;
+      outline: none;
+      
+      &:focus, &:valid {
+        border-bottom: 3px solid $green;
+      }
+      
+      &:focus + label, &:valid + label {
+        transform: translate(0,-24px);
+        font-size: 0.7em;
+        transition: 0.2s;
+        color: $green;
+      }
+    }
+    
+    label {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0.5rem;
+      right: 0;
+      bottom: 0;
+      line-height: 2.5rem;
+      transition: 0.4s;
+      color: $mediumgray;
+    }
+  }
+
 }
 
 .dropdown-menu {
