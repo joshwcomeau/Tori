@@ -1,5 +1,6 @@
 Template.compose.onCreated(function() {
   this.backgroundImage = new ReactiveVar(null);
+  this.usingPresetBackground = new ReactiveVar(false);
   this.uploader = new Slingshot.Upload("background");
 });
 
@@ -8,15 +9,7 @@ Template.compose.helpers({
   composing: function() {
     return Session.get('composingHaiku');
   },
-  url: function() {
-    return ComposeUtils.wrapImageUrl(Template.instance().uploader.url(true));
-  },
   backgroundImage: function() {
-    // if ( Template.instance().uploader ) {
-    //
-    //   console.log('in helper:', Template.instance().uploader, Template.instance().uploader.url(true) );
-    // }
-    //
     return Template.instance().backgroundImage.get();
   }
 });
@@ -48,6 +41,7 @@ Template.compose.events({
     $thumb = $(ev.target);
     let image_css = $thumb.css('background-image');
     instance.backgroundImage.set(image_css);
+    instance.usingPresetBackground.set(true);
     
     // Add the 'selected' class to this thumbnail
     $('.background-select-option').removeClass('selected');
@@ -61,10 +55,18 @@ Template.compose.events({
   'change .upload-background': function(ev, instance) {
     ev.preventDefault();
     
+    instance.usingPresetBackground.set(false);
+    
     // Latency compensation
-    let temp_image = ComposeUtils.wrapImageUrl( instance.uploader.url(true) );
-    instance.backgroundImage.set( temp_image );
-    console.log("Setting temp image", temp_image, instance.uploader.url(true) );
+    Tracker.autorun( () => {
+      // If we've switched over to using a preset, don't un-set the preset
+      // when our upload completes and the upload URL changes.
+      if ( !instance.usingPresetBackground.get() ) {
+        instance.backgroundImage.set(
+          ComposeUtils.wrapImageUrl( instance.uploader.url(true) )
+        );
+      }
+    });
     
     // Mark the 'upload' button (instead of one of the preset thumbs) as selected.
     $('.background-select-option').removeClass('selected');
@@ -75,12 +77,6 @@ Template.compose.events({
       if (error) {
         console.error('Error uploading', instance.uploader.xhr.response);
         alert (error);
-      } else {
-        console.log("Uploaded file!", image_url);
-        
-        let image_css = `url('${image_url}')`;
-        instance.backgroundImage.set(image_css)
-        
       }
     });
   },
@@ -143,20 +139,14 @@ Template.compose.events({
     let initialCursorOffset = ComposeUtils.getCursorOffset(ev.target);
     
     
-    console.log("Before changing", initialCursorOffset);
     
     $(ev.target).html(lines);
     
-    console.log(initialCursorOffset);
-    
     ComposeUtils.setCursorOffset(ev.target, initialCursorOffset);
-    
-    console.log("After setting:", ComposeUtils.getCursorOffset(ev.target));
     
   },
   
   'submit .post-haiku': function(ev, instance) {
-    console.log("Form submitted")
     ev.preventDefault();
     
     // Find our Haiku text, and split it into 3 lines.
