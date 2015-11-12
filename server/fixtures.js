@@ -6,7 +6,7 @@ Meteor.startup(function() {
       profile:  {
         displayName: 'The Malevolent Poet',
         summary: 'Aspiring poet who leaves everything to the imagination. Fond of cats, cars and cabins.',
-        image: '/images/default_avatar.jpg',
+        photo: '/images/default_avatar.jpg',
         url: 'www.tori.com/ThePoet'
       },
       haikus: 0,
@@ -21,7 +21,7 @@ Meteor.startup(function() {
       profile: {
         displayName: 'Lush Rolling Hills',
         summary: 'Inspiration: Shakespear, Wordsworth, Mia Angelou.',
-        image: '/images/alternate_default_avatar.jpg',
+        photo: '/images/alternate_default_avatar.jpg',
         url: 'www.tori.com/rollinghills'
       },
       haikus: 0,

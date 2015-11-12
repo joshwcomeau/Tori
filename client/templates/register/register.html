@@ -8,37 +8,54 @@
           <h3>Use the form below.</h3>
         </div>
         <div class="card-body">
-          <button class="twitter">
-            <i class="fa fa-twitter"></i>
-            Sign Up With Twitter
-          </button>
-          <button class="google">
-            <i class="fa fa-google-plus"></i>
-            Sign Up With Google
-          </button>
+          <!-- Step 1 - Auth info like email/pass, or Oauth verification -->
+          {{#unless currentUser}}
+            <button class="twitter">
+              <i class="fa fa-twitter"></i>
+              Sign Up With Twitter
+            </button>
+            <button class="google">
+              <i class="fa fa-google-plus"></i>
+              Sign Up With Google
+            </button>
+            
+            <div class="divider" data-text="Or"></div>
+            
+            <div class="floating-input {{errorClass 'username'}}">
+              <input type="text" name="username" id="username" class="user-field username" required="true" value="{{username}}" data-validate-alphanumeric="true">
+              <label for="username">Username</label>
+              <span class="error-message">{{errorMessage 'username'}}</span>
+            </div>
+            
+            <!-- <div class="note handle-display {{#unless username}}hide{{/unless}}">
+              You will be reached at <a>{{url}}</a><br>
+              <small>Don't worry, you can always change it later :)</small>
+            </div> -->
+            
+            <div class="floating-input">
+              <input type="email" name="email" id="email" class="user-field email" required="true" value="{{email}}">
+              <label for="email">Email Address</label>
+            </div>
+            
+            <div class="floating-input">
+              <input type="password" name="password" id="password" class="user-field password" required="true">
+              <label for="password">Password</label>
+            </div>
           
-          <div class="divider" data-text="Or"></div>
+          <!-- Step 2 - User has an account but needs to enter pertinent details -->
+          {{else}}
           
-          <div class="floating-input {{errorClass 'username'}}">
-            <input type="text" name="username" id="username" class="user-field username" required="true" value="{{username}}" data-validate-alphanumeric="true">
-            <label for="username">Tori Handle</label>
-            <span class="error-message">{{errorMessage 'username'}}</span>
-          </div>
-          
-          <!-- <div class="note handle-display {{#unless username}}hide{{/unless}}">
-            You will be reached at <a>{{url}}</a><br>
-            <small>Don't worry, you can always change it later :)</small>
-          </div> -->
-          
-          <div class="floating-input">
-            <input type="email" name="email" id="email" class="user-field email" required="true" value="{{email}}">
-            <label for="email">Email Address</label>
-          </div>
-          
-          <div class="floating-input">
-            <input type="password" name="password" id="password" class="user-field password" required="true">
-            <label for="password">Password</label>
-          </div>
+            <div class="profile-photo" style="background-image: url('{{photo}}')"></div>
+            
+            <div class="floating-input">
+              <input type="text" name="displayName" id="displayName" class="profile-field displayName" required="true" value={{currentUser.profile.displayName}}>
+              <label for="displayName">Display Name</label>
+            </div>
+            <div class="floating-input">
+              <textarea type="text" name="summary" id="summary" class="profile-field summary" required="true">{{currentUser.profile.summary}}</textarea>
+              <label for="summary">Self-Summary</label>
+            </div>
+          {{/unless}}
         </div>
       </form>
     </div>
