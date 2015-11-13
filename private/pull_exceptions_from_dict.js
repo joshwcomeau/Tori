@@ -4,7 +4,7 @@
 
 fs                  = require('fs');
 _                   = require('lodash');
-validate            = require('../lib/vendor/syllables.garbage.js');
+validate            = require('../lib/vendor/syllables.js');
 
 var dict_path       = __dirname + '/syllables.txt';
 
@@ -66,7 +66,7 @@ wordList = fs.readFile(dict_path, 'utf-8', function(err, data) {
       console.log("VALIDATED WORD IS NOT AN ARRAY", validated_word, word)
     }
 
-    if ( validate(word).join(delimiter) != syllables ) {
+    if ( validate(word).length != syllables_array.length ) {
       exception_count++;
       exceptions[word] = syllables_array;
 
@@ -75,7 +75,6 @@ wordList = fs.readFile(dict_path, 'utf-8', function(err, data) {
       if ( common_words.indexOf(word) != -1 ) {
         common_count++;
         common_wrong.push(word);
-        console.log(validate(word).join(delimiter), "  !==  ", syllables)
       }
     }
   });
