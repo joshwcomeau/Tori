@@ -101,7 +101,7 @@ Template.compose.events({
     let text = $(ev.target).html();
     
     // Remove any <span>s added for illustrative purposes
-    text = text.replace(/<[\/]?span>/gi, '');
+    text = text.replace(/<\/?span>/gi, '');
     
     // If the most recent action was a new line, we need to ignore and preserve it
     let endsWithBreak = _.endsWith(text, '<br><br>');
@@ -154,6 +154,7 @@ Template.compose.events({
       .find('.haiku-text')
       .html()
       .replace(/<\/div>/gi, '')
+      .replace(/<\/?span>/gi, '')
       .replace(/<div>/gi, '<br>')
       .split('<br>');
     
