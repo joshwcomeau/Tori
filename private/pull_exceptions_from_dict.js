@@ -3,7 +3,6 @@
 // _failed_, for use as an 'exceptions' library.
 
 fs                  = require('fs');
-_                   = require('lodash');
 validate            = require('../lib/vendor/syllables.js');
 
 var dict_path       = __dirname + '/syllables.txt';
