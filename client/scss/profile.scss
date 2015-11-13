@@ -1,15 +1,16 @@
 @import 'variables';
+@import "{francocatena:compass}/compass";
 
 #profile {
   padding: 2rem;
-  
+
   .stats {
-    
+
     li {
       flex: 1;
       text-align: center;
       padding: 1.25rem;
-      
+
       &.selected {
         border-bottom: 5px solid $grass;
       }
@@ -19,7 +20,7 @@
       font-weight: $fw-heavy;
       font-size: 1.2rem;
       color: #222;
-      
+
     }
     h6 {
       text-transform: uppercase;
@@ -29,52 +30,50 @@
       margin: 0;
     }
   }
-  
+
   .haikus {
     margin-top: 2rem;
     font-weight: $fw-medium;
-    
+
     .haikus-list > li {
       position: relative;
-      height: 11rem;
-      border-bottom: 1px solid $lightgray;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
 
       .haiku {
-        position: absolute;
-        text-align: right;
-        font-size: 1.3rem;
-        right: 2.2rem;
-        bottom: 2rem;
+        height: 13rem;
+        // MOST haiku styles are in their own file, haiku.scss
       }
-      
+
       .haiku-actions {
         position: absolute;
-        left: 0rem;
+        left: 0;
+        right: 0;
         bottom: 0;
         height: 2rem;
         line-height: 2rem;
         color: $darkgray;
-        
+        background: rgba(0,0,0,0.25);
+
         li {
           display: inline-block;
           padding: 0 1rem;
-          
+
           &.liked {
             // the user likes this haiku.
             color: $fuscia;
-            
+
             button {
               color: $fuscia;
             }
           }
-          
+
           button {
             background: transparent;
             border: 0;
             outline: none;
           }
-          
-          
+
+
           .count {
             display: inline-block;
             padding-left: 0.5rem;
@@ -82,8 +81,8 @@
         }
       }
     }
-    
-    
-    
+
+
+
   }
 }

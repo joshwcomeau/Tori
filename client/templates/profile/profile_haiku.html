@@ -1,28 +1,42 @@
 <template name="profileHaiku">
   <li>
-    <div class="haiku">
-      <div class="haiku-line">
-        {{line1}}
+    <!-- There are lots of ways to customize the Haiku, passed in through data attributes. Using CSS3 selectors, we apply styles based on these data attributes! -->
+    <div class="haiku"
+    data-text-color="white"
+    data-text-align="right"
+    data-text-valign="bottom"
+    data-overlay-color="black"
+    data-overlay-direction="right"
+    data-include-actions="true"
+    style="{{#if backgroundImage}}background-image: {{backgroundImage}}{{/if}}">
+
+      <div class="visibility-gradient"></div>
+
+      <div class="haiku-text">
+        <div class="haiku-line">
+          {{line1}}
+        </div>
+        <div class="haiku-line">
+          {{line2}}
+        </div>
+        <div class="haiku-line">
+          {{line3}}
+        </div>
       </div>
-      <div class="haiku-line">
-        {{line2}}
-      </div>
-      <div class="haiku-line">
-        {{line3}}
-      </div>
+      <ul class="haiku-actions">
+        <li>
+          <i class="fa fa-reply"></i><span class="count"></span>
+        </li>
+        <li>
+          <i class="fa fa-retweet"></i><span class="count">{{retweets}}</span>
+        </li>
+        <li class="{{#if doesLike}}liked{{else}}not-liked{{/if}}">
+          <button class="like"><i class="fa fa-heart"></i></button>
+          <span class="count">{{likes}}</span>
+        </li>
+      </ul>
+
     </div>
 
-    <ul class="haiku-actions">
-      <li>
-        <i class="fa fa-reply"></i><span class="count"></span>
-      </li>
-      <li>
-        <i class="fa fa-retweet"></i><span class="count">{{retweets}}</span>
-      </li>
-      <li class="{{#if doesLike}}liked{{else}}not-liked{{/if}}">
-        <button class="like"><i class="fa fa-heart"></i></button>
-        <span class="count">{{likes}}</span>
-      </li>
-    </ul>
   </li>
 </template>

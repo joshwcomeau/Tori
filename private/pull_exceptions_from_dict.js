@@ -81,6 +81,8 @@ wordList = fs.readFile(dict_path, 'utf-8', function(err, data) {
   console.log("Out of", word_count, "words, our algorithm got", exception_count, "wrong.");
   console.log("Out of", common_words.length, "COMMON words, we got", common_count, "wrong");
 
+  fs.writeFileSync('exceptions.json', JSON.stringify(exceptions) );
+
   return exceptions;
 
 });

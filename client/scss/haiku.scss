@@ -1,0 +1,77 @@
+@import 'variables';
+@import "{francocatena:compass}/compass";
+
+.haiku {
+  position: relative;
+  background-position: center center;
+  background-size: cover;
+
+  ///////////////// PROPERTIES /////////////////
+
+  //// Text Color
+  &[data-text-color="white"] {
+    color: $white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  }
+  &[data-text-color="black"] {
+    color: #222;
+  }
+
+  //// Text Horizontal Alignment
+  &[data-text-align="right"] {
+    .haiku-text {
+      text-align: right;
+      right: 2.2rem;
+    }
+  }
+  &[data-text-align="left"] {
+    .haiku-text {
+      text-align: left;
+      left: 2.2rem;
+    }
+  }
+
+  //// Text Vertical Alignment
+  &[data-text-valign="top"] {
+    .haiku-text { top: 2rem; }
+  }
+  &[data-text-valign="bottom"] {
+    .haiku-text { bottom: 2rem; }
+
+    // IF we're including actions in the same container (as is the case
+    // on the main profile page), we need to add 2rem spacing for the
+    // actions bar.
+    &[data-include-actions="true"] {
+      .haiku-text { bottom: 2rem + 2rem; }
+    }
+  }
+
+  // Overlay Direction and Color
+  &[data-overlay-direction="right"] {
+    &[data-overlay-color="black"] {
+      .visibility-gradient {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&amp;0+0,0.65+100 */
+        background: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to right,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=1 ); /* IE6-9 */
+
+      }
+    }
+  }
+
+  .visibility-gradient {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .haiku-text {
+    position: absolute;
+    font-size: 1.3rem;
+  }
+
+}
