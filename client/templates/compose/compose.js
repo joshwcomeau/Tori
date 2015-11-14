@@ -6,6 +6,7 @@ Template.compose.onCreated(function() {
   this.haiku = new ReactiveDict('haiku');
   this.haiku.set({
     body:             '',
+    syllables:        [ [], [], [] ],
     textColor:        'black',
     textAlign:        'center',
     textValign:       'center',
@@ -18,7 +19,7 @@ Template.compose.onCreated(function() {
   this.state.set({
     showPlaceholder:    true,
     advancedMode:       false,
-    highlightSyllables: false
+    highlightSyllables: true
   });
 
   // We have a few presets the user can choose from.
@@ -103,8 +104,12 @@ Template.compose.rendered = function() {
 
 
 Template.compose.helpers({
-  modalOpen:              () => UiUtils.modal.isActive('composingHaiku'),
+  // Composing State helpers
   showPlaceholder:        () => Template.instance().state.get('showPlaceholder'),
+  highlightSyllables:     () => Template.instance().state.get('highlightSyllables'),
+  advancedMode:           () => Template.instance().state.get('advancedMode'),
+
+  // Haiku helpers
   haikuBackgroundImage:   () => Template.instance().haiku.get('backgroundImage'),
   haikuTextColor:         () => Template.instance().haiku.get('textColor'),
   haikuTextAlign:         () => Template.instance().haiku.get('textAlign'),
@@ -114,9 +119,21 @@ Template.compose.helpers({
   haikuOverlayColor:      () => Template.instance().haiku.get('overlayColor'),
   haikuOverlayDirection:  () => Template.instance().haiku.get('overlayDirection'),
   formattedHaikuBody: function() {
-    let haikuBody = Template.instance().haiku.get('body');
-    return ComposeUtils.wrapSyllables(haikuBody);
-  }
+    let syllables = Template.instance().haiku.get('syllables');
+    let body      = Template.instance().haiku.get('body');
+    console.log("Formatting", ComposeUtils.formatSyllables(syllables, body))
+    return ComposeUtils.formatSyllables(syllables, body);
+  },
+
+  syllableCount: (lineNum) => {
+    let syllables = Template.instance().haiku.get('syllables');
+    if ( !syllables[lineNum] ) return 0;
+
+    return _.flatten(syllables[lineNum]).length;
+  },
+
+  // Misc helpers
+  modalOpen:              () => UiUtils.modal.isActive('composingHaiku')
 
 });
 
@@ -202,15 +219,18 @@ Template.compose.events({
       }
     });
   },
+
   /** Hide the placeholder when the Haiku textfield is focused */
   'focus #haiku-body': function(ev, instance) {
     instance.state.set('showPlaceholder', false);
   },
+
   /** Show the placeholder when the Haiku textfield is blurred and is still empty */
   'blur #haiku-body': function(ev, instance) {
     if ( !instance.haiku.get('body').length )
       instance.state.set('showPlaceholder', true);
   },
+
   /**
     * Special behaviour for enter key
     * ensure <br> tags are created instead of <div>s
@@ -223,7 +243,10 @@ Template.compose.events({
     */
   'keyup #haiku-body': function(ev, instance) {
     let text = $(ev.target).html();
-    instance.haiku.set('body', text)
+
+    // Let's get our syllables array, so it can be used in various places.
+    instance.haiku.set('syllables', ComposeUtils.buildSyllablesArray(text));
+    instance.haiku.set('body', text);
   },
 
   /**
