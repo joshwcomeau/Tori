@@ -59,9 +59,18 @@
           <div class="syllable-indicator-container flex-item">
             <h6 class="label">Syllable Count</h6>
             <div class="syllable-indicators">
-              <div class="line-1">{{syllableCount 0}}</div>
-              <div class="line-2">{{syllableCount 1}}</div>
-              <div class="line-3">{{syllableCount 2}}</div>
+              <div class="line-1 count{{#if syllablePerfect 0}} perfect{{/if}}">
+                <div class="num">{{syllableCount 0}}</div>
+                <div class="bar" style="height: {{syllableHeight 0}}"></div>
+              </div>
+              <div class="line-2 count{{#if syllablePerfect 1}} perfect{{/if}}">
+                <div class="num">{{syllableCount 1}}</div>
+                <div class="bar" style="height: {{syllableHeight 1}}"></div>
+              </div>
+              <div class="line-3 count{{#if syllablePerfect 2}} perfect{{/if}}">
+                <div class="num">{{syllableCount 2}}</div>
+                <div class="bar" style="height: {{syllableHeight 2}}"></div>
+              </div>
             </div>
           </div>
         </div>

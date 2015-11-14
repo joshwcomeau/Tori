@@ -145,43 +145,46 @@
 
     .syllable-indicator-container {
       text-align: right;
+
+      .count {
+        position: relative;
+        display: inline-block;
+        width: $row-height;
+        height: $row-height;
+        line-height: $row-height;
+        margin-left: 4px;
+        font-size: 0.7rem;
+        text-align: center;
+        font-weight: 700;
+        border-bottom: 3px solid $orange;
+        overflow: hidden;
+        border-radius: 2px;
+
+        &.perfect {
+          border-bottom: 3px solid $grass;
+
+          .bar { background: $grass; }
+        }
+
+        .num {
+          position: relative;
+          z-index: 2;
+        }
+
+        .bar {
+          content: '';
+          position: absolute;
+          z-index: 1;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          overflow: hidden;
+          background: $orange;
+        }
+      }
+
     }
   }
-  //
-  // .background-select {
-  //   font-weight: $fw-medium;
-  //   color: #444;
-  //   font-size: 0.8rem;
-  //
-  //   span {
-  //     background-position: center center;
-  //     float: left;
-  //     height: 1.5rem;
-  //     line-height: 1.5rem;
-  //   }
-  //   .label {
-  //     margin-right: 0.5rem;
-  //   }
-  //   .preset {
-  //
-  //   }
-  //
-  //   .background-select-1 {
-  //     background-image: url('/images/sample-background-1.jpg');
-  //   }
-  //   .background-select-2 {
-  //     background-image: url('/images/sample-background-2.jpg');
-  //   }
-  //   .background-select-3 {
-  //     background-image: url('/images/sample-background-3.jpg');
-  //   }
-  //   .background-select-4 {
-  //     background-image: url('/images/sample-background-4.jpg');
-  //   }
-  //
-  //   .background-select-custom {
-  //   }
-  // }
 
 
   .submit-haiku {
