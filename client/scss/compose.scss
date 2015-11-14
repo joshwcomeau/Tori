@@ -3,7 +3,7 @@
 #compose {
   .haiku {
     height: 11rem;
-    background: $white;
+    background-color: $white;
     outline: none;
     margin: 1rem 0;
     cursor: text;
@@ -16,7 +16,7 @@
       font-size: 1.5rem;
       font-weight: $fw-medium;
 
-      &.invisible {
+      &.highlight-syllables {
         color: transparent;
       }
 
@@ -53,6 +53,8 @@
 
 
   .under-haiku-text {
+    $row-height: 1.75rem;
+
     h6.label {
       margin: 0 0 0.25rem 0;
       font-size: 0.75rem;
@@ -61,9 +63,9 @@
 
     .background-select-container {
       .preset {
-        width: 1.5rem;
-        height: 1.5rem;
-        line-height: 1.5rem;
+        width: $row-height;
+        height: $row-height;
+        line-height: $row-height;
         border: 1px solid rgba(0,0,0,0.2);
         display: inline-block;
         vertical-align: bottom;
@@ -73,11 +75,21 @@
         cursor: pointer;
         background-position: center center;
         background-size: cover;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        &.selected {
+          opacity: 1;
+          border: 2px solid $green;
+        }
+
       }
       .custom {
         display: inline-block;
-        height: 1.5rem;
-        line-height: 1.5rem;
+        height: $row-height;
+        line-height: $row-height;
         position: relative;
 
 
@@ -118,7 +130,7 @@
             border: 2px solid $blue;
             border-radius: 2px;
             padding: 0 1rem;
-            line-height: 1.5rem;
+            line-height: $row-height;
             outline: none;
             color: $white;
             -webkit-user-select: none;
@@ -152,14 +164,6 @@
   //   }
   //   .preset {
   //
-  //     &:hover {
-  //       opacity: 1;
-  //     }
-  //
-  //     &.selected {
-  //       opacity: 1;
-  //       border: 2px solid $green;
-  //     }
   //   }
   //
   //   .background-select-1 {

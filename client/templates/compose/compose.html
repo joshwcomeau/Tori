@@ -1,66 +1,77 @@
 <template name="compose">
-  {{#if modalOpen}}
-    <div class="modal">
+  <div class="modal{{#if modalOpen}} active{{/if}}">
 
-      <div class="modal-backdrop"></div>
-      <div id="compose" class="modal-window">
-        <form class="post-haiku">
+    <div class="modal-backdrop"></div>
+    <div id="compose" class="modal-window">
+      <form class="post-haiku">
 
-          <div class="close">
-            {{> close}}
-          </div>
-          <h2 class="title">Compose a Haiku</h2>
+        <div class="close">
+          {{> close}}
+        </div>
+        <h2 class="title">Compose a Haiku</h2>
 
-          <!-- Haiku Text Box -->
-          <div class="haiku"
-          data-text-color="{{haikuTextColor}}"
-          data-text-align="{{haikuTextAlign}}"
-          data-text-valign="{{haikuTextValign}}"
-          data-overlay-color="{{haikuOverlayColor}}"
-          data-overlay-direction="{{haikuOverlayDirection}}"
-          data-include-actions="false"
-          style="{{#if backgroundImage}}background-image: {{backgroundImage}};{{/if}}">
-            <div class="haiku-text invisible">
+        <!-- Haiku Text Box -->
+        <div class="haiku"
+        data-text-color="{{haikuTextColor}}"
+        data-text-align="{{haikuTextAlign}}"
+        data-text-valign="{{haikuTextValign}}"
+        data-image-align="{{haikuImageAlign}}"
+        data-image-valign="{{haikuImageValign}}"
+        data-overlay-color="{{haikuOverlayColor}}"
+        data-overlay-direction="{{haikuOverlayDirection}}"
+        data-include-actions="false"
+        style="{{#if haikuBackgroundImage}}background-image: url({{haikuBackgroundImage}});{{/if}}">
+
+          <!-- OUR MAIN HAIKU. What the app listens to -->
+          <div id="haiku-body" class="haiku-text" contenteditable="true"></div>
+
+          <!-- Optional underlining for syllable identification. -->
+          {{#if highlightSyllables}}
+            <div class="haiku-text highlight-syllables">
               {{{formattedHaikuBody}}}
             </div>
-            <div id="haiku-body" class="haiku-text" contenteditable="true">
-            </div>
-            {{#if showPlaceholder}}
-              <span class="placeholder">Write Your Haiku...</span>
-            {{/if}}
-          </div>
+          {{/if}}
 
-          <!-- Background-change and Syllable Indicator -->
-          <div class="under-haiku-text flex">
-            <div class="background-select-container flex-item">
-              <!-- Crazy formatting is to avoid whitespace added between spans -->
-              <!-- TODO: Make this generated from template. -->
-              <h6 class="label">Select Background:</h6>
+          <!-- Placeholder text. Disappears on focus or content. -->
+          {{#if showPlaceholder}}
+            <span class="placeholder">Write Your Haiku...</span>
+          {{/if}}
 
-              <!-- Dynamically generated presets are inserted into this row -->
-              <div class="presets row"><span class="custom">
-                  <input type="file" class="background-select-option upload-background">
-                </span>
-              </div>
-            </div>
+          <!-- An overlay that makes text more legible. -->
+          <div class="visibility-gradient"></div>
+        </div>
 
-            <div class="syllable-indicator-container flex-item">
-              <h6 class="label">Syllable Count</h6>
-              <div class="syllable-indicators">
-                <div class="line-1">0</div>
-                <div class="line-2">0</div>
-                <div class="line-3">0</div>
-              </div>
+        <!-- Background-change and Syllable Indicator -->
+        <div class="under-haiku-text flex">
+          <div class="background-select-container flex-item">
+            <!-- Crazy formatting is to avoid whitespace added between spans -->
+            <!-- TODO: Make this generated from template. -->
+            <h6 class="label">Select Background:</h6>
+
+            <!-- Dynamically generated presets are inserted into this row -->
+            <div class="presets row"><!--
+           --><span class="custom">
+                <input type="file" class="background-select-option upload-background">
+              </span>
             </div>
           </div>
 
+          <div class="syllable-indicator-container flex-item">
+            <h6 class="label">Syllable Count</h6>
+            <div class="syllable-indicators">
+              <div class="line-1">0</div>
+              <div class="line-2">0</div>
+              <div class="line-3">0</div>
+            </div>
+          </div>
+        </div>
 
-          <!-- Advanced Mode -->
 
-          <!-- Submit -->
-          <button class='submit-haiku'>Post</button>
-        </form>
-      </div>
+        <!-- Advanced Mode -->
+
+        <!-- Submit -->
+        <button class='submit-haiku'>Post</button>
+      </form>
     </div>
-  {{/if}}
+  </div>
 </template>

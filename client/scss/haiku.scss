@@ -62,6 +62,35 @@
     }
   }
 
+  // Image Horizontal Position
+  &[data-image-align="left"][data-image-valign="top"] {
+    background-position: left top;
+  }
+  &[data-image-align="left"][data-image-valign="center"] {
+    background-position: left center;
+  }
+  &[data-image-align="left"][data-image-valign="bottom"] {
+    background-position: left bottom;
+  }
+  &[data-image-align="center"][data-image-valign="top"] {
+    background-position: center top;
+  }
+  &[data-image-align="center"][data-image-valign="center"] {
+    background-position: center center;
+  }
+  &[data-image-align="center"][data-image-valign="bottom"] {
+    background-position: center bottom;
+  }
+  &[data-image-align="right"][data-image-valign="top"] {
+    background-position: right top;
+  }
+  &[data-image-align="right"][data-image-valign="center"] {
+    background-position: right center;
+  }
+  &[data-image-align="right"][data-image-valign="bottom"] {
+    background-position: right bottom;
+  }
+
   // Overlay Direction and Color
   &[data-overlay-direction="right"] {
     &[data-overlay-color="black"] {

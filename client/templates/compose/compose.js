@@ -8,9 +8,7 @@ Template.compose.onCreated(function() {
     body:             '',
     textColor:        'black',
     textAlign:        'center',
-    textValign:       'bottom',
-    overlayColor:     'black',
-    overlayDirection: 'right',
+    textValign:       'center',
     imageAlign:       'center',
     imageValign:      'center',
     backgroundImage:  false
@@ -18,8 +16,9 @@ Template.compose.onCreated(function() {
 
   this.state = new ReactiveDict('state');
   this.state.set({
-    showPlaceholder:  true,
-    advancedMode:     false
+    showPlaceholder:    true,
+    advancedMode:       false,
+    highlightSyllables: false
   });
 
   // We have a few presets the user can choose from.
@@ -75,8 +74,8 @@ Template.compose.onCreated(function() {
       backgroundImage: '/images/sample-background-4.jpg',
       backgroundThumb: '/images/sample-background-4.jpg',
       textColor: 'black',
-      textAlign: 'center',
-      textValign: 'center',
+      textAlign: 'left',
+      textValign: 'bottom',
       overlayColor: 'none',
       overlayDirection: 'none',
       imageAlign:       'center',
@@ -97,7 +96,6 @@ Template.compose.rendered = function() {
         .data(preset);
 
       if ( preset.default ) $node.addClass('selected');
-
       $(".presets").prepend($node);
     });
   }
@@ -111,8 +109,10 @@ Template.compose.helpers({
   haikuTextColor:         () => Template.instance().haiku.get('textColor'),
   haikuTextAlign:         () => Template.instance().haiku.get('textAlign'),
   haikuTextValign:        () => Template.instance().haiku.get('textValign'),
-  haikuOverlayColor:      () => Template.instance().haiku.get('OverlayColor'),
-  haikuOverlayDirection:  () => Template.instance().haiku.get('OverlayDirection'),
+  haikuImageAlign:        () => Template.instance().haiku.get('imageAlign'),
+  haikuImageValign:       () => Template.instance().haiku.get('imageValign'),
+  haikuOverlayColor:      () => Template.instance().haiku.get('overlayColor'),
+  haikuOverlayDirection:  () => Template.instance().haiku.get('overlayDirection'),
   formattedHaikuBody: function() {
     let haikuBody = Template.instance().haiku.get('body');
     return ComposeUtils.wrapSyllables(haikuBody);
@@ -154,14 +154,20 @@ Template.compose.events({
    *  Select one of the preset background images. Instantly updates the textarea.
    */
   'click .preset': function(ev, instance) {
-    $thumb = $(ev.target);
-    let image_css = $thumb.css('background-image');
-    instance.backgroundImage.set(image_css);
-    instance.usingPresetBackground.set(true);
+    // We need to do 2 things here:
+    // 1) Mark the thumb as selected, visually.
+    // 2) Update our `haiku` object with the properties held herein.
 
-    // Add the 'selected' class to this thumbnail
-    $('.background-select-option').removeClass('selected');
-    $thumb.addClass('selected');
+    // 1) Remove the 'selected' class from others, add it to this one.
+    $('.preset, .custom').removeClass('selected');
+    $(ev.target).addClass('selected');
+
+    // 2) update our reactiveDict.
+    let data = $(ev.target).data();
+    // Most of the data attached to the preset is useful, there are just a
+    // couple of superfluous bits. Remove them.
+    let pertinent_data = _.omit(data, ['default', 'backgroundThumb']);
+    instance.haiku.set(pertinent_data);
   },
 
   /**
