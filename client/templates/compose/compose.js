@@ -4,31 +4,120 @@ Template.compose.onCreated(function() {
   this.uploader = new Slingshot.Upload("background");
 
   this.haiku = new ReactiveDict('haiku');
-  this.haiku.set('body', '');
+  this.haiku.set({
+    body:             '',
+    textColor:        'black',
+    textAlign:        'center',
+    textValign:       'bottom',
+    overlayColor:     'black',
+    overlayDirection: 'right',
+    imageAlign:       'center',
+    imageValign:      'center',
+    backgroundImage:  false
+  });
 
   this.state = new ReactiveDict('state');
-  this.state.set('placeholderNeeded', true);
+  this.state.set({
+    showPlaceholder:  true,
+    advancedMode:     false
+  });
+
+  // We have a few presets the user can choose from.
+  // They will each have their own background images, font/overlay settings, etc.
+  this.presets = [
+    {
+      default: true,
+      presetName: 'no-bg',
+      backgroundImage: false,
+      backgroundThumb: '/images/no-background.png',
+      textColor: 'black',
+      textAlign: 'center',
+      textValign: 'center',
+      overlayColor: 'none',
+      overlayDirection: 'none',
+      imageAlign:       'center',
+      imageValign:      'center'
+    }, {
+      presetName: 'flower-sun',
+      backgroundImage: '/images/sample-background-1.jpg',
+      backgroundThumb: '/images/sample-background-1.jpg',
+      textColor: 'black',
+      textAlign: 'center',
+      textValign: 'top',
+      overlayColor: 'none',
+      overlayDirection: 'none',
+      imageAlign:       'center',
+      imageValign:      'center'
+    }, {
+      presetName: 'forest-bridge',
+      backgroundImage: '/images/sample-background-2.jpg',
+      backgroundThumb: '/images/sample-background-2.jpg',
+      textColor: 'white',
+      textAlign: 'right',
+      textValign: 'bottom',
+      overlayColor: 'black',
+      overlayDirection: 'right',
+      imageAlign:       'center',
+      imageValign:      'center'
+    }, {
+      presetName: 'night-sky',
+      backgroundImage: '/images/sample-background-3.jpg',
+      backgroundThumb: '/images/sample-background-3.jpg',
+      textColor: 'white',
+      textAlign: 'center',
+      textValign: 'center',
+      overlayColor: 'none',
+      overlayDirection: 'none',
+      imageAlign:       'center',
+      imageValign:      'top'
+    }, {
+      presetName: 'parchment',
+      backgroundImage: '/images/sample-background-4.jpg',
+      backgroundThumb: '/images/sample-background-4.jpg',
+      textColor: 'black',
+      textAlign: 'center',
+      textValign: 'center',
+      overlayColor: 'none',
+      overlayDirection: 'none',
+      imageAlign:       'center',
+      imageValign:      'center'
+    },
+  ];
 
 });
 
+Template.compose.rendered = function() {
+  if ( !this.rendered ) {
+    // On initial render, add our presets to the dom
+    // Our presets were defined in .onCreated.
+    this.presets.reverse().forEach( (preset) => {
+      let $node = $("<span>")
+        .addClass('preset')
+        .css('background-image', `url(${preset.backgroundThumb})`)
+        .data(preset);
+
+      if ( preset.default ) $node.addClass('selected');
+
+      $(".presets").prepend($node);
+    });
+  }
+};
+
 
 Template.compose.helpers({
-  modalOpen: function() {
-    console.log("Modal open?", UiUtils.modal.isActive("composingHaiku"))
-    return UiUtils.modal.isActive("composingHaiku");
-  },
-  placeholderNeeded: function() {
-    // current rules: Show the placeholder if textarea has no content
-    // AND isn't in focus.
-    return Template.instance().state.get('placeholderNeeded');
-  },
+  modalOpen:              () => UiUtils.modal.isActive('composingHaiku'),
+  showPlaceholder:        () => Template.instance().state.get('showPlaceholder'),
+  haikuBackgroundImage:   () => Template.instance().haiku.get('backgroundImage'),
+  haikuTextColor:         () => Template.instance().haiku.get('textColor'),
+  haikuTextAlign:         () => Template.instance().haiku.get('textAlign'),
+  haikuTextValign:        () => Template.instance().haiku.get('textValign'),
+  haikuOverlayColor:      () => Template.instance().haiku.get('OverlayColor'),
+  haikuOverlayDirection:  () => Template.instance().haiku.get('OverlayDirection'),
   formattedHaikuBody: function() {
     let haikuBody = Template.instance().haiku.get('body');
     return ComposeUtils.wrapSyllables(haikuBody);
-  },
-  backgroundImage: function() {
-    return Template.instance().backgroundImage.get();
   }
+
 });
 
 
@@ -109,12 +198,12 @@ Template.compose.events({
   },
   /** Hide the placeholder when the Haiku textfield is focused */
   'focus #haiku-body': function(ev, instance) {
-    instance.state.set('placeholderNeeded', false);
+    instance.state.set('showPlaceholder', false);
   },
   /** Show the placeholder when the Haiku textfield is blurred and is still empty */
   'blur #haiku-body': function(ev, instance) {
     if ( !instance.haiku.get('body').length )
-      instance.state.set('placeholderNeeded', true);
+      instance.state.set('showPlaceholder', true);
   },
   /**
     * Special behaviour for enter key

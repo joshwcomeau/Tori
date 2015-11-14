@@ -99,6 +99,10 @@ button {
 .flex {
   display: flex;
 }
+.flex-item {
+  flex: 1;
+}
+
 .clearfix {
   &:after {
     content: "";

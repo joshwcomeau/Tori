@@ -22,13 +22,13 @@
 
   //// Text Horizontal Alignment
   &[data-text-align="right"] {
-    .haiku-text {
+    .haiku-text, .placeholder {
       text-align: right;
       right: 2.2rem;
     }
   }
   &[data-text-align="left"] {
-    .haiku-text {
+    .haiku-text, .placeholder {
       text-align: left;
       left: 2.2rem;
     }
@@ -43,16 +43,16 @@
 
   //// Text Vertical Alignment
   &[data-text-valign="top"] {
-    .haiku-text { top: 2rem; }
+    .haiku-text, .placeholder { top: 2rem; }
   }
   &[data-text-valign="bottom"] {
-    .haiku-text { bottom: 2rem; }
+    .haiku-text, .placeholder { bottom: 2rem; }
 
     // IF we're including actions in the same container (as is the case
     // on the main profile page), we need to add 2rem spacing for the
     // actions bar.
     &[data-include-actions="true"] {
-      .haiku-text { bottom: 2rem + 2rem; }
+      .haiku-text, .placeholder { bottom: 2rem + 2rem; }
     }
   }
   &[data-text-valign="center"] {

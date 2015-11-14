@@ -10,12 +10,14 @@
             {{> close}}
           </div>
           <h2 class="title">Compose a Haiku</h2>
+
+          <!-- Haiku Text Box -->
           <div class="haiku"
-          data-text-color="black"
-          data-text-align="center"
-          data-text-valign="center"
-          data-overlay-color="none"
-          data-overlay-direction="none"
+          data-text-color="{{haikuTextColor}}"
+          data-text-align="{{haikuTextAlign}}"
+          data-text-valign="{{haikuTextValign}}"
+          data-overlay-color="{{haikuOverlayColor}}"
+          data-overlay-direction="{{haikuOverlayDirection}}"
           data-include-actions="false"
           style="{{#if backgroundImage}}background-image: {{backgroundImage}};{{/if}}">
             <div class="haiku-text invisible">
@@ -23,27 +25,39 @@
             </div>
             <div id="haiku-body" class="haiku-text" contenteditable="true">
             </div>
-            {{#if placeholderNeeded}}
+            {{#if showPlaceholder}}
               <span class="placeholder">Write Your Haiku...</span>
             {{/if}}
           </div>
-          <div class="background-select clearfix">
-            <!-- Crazy formatting is to avoid whitespace added between spans -->
-            <span class="label">Select Background:
-            </span><span class="background-select-option preset background-select-none selected">
-            </span><span class="background-select-option preset background-select-1">
-            </span><span class="background-select-option preset background-select-2">
-            </span><span class="background-select-option preset background-select-3">
-            </span><span class="background-select-option preset background-select-4">
-            </span><span class="background-select-custom">
-              <input type="file" class="background-select-option upload-background">
-            </span>
+
+          <!-- Background-change and Syllable Indicator -->
+          <div class="under-haiku-text flex">
+            <div class="background-select-container flex-item">
+              <!-- Crazy formatting is to avoid whitespace added between spans -->
+              <!-- TODO: Make this generated from template. -->
+              <h6 class="label">Select Background:</h6>
+
+              <!-- Dynamically generated presets are inserted into this row -->
+              <div class="presets row"><span class="custom">
+                  <input type="file" class="background-select-option upload-background">
+                </span>
+              </div>
+            </div>
+
+            <div class="syllable-indicator-container flex-item">
+              <h6 class="label">Syllable Count</h6>
+              <div class="syllable-indicators">
+                <div class="line-1">0</div>
+                <div class="line-2">0</div>
+                <div class="line-3">0</div>
+              </div>
+            </div>
           </div>
 
-          <div class="clearfix">
 
-          </div>
+          <!-- Advanced Mode -->
 
+          <!-- Submit -->
           <button class='submit-haiku'>Post</button>
         </form>
       </div>

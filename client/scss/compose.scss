@@ -51,106 +51,133 @@
     }
   }
 
-  .background-select {
-    line-height: 1.5rem;
-    font-weight: $fw-medium;
-    color: #444;
-    font-size: 0.8rem;
 
-    span {
-      background-position: center center;
-      float: left;
-      height: 1.5rem;
-      line-height: 1.5rem;
+  .under-haiku-text {
+    h6.label {
+      margin: 0 0 0.25rem 0;
+      font-size: 0.75rem;
+      color: #444;
     }
-    .label {
-      margin-right: 0.5rem;
-    }
-    .preset {
-      width: 1.5rem;
-      border: 1px solid rgba(0,0,0,0.2);
-      display: inline-block;
-      vertical-align: bottom;
-      margin-right: 0.25rem;
-      border-radius: 2px;
-      opacity: 0.8;
-      cursor: pointer;
 
-      &:hover {
-        opacity: 1;
+    .background-select-container {
+      .preset {
+        width: 1.5rem;
+        height: 1.5rem;
+        line-height: 1.5rem;
+        border: 1px solid rgba(0,0,0,0.2);
+        display: inline-block;
+        vertical-align: bottom;
+        margin-right: 0.25rem;
+        border-radius: 2px;
+        opacity: 0.8;
+        cursor: pointer;
+        background-position: center center;
+        background-size: cover;
       }
-
-      &.selected {
-        opacity: 1;
-        border: 2px solid $green;
-      }
-    }
-
-    .background-select-1 {
-      background-image: url('/images/sample-background-1.jpg');
-    }
-    .background-select-2 {
-      background-image: url('/images/sample-background-2.jpg');
-    }
-    .background-select-3 {
-      background-image: url('/images/sample-background-3.jpg');
-    }
-    .background-select-4 {
-      background-image: url('/images/sample-background-4.jpg');
-    }
-
-    .background-select-custom {
-      position: relative;
+      .custom {
+        display: inline-block;
+        height: 1.5rem;
+        line-height: 1.5rem;
+        position: relative;
 
 
-      input[type=file] {
-        color: transparent;
-        outline: none;
-        margin: 0;
-        height: 100%;
-        width: 80px; // Preventing spillover beyond the button.
-
-        &.selected {
-          &:before {
-            border: 2px solid $green;
-          }
-        }
-
-
-        &::-webkit-file-upload-button {
-          visibility: hidden;
-        }
-
-        &:hover {
-          &:before {
-            background: darken($blue, 8%);
-            border: 2px solid darken($blue, 8%);
-          }
-        }
-
-        &:before {
-          content: 'Upload';
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          vertical-align: bottom;
-          display: inline-block;
-          background: $blue;
-          border: 2px solid $blue;
-          border-radius: 2px;
-          padding: 0 1rem;
-          line-height: 20px;
+        input[type=file] {
+          color: transparent;
           outline: none;
-          color: $white;
-          -webkit-user-select: none;
-          cursor: pointer;
-          font-weight: $fw-heavy;
-          font-size: 10pt;
+          margin: 0;
+          height: 100%;
+          width: 80px; // Preventing spillover beyond the button.
+
+          &.selected {
+            &:before {
+              border: 2px solid $green;
+            }
+          }
+
+
+          &::-webkit-file-upload-button {
+            visibility: hidden;
+          }
+
+          &:hover {
+            &:before {
+              background: darken($blue, 8%);
+              border: 2px solid darken($blue, 8%);
+            }
+          }
+
+          &:before {
+            content: 'Upload';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            vertical-align: bottom;
+            display: inline-block;
+            background: $blue;
+            border: 2px solid $blue;
+            border-radius: 2px;
+            padding: 0 1rem;
+            line-height: 1.5rem;
+            outline: none;
+            color: $white;
+            -webkit-user-select: none;
+            cursor: pointer;
+            font-weight: $fw-heavy;
+            font-size: 10pt;
+          }
         }
       }
+    }
+
+
+    .syllable-indicator-container {
+      text-align: right;
     }
   }
+  //
+  // .background-select {
+  //   font-weight: $fw-medium;
+  //   color: #444;
+  //   font-size: 0.8rem;
+  //
+  //   span {
+  //     background-position: center center;
+  //     float: left;
+  //     height: 1.5rem;
+  //     line-height: 1.5rem;
+  //   }
+  //   .label {
+  //     margin-right: 0.5rem;
+  //   }
+  //   .preset {
+  //
+  //     &:hover {
+  //       opacity: 1;
+  //     }
+  //
+  //     &.selected {
+  //       opacity: 1;
+  //       border: 2px solid $green;
+  //     }
+  //   }
+  //
+  //   .background-select-1 {
+  //     background-image: url('/images/sample-background-1.jpg');
+  //   }
+  //   .background-select-2 {
+  //     background-image: url('/images/sample-background-2.jpg');
+  //   }
+  //   .background-select-3 {
+  //     background-image: url('/images/sample-background-3.jpg');
+  //   }
+  //   .background-select-4 {
+  //     background-image: url('/images/sample-background-4.jpg');
+  //   }
+  //
+  //   .background-select-custom {
+  //   }
+  // }
 
 
   .submit-haiku {
