@@ -3,15 +3,27 @@
     <div class="modal-backdrop"></div>
     <div id="compose" class="modal-window">
       <form class="post-haiku">
-        
+
         <div class="close">
           {{> close}}
         </div>
         <h2 class="title">Compose a Haiku</h2>
-        <div class="haiku-box" style="{{#if backgroundImage}}background-image: {{backgroundImage}};{{/if}}">
+        <div class="haiku"
+        data-text-color="black"
+        data-text-align="center"
+        data-text-valign="center"
+        data-overlay-color="none"
+        data-overlay-direction="none"
+        data-include-actions="false"
+        style="{{#if backgroundImage}}background-image: {{backgroundImage}};{{/if}}">
+          <div class="haiku-text invisible">
+            {{formattedHaikuBody}}
+          </div>
           <div class="haiku-text vertically-centered horizontally-centered" contenteditable="true">
           </div>
-          <span class="placeholder vertically-centered horizontally-centered">Write Your Haiku...</span>
+          {{#if hasContent}}
+            <span class="placeholder">Write Your Haiku...</span>
+          {{/if}}
         </div>
         <div class="background-select clearfix">
           <!-- Crazy formatting is to avoid whitespace added between spans -->
@@ -25,11 +37,11 @@
             <input type="file" class="background-select-option upload-background">
           </span>
         </div>
-        
+
         <div class="clearfix">
-          
+
         </div>
-                
+
         <button class='submit-haiku'>Post</button>
       </form>
     </div>

@@ -5,7 +5,7 @@ Template.headerAccount.onCreated(function() {
 
 Template.headerAccount.helpers({
   menuOpen: function() {
-    return UiUtils.menu.isMenuActive(Template.instance().menuName);
+    return UiUtils.menu.isActive(Template.instance().menuName);
   },
   profileLink: function() {
     return `/${this.username}`

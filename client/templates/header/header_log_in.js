@@ -5,7 +5,7 @@ Template.headerLogIn.onCreated(function() {
 
 Template.headerLogIn.helpers({
   menuOpen: function() {
-    return UiUtils.menu.isMenuActive(Template.instance().menuName);
+    return UiUtils.menu.isActive(Template.instance().menuName);
   }
 })
 
@@ -23,13 +23,13 @@ Template.headerLogIn.events({
   },
   'submit .log-in-form': function(ev, instance) {
     ev.preventDefault();
-    
+
     let $form = $(ev.target);
     let email_or_username = $form.find('[name=email_username]').val();
     let password = $form.find('[name=password]').val();
-    
+
     // TODO: some form of basic validation.
-    
+
     Meteor.loginWithPassword(email_or_username, password, (err) => {
       if ( err ) {
         // TODO: Error handling

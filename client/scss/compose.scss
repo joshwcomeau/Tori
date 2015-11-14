@@ -1,44 +1,28 @@
 @import 'variables';
 
 #compose {
-  .haiku-box {
-    position: relative;
-    width: 100%;
-    height: 10rem;
+  .haiku {
+    height: 11rem;
     background: $white;
     outline: none;
     margin: 1rem 0;
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    transform-style: preserve-3d;
     cursor: text;
-    background-position: center center;
-    background-size: cover;
     box-shadow: 2px 1px 3px rgba(0,0,0,0.1);
     border-radius: 2px;
-    
-    .vertically-centered {
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    
-    .horizontally-centered {
-      text-align: center;
-    }
 
     .haiku-text {
       position: relative;
       outline: none;
       font-size: 1.5rem;
       font-weight: $fw-medium;
-      
+
       span {
         &:hover {
           border-bottom: 2px solid $grass;
         }
       }
     }
-    
+
     .placeholder {
       position: absolute;
       width: 100%;
@@ -47,13 +31,13 @@
       pointer-events:none;
     }
   }
-  
+
   .background-select {
     line-height: 1.5rem;
     font-weight: $fw-medium;
     color: #444;
     font-size: 0.8rem;
-    
+
     span {
       background-position: center center;
       float: left;
@@ -72,17 +56,17 @@
       border-radius: 2px;
       opacity: 0.8;
       cursor: pointer;
-      
+
       &:hover {
         opacity: 1;
       }
-      
+
       &.selected {
         opacity: 1;
         border: 2px solid $green;
       }
     }
-    
+
     .background-select-1 {
       background-image: url('/images/sample-background-1.jpg');
     }
@@ -95,36 +79,36 @@
     .background-select-4 {
       background-image: url('/images/sample-background-4.jpg');
     }
-    
+
     .background-select-custom {
       position: relative;
-      
-      
+
+
       input[type=file] {
         color: transparent;
         outline: none;
         margin: 0;
         height: 100%;
         width: 80px; // Preventing spillover beyond the button.
-        
+
         &.selected {
           &:before {
             border: 2px solid $green;
           }
         }
 
-        
+
         &::-webkit-file-upload-button {
           visibility: hidden;
         }
-        
+
         &:hover {
           &:before {
             background: darken($blue, 8%);
             border: 2px solid darken($blue, 8%);
           }
         }
-        
+
         &:before {
           content: 'Upload';
           position: absolute;
@@ -149,7 +133,7 @@
     }
   }
 
-  
+
   .submit-haiku {
     position: relative;
     display: block;
@@ -162,7 +146,7 @@
     font-weight: $fw-heavy;
     outline: none;
     transition: background 0.5s;
-    
+
     &:hover {
       background: darken($green, 8%);
       transition: background 0.2s;
