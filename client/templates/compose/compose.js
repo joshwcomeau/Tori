@@ -6,7 +6,7 @@ Template.compose.onCreated(function() {
   this.haiku = new ReactiveDict('haiku');
   this.haiku.set({
     body:             '',
-    syllables:        [ [], [], [] ],
+    syllables:        [ [] ],
     textColor:        'black',
     textAlign:        'center',
     textValign:       'center',
@@ -124,29 +124,7 @@ Template.compose.helpers({
     console.log("Formatting", ComposeUtils.formatSyllables(syllables, body))
     return ComposeUtils.formatSyllables(syllables, body);
   },
-
-  syllableCount: (lineNum) => {
-    let syllables = Template.instance().haiku.get('syllables');
-    if ( !syllables[lineNum] ) return 0;
-
-    return _.flatten(syllables[lineNum]).length;
-  },
-  syllableHeight: (lineNum) => {
-    let max = lineNum === 1 ? 7 : 5;
-    let syllables = Template.instance().haiku.get('syllables');
-
-    if ( !syllables[lineNum] ) return '0%';
-
-    let length = _.flatten(syllables[lineNum]).length;
-    return ( length / max) * 100 + "%";
-  },
-  syllablePerfect: (lineNum) => {
-    let max = lineNum === 1 ? 7 : 5;
-    let syllables = Template.instance().haiku.get('syllables');
-    if ( !syllables[lineNum] ) return 0;
-
-    return _.flatten(syllables[lineNum]).length === max;
-  },
+  syllableData:           () => Template.instance().haiku.get('syllables'),
 
   // Misc helpers
   modalOpen:              () => UiUtils.modal.isActive('composingHaiku')
