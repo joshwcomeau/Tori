@@ -1,11 +1,10 @@
 Template.headerLogIn.onCreated(function() {
   this.menuName = 'headerLogin';
-  UiUtils.menu.registerWindowClickHandler();
 });
 
 Template.headerLogIn.helpers({
   menuOpen: function() {
-    return UiUtils.menu.isActive(Template.instance().menuName);
+    return UiUtils.modal.isActive(Template.instance().menuName);
   }
 })
 
@@ -19,7 +18,7 @@ Template.headerLogIn.events({
   },
   'mouseup .log-in-text': function(ev, instance) {
     ev.stopPropagation();
-    UiUtils.menu.activate(instance.menuName);
+    UiUtils.modal.activate(instance.menuName);
   },
   'submit .log-in-form': function(ev, instance) {
     ev.preventDefault();
@@ -38,7 +37,7 @@ Template.headerLogIn.events({
         console.error( "No formal error logging in, but we aren't logged in =(");
       } else {
         // Success! Just close the window.
-        UiUtils.menu.deactivate();
+        UiUtils.modal.deactivate();
       }
     });
   }

@@ -160,11 +160,6 @@ button {
   left: 0;
   right: 0;
   bottom: 0;
-  display: none;
-
-  &.active {
-    display: block;
-  }
 
   .modal-backdrop {
     position: absolute;

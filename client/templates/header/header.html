@@ -2,18 +2,18 @@
   <header>
     <div class="left-nav">
       {{#if currentUser}}
-        <div class="compose-button">
-          <button class='filled'>
+        <div class="compose-button-container">
+          <button class='compose-button filled'>
             <i class="fa fa-pencil"></i>
           </button>
         </div>
       {{/if}}
     </div>
-      
+
     <div class="main-logo">
       {{> logo }}
     </div>
-    
+
     <div class="right-nav">
       {{> headerSearch }}
       {{#if currentUser}}
@@ -21,9 +21,7 @@
       {{else}}
         {{> headerLogIn }}
       {{/if}}
-      
-      <!-- {{> loginButtons align="right"}} -->
     </div>
   </header>
-  
+
 </template>

@@ -1,49 +1,52 @@
 <template name="compose">
-  <div class="modal {{#if composing}}active{{/if}}">
-    <div class="modal-backdrop"></div>
-    <div id="compose" class="modal-window">
-      <form class="post-haiku">
+  {{#if modalOpen}}
+    <div class="modal">
 
-        <div class="close">
-          {{> close}}
-        </div>
-        <h2 class="title">Compose a Haiku</h2>
-        <div class="haiku"
-        data-text-color="black"
-        data-text-align="center"
-        data-text-valign="center"
-        data-overlay-color="none"
-        data-overlay-direction="none"
-        data-include-actions="false"
-        style="{{#if backgroundImage}}background-image: {{backgroundImage}};{{/if}}">
-          <div class="haiku-text invisible">
-            {{{formattedHaikuBody}}}
+      <div class="modal-backdrop"></div>
+      <div id="compose" class="modal-window">
+        <form class="post-haiku">
+
+          <div class="close">
+            {{> close}}
           </div>
-          <div id="haiku-body" class="haiku-text" contenteditable="true">
+          <h2 class="title">Compose a Haiku</h2>
+          <div class="haiku"
+          data-text-color="black"
+          data-text-align="center"
+          data-text-valign="center"
+          data-overlay-color="none"
+          data-overlay-direction="none"
+          data-include-actions="false"
+          style="{{#if backgroundImage}}background-image: {{backgroundImage}};{{/if}}">
+            <div class="haiku-text invisible">
+              {{{formattedHaikuBody}}}
+            </div>
+            <div id="haiku-body" class="haiku-text" contenteditable="true">
+            </div>
+            {{#if placeholderNeeded}}
+              <span class="placeholder">Write Your Haiku...</span>
+            {{/if}}
           </div>
-          {{#if placeholderNeeded}}
-            <span class="placeholder">Write Your Haiku...</span>
-          {{/if}}
-        </div>
-        <div class="background-select clearfix">
-          <!-- Crazy formatting is to avoid whitespace added between spans -->
-          <span class="label">Select Background:
-          </span><span class="background-select-option preset background-select-none selected">
-          </span><span class="background-select-option preset background-select-1">
-          </span><span class="background-select-option preset background-select-2">
-          </span><span class="background-select-option preset background-select-3">
-          </span><span class="background-select-option preset background-select-4">
-          </span><span class="background-select-custom">
-            <input type="file" class="background-select-option upload-background">
-          </span>
-        </div>
+          <div class="background-select clearfix">
+            <!-- Crazy formatting is to avoid whitespace added between spans -->
+            <span class="label">Select Background:
+            </span><span class="background-select-option preset background-select-none selected">
+            </span><span class="background-select-option preset background-select-1">
+            </span><span class="background-select-option preset background-select-2">
+            </span><span class="background-select-option preset background-select-3">
+            </span><span class="background-select-option preset background-select-4">
+            </span><span class="background-select-custom">
+              <input type="file" class="background-select-option upload-background">
+            </span>
+          </div>
 
-        <div class="clearfix">
+          <div class="clearfix">
 
-        </div>
+          </div>
 
-        <button class='submit-haiku'>Post</button>
-      </form>
+          <button class='submit-haiku'>Post</button>
+        </form>
+      </div>
     </div>
-  </div>
+  {{/if}}
 </template>

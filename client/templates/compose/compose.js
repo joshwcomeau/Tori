@@ -13,8 +13,9 @@ Template.compose.onCreated(function() {
 
 
 Template.compose.helpers({
-  composing: function() {
-    return Session.get('composingHaiku');
+  modalOpen: function() {
+    console.log("Modal open?", UiUtils.modal.isActive("composingHaiku"))
+    return UiUtils.modal.isActive("composingHaiku");
   },
   placeholderNeeded: function() {
     // current rules: Show the placeholder if textarea has no content
@@ -33,14 +34,27 @@ Template.compose.helpers({
 
 Template.compose.events({
   /**
+   *  By default, all body clicks close modals.
+   *  To prevent legitimate clicks from closing this window, we need to stop
+   *  the event from bubbling up to the `body` element.
+   */
+  'mouseup #compose': function(ev, instance) {
+    // We have a window handler to close the login popup. We want this to run
+    // except when the log-in menu, or one of its children, is clicked.
+    // Because of how events bubble, this trick will ensure that any click
+    // within the menu doesn't close the menu =)
+    ev.stopPropagation();
+  },
+
+  /**
    *  Close the 'compose' modal.
    *  Data is kept, it's just hidden from view.
-   **/
-  'click .close': () => Session.set('composingHaiku', undefined),
+   */
+  'click .close': () => UiUtils.modal.deactivate(),
 
   /**
    *  Focus the pseudo-textarea to begin typing
-   **/
+   */
   'click .haiku': (ev) => {
     // We want to transfer focus to the text element, which can be positioned
     // more precisely.
@@ -49,7 +63,7 @@ Template.compose.events({
 
   /**
    *  Select one of the preset background images. Instantly updates the textarea.
-   **/
+   */
   'click .preset': function(ev, instance) {
     $thumb = $(ev.target);
     let image_css = $thumb.css('background-image');
@@ -64,7 +78,7 @@ Template.compose.events({
   /**
    *  Upload your own background image instead of using a preset.
    *  Uploads the file to S3 but latency-compensates by displaying it immediately.
-   **/
+   */
   'change .upload-background': function(ev, instance) {
     ev.preventDefault();
 
@@ -93,44 +107,33 @@ Template.compose.events({
       }
     });
   },
-
+  /** Hide the placeholder when the Haiku textfield is focused */
   'focus #haiku-body': function(ev, instance) {
     instance.state.set('placeholderNeeded', false);
   },
+  /** Show the placeholder when the Haiku textfield is blurred and is still empty */
   'blur #haiku-body': function(ev, instance) {
     if ( !instance.haiku.get('body').length )
       instance.state.set('placeholderNeeded', true);
   },
-
+  /**
+    * Special behaviour for enter key
+    * ensure <br> tags are created instead of <div>s
+    */
   'keydown #haiku-body': ComposeUtils.handleEnterKey,
 
+  /**
+    * Our main Haiku-writing method.
+    * Sets our Dict's body to the contents, which updates a couple of helpers.
+    */
   'keyup #haiku-body': function(ev, instance) {
-    // New strategy!
-    // The div the user is entering will never be modified; too many variables.
-    // Instead, there's a second <div> right behind the one the user is editing.
-    // It is updated on keyup with the text entered into the first.
-    // That text is formatted - wrapped in <span>s around each syllable.
-    // The bare text itself (with <br> newlines) is stored in our `haiku`
-    // reactiveDict. This is our authoritative source - it receives its input
-    // from this container, and is output to the other (and to the server
-    // on form submit).
-
-    // let key_pressed = ev.keyCode;
-
-    // Ignore arrow keys, shift key, delete/backspace
-    // if ( _.includes([8, 16, 37, 38, 39, 40, 46], key_pressed) ) return
-
-
     let text = $(ev.target).html();
-
-    console.log(text);
     instance.haiku.set('body', text)
-
-    //
-    // ComposeUtils.setCursorOffset(ev.target, initialCursorOffset);
-
   },
 
+  /**
+    * Submit the Haiku to the server, ready to be published.
+    */
   'submit .post-haiku': function(ev, instance) {
     ev.preventDefault();
 
