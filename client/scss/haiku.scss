@@ -25,12 +25,14 @@
     .haiku-text, .placeholder {
       text-align: right;
       right: 2.2rem;
+      left: 0;
     }
   }
   &[data-text-align="left"] {
     .haiku-text, .placeholder {
       text-align: left;
       left: 2.2rem;
+      right: 0;
     }
   }
   &[data-text-align="center"] {
@@ -46,13 +48,13 @@
     .haiku-text, .placeholder { top: 2rem; }
   }
   &[data-text-valign="bottom"] {
-    .haiku-text, .placeholder { bottom: 2rem; }
+    .haiku-text, .placeholder { bottom: 1.5rem; }
 
     // IF we're including actions in the same container (as is the case
     // on the main profile page), we need to add 2rem spacing for the
     // actions bar.
     &[data-include-actions="true"] {
-      .haiku-text, .placeholder { bottom: 2rem + 2rem; }
+      .haiku-text, .placeholder { bottom: 1.5rem + 2rem; }
     }
   }
   &[data-text-valign="center"] {
@@ -92,16 +94,33 @@
   }
 
   // Overlay Direction and Color
-  &[data-overlay-direction="right"] {
-    &[data-overlay-color="black"] {
-      .visibility-gradient {
-        background: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to right,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=1 ); /* IE6-9 */
+  $directions: ('top', 'bottom', 'left', 'right');
 
+  @each $direction in $directions {
+    &[data-overlay-direction="#{$direction}"][data-overlay-color="black"] {
+      .visibility-gradient {
+        background: linear-gradient(to #{$direction}, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
       }
     }
+    &[data-overlay-direction="#{$direction}"][data-overlay-color="white"] {
+      .visibility-gradient {
+        background: linear-gradient(to #{$direction}, rgba(255,255,255,0) 0%,rgba(255,255,255,0.45) 100%);
+        background-blend-mode: multiply;
+        -webkit-filter: blur(3px);
+        filter: blur(3px);
+      }
+    }
+
+  }
+
+  // &[data-overlay-direction="right"][data-overlay-color="black"] {
+  //   .visibility-gradient {
+  //     background: linear-gradient(to right,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  //   }
+  // }
+
+  #haiku-body {
+    z-index: 10;
   }
 
   .visibility-gradient {

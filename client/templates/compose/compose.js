@@ -32,8 +32,8 @@ Template.compose.onCreated(function() {
       textColor: 'black',
       textAlign: 'center',
       textValign: 'center',
-      overlayColor: 'none',
-      overlayDirection: 'none',
+      overlayColor: false,
+      overlayDirection: false,
       imageAlign:       'center',
       imageValign:      'center'
     }, {
@@ -43,8 +43,8 @@ Template.compose.onCreated(function() {
       textColor: 'black',
       textAlign: 'center',
       textValign: 'top',
-      overlayColor: 'none',
-      overlayDirection: 'none',
+      overlayColor: 'white',
+      overlayDirection: 'top',
       imageAlign:       'center',
       imageValign:      'center'
     }, {
@@ -65,8 +65,8 @@ Template.compose.onCreated(function() {
       textColor: 'white',
       textAlign: 'center',
       textValign: 'center',
-      overlayColor: 'none',
-      overlayDirection: 'none',
+      overlayColor: false,
+      overlayDirection: false,
       imageAlign:       'center',
       imageValign:      'top'
     }, {
@@ -76,8 +76,8 @@ Template.compose.onCreated(function() {
       textColor: 'black',
       textAlign: 'left',
       textValign: 'bottom',
-      overlayColor: 'none',
-      overlayDirection: 'none',
+      overlayColor: false,
+      overlayDirection: false,
       imageAlign:       'center',
       imageValign:      'center'
     },
