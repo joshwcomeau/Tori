@@ -6,7 +6,8 @@ Template.compose.onCreated(function() {
   this.haiku = new ReactiveDict('haiku');
   this.haiku.set('body', '');
 
-  document.execCommand('insertBrOnReturn', false, '<br><br>');
+  this.state = new ReactiveDict('state');
+  this.state.set('placeholderNeeded', true);
 
 });
 
@@ -15,12 +16,14 @@ Template.compose.helpers({
   composing: function() {
     return Session.get('composingHaiku');
   },
-  hasContent: function() {
-    return !!Template.instance().haiku.get('body').length
+  placeholderNeeded: function() {
+    // current rules: Show the placeholder if textarea has no content
+    // AND isn't in focus.
+    return Template.instance().state.get('placeholderNeeded');
   },
   formattedHaikuBody: function() {
     let haikuBody = Template.instance().haiku.get('body');
-    return ComposeUtils.formatOutputHtml(haikuBody);
+    return ComposeUtils.wrapSyllables(haikuBody);
   },
   backgroundImage: function() {
     return Template.instance().backgroundImage.get();
@@ -38,13 +41,10 @@ Template.compose.events({
   /**
    *  Focus the pseudo-textarea to begin typing
    **/
-  'click .haiku-box': (ev) => {
+  'click .haiku': (ev) => {
     // We want to transfer focus to the text element, which can be positioned
     // more precisely.
-    $(".placeholder").hide();
-    $(".haiku-text").focus();
-    // TODO: Update this when the 'set' method is improved.
-    // ComposeUtils.setCursorOffset(ev.target);
+    $("#haiku-body").focus();
   },
 
   /**
@@ -94,6 +94,15 @@ Template.compose.events({
     });
   },
 
+  'focus #haiku-body': function(ev, instance) {
+    instance.state.set('placeholderNeeded', false);
+  },
+  'blur #haiku-body': function(ev, instance) {
+    if ( !instance.haiku.get('body').length )
+      instance.state.set('placeholderNeeded', true);
+  },
+
+  'keydown #haiku-body': ComposeUtils.handleEnterKey,
 
   'keyup #haiku-body': function(ev, instance) {
     // New strategy!
@@ -106,64 +115,17 @@ Template.compose.events({
     // from this container, and is output to the other (and to the server
     // on form submit).
 
-    let key_pressed = ev.keyCode;
-
-    // Make 'enter' key spawn double-BRs instead of DIVs.
-    if (key_pressed === 13) {
-      // insert 2 br tags (if only one br tag is inserted the cursor won't go to the next line)
-      document.execCommand('insertHTML', false, '<br><br>');
-      // prevent the default behaviour of return key pressed
-      return false;
-    }
+    // let key_pressed = ev.keyCode;
 
     // Ignore arrow keys, shift key, delete/backspace
-    if ( _.includes([8, 16, 37, 38, 39, 40, 46], key_pressed) ) return
+    // if ( _.includes([8, 16, 37, 38, 39, 40, 46], key_pressed) ) return
+
 
     let text = $(ev.target).html();
 
     console.log(text);
     instance.haiku.set('body', text)
-    // // Remove any <span>s added for illustrative purposes
-    // text = text.replace(/<\/?span>/gi, '');
-    //
-    // // If the most recent action was a new line, we need to ignore and preserve it
-    // let endsWithBreak = _.endsWith(text, '<br><br>');
-    //
-    // // Split into lines
-    // let lines = _.compact(text.split('<br>'));
-    //
-    // // Break each line into an array of its words
-    // lines = lines.map( line => {
-    //   let words = _.compact(line.split(' '));
-    //
-    //   words = words.map( word => {
-    //     // Break each word into an array of its syllables
-    //     let syllables = ParseSyllables(word);
-    //
-    //     // Wrap each syllable in a span
-    //     syllables = syllables.map( syllable => `<span>${syllable}</span>` );
-    //
-    //     // Join each syllable
-    //     return syllables.join("");
-    //
-    //   });
-    //
-    //   // join each word with a space
-    //   return words.join(" ");
-    //
-    // });
-    //
-    // // Join each line with a linebreak
-    // lines = lines.join("<br>");
-    //
-    // // Replace any removed final linebreak
-    // if ( endsWithBreak ) lines += "<br><br>";
-    //
-    // let initialCursorOffset = ComposeUtils.getCursorOffset(ev.target);
-    //
-    //
-    //
-    // $(ev.target).html(lines);
+
     //
     // ComposeUtils.setCursorOffset(ev.target, initialCursorOffset);
 

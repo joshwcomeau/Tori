@@ -17,11 +17,11 @@
         data-include-actions="false"
         style="{{#if backgroundImage}}background-image: {{backgroundImage}};{{/if}}">
           <div class="haiku-text invisible">
-            {{formattedHaikuBody}}
+            {{{formattedHaikuBody}}}
           </div>
-          <div class="haiku-text vertically-centered horizontally-centered" contenteditable="true">
+          <div id="haiku-body" class="haiku-text" contenteditable="true">
           </div>
-          {{#if hasContent}}
+          {{#if placeholderNeeded}}
             <span class="placeholder">Write Your Haiku...</span>
           {{/if}}
         </div>

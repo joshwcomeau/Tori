@@ -11,16 +11,35 @@
     border-radius: 2px;
 
     .haiku-text {
-      position: relative;
+      position: absolute;
       outline: none;
       font-size: 1.5rem;
       font-weight: $fw-medium;
 
-      span {
-        &:hover {
-          border-bottom: 2px solid $grass;
+      &.invisible {
+        color: transparent;
+      }
+
+      .syllable {
+        position: relative;
+
+        &:after {
+          position: absolute;
+          content: '';
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+        }
+
+        &:nth-child(even):after {
+          border-bottom: 2px solid $orange;
+        }
+        &:nth-child(odd):after {
+          border-bottom: 2px solid $blue;
         }
       }
+
     }
 
     .placeholder {
