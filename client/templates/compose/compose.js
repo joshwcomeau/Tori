@@ -88,55 +88,6 @@ Template.compose.onCreated(function() {
       imageValign:      'center'
     },
   ];
-
-  // this.advancedModeControls = [
-  //   // Group 1: Text Align
-  //   {
-  //     buttons: [
-  //       {
-  //         iconClass: 'fa fa-align-left',
-  //         data: {
-  //           textAlign: 'left'
-  //         }
-  //       }, {
-  //         iconClass: 'fa fa-align-center',
-  //         data: {
-  //           textAlign: 'center'
-  //         }
-  //       }, {
-  //         iconClass: 'fa fa-align-right',
-  //         data: {
-  //           textAlign: 'right'
-  //         }
-  //       }
-  //     ]
-  //   },
-  //   // Group 2: Text Vertical Align
-  //   {
-  //     buttons: [
-  //       {
-  //         imageSrc: 'images/vertical-top.png',
-  //         data: {
-  //           textValign: 'top'
-  //         }
-  //       }, {
-  //         imageSrc: 'images/vertical-center.png',
-  //         data: {
-  //           textValign: 'center'
-  //         }
-  //       }, {
-  //         imageSrc: 'images/vertical-bottom.png',
-  //         data: {
-  //           textValign: 'bottom'
-  //         }
-  //       }
-  //     ]
-  //   },
-  //   {
-  //
-  //   }
-  // ]
-
 });
 
 Template.compose.rendered = function() {
@@ -152,32 +103,6 @@ Template.compose.rendered = function() {
       if ( preset.default ) $node.addClass('selected');
       $(".presets").prepend($node);
     });
-
-    // Similarly, add our 'Advanced Mode' controls
-    // this.advancedModeControls.forEach( (buttonGroup) => {
-    //   // Each group
-    //   let $group = $("<span>").addClass('button-group');
-    //
-    //   buttonGroup.buttons.forEach( (button) => {
-    //     console.log("Iterating with", button, )
-    //     let $button = $("<button>").addClass('control');
-    //
-    //     if ( button.iconClass ) {
-    //       $icon = $("<i>").addClass(button.iconClass);
-    //     } else if ( button.imageSrc ) {
-    //       $icon = $("<img>").attr('src', button.imageSrc);
-    //     }
-    //
-    //     $button
-    //       .append($icon)
-    //       .addClass("{{#if haikuHasProperty 'textAlign' 'right'}}selected{{/if}}")
-    //       .data(button.data)
-    //       .appendTo($group);
-    //
-    //   });
-    //   console.log("About to append", $group)
-    //   $(".advanced-mode-controls").append($group);
-    // });
   }
 };
 
@@ -214,10 +139,8 @@ Template.compose.helpers({
   },
   syllableData:           () => Template.instance().haiku.get('syllables'),
   haikuHasProperty:       (property, value) => {
-    console.log("Does haiku have property?", property, value, !!Template.instance().haiku.get(property))
     // If we don't pass in a value, we assume the property just needs to be truthy
     if ( typeof value === 'undefined' ) {
-
       return !!Template.instance().haiku.get(property);
     } else {
       return Template.instance().haiku.get(property) === value;
