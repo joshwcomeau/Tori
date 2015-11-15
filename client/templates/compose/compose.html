@@ -15,8 +15,8 @@
         data-text-color="{{haikuTextColor}}"
         data-text-align="{{haikuTextAlign}}"
         data-text-valign="{{haikuTextValign}}"
-        data-image-align="{{haikuImageAlign}}"
-        data-image-valign="{{haikuImageValign}}"
+        data-background-align="{{haikuBackgroundAlign}}"
+        data-background-valign="{{haikuBackgroundValign}}"
         data-overlay-color="{{haikuOverlayColor}}"
         data-overlay-direction="{{haikuOverlayDirection}}"
         data-include-actions="false"
@@ -77,39 +77,39 @@
         <!-- Advanced Mode controls dynamically added here on render. -->
         <div class="advanced-mode-controls{{#if advancedMode}} active{{/if}}">
           <span class="button-group">
-            <button class="control {{#if haikuHasProperty 'textAlign' 'left'}}selected{{/if}}" data-text-align="left">
+            <button class="control {{#if haikuHasProperty 'textAlign' 'left'}}selected{{/if}}" data-text-align="left" data-overlay-direction="left">
               <i class="fa fa-align-left"></i>
             </button>
 
-            <button class="control {{#if haikuHasProperty 'textAlign' 'center'}}selected{{/if}}" data-text-align="center">
+            <button class="control {{#if haikuHasProperty 'textAlign' 'center'}}selected{{/if}}" data-text-align="center" data-overlay-direction="center">
               <i class="fa fa-align-center"></i>
             </button>
 
-            <button class="control {{#if haikuHasProperty 'textAlign' 'right'}}selected{{/if}}" data-text-align="right">
+            <button class="control {{#if haikuHasProperty 'textAlign' 'right'}}selected{{/if}}" data-text-align="right" data-overlay-direction="right">
               <i class="fa fa-align-right"></i>
             </button>
           </span>
 
           <span class="button-group">
-            <button class="control {{#if haikuHasProperty 'textValign' 'top'}}selected{{/if}}" data-text-valign="top">
+            <button class="control {{#if haikuHasProperty 'textValign' 'top'}}selected{{/if}}" data-text-valign="top" data-overlay-direction="top">
               <img src="images/vertical-top.png" />
             </button>
 
-            <button class="control {{#if haikuHasProperty 'textValign' 'center'}}selected{{/if}}" data-text-valign="center">
+            <button class="control {{#if haikuHasProperty 'textValign' 'center'}}selected{{/if}}" data-text-valign="center" data-overlay-direction="center">
               <img src="images/vertical-center.png" />
             </button>
 
-            <button class="control {{#if haikuHasProperty 'textValign' 'bottom'}}selected{{/if}}" data-text-valign="bottom">
+            <button class="control {{#if haikuHasProperty 'textValign' 'bottom'}}selected{{/if}}" data-text-valign="bottom" data-overlay-direction="bottom">
               <img src="images/vertical-bottom.png" />
             </button>
           </span>
 
           <span class="button-group">
-            <button class="control {{#if haikuHasProperty 'textColor' 'black'}}selected{{/if}}" data-text-color="black">
+            <button class="control {{#if haikuHasProperty 'textColor' 'black'}}selected{{/if}}" data-text-color="black" data-overlay-color="white">
               <i class="fa fa-font"></i>
             </button>
 
-            <button class="control dark {{#if haikuHasProperty 'textColor' 'white'}}selected{{/if}}" data-text-color="white">
+            <button class="control dark {{#if haikuHasProperty 'textColor' 'white'}}selected{{/if}}" data-text-color="white" data-overlay-color="black">
               <i class="fa fa-font"></i>
             </button>
           </span>
@@ -122,7 +122,7 @@
         </div>
 
         <!-- Submit -->
-        <button class='submit-haiku'>Post</button>
+        <button class='submit-haiku'>Publish</button>
       </form>
     </div>
   </div>

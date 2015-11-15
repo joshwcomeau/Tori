@@ -10,8 +10,11 @@ Template.compose.onCreated(function() {
     textColor:        'black',
     textAlign:        'center',
     textValign:       'center',
-    imageAlign:       'center',
-    imageValign:      'center',
+    showOverlay:      false,
+    overlayColor:     'center',
+    overlayDirection: 'center',
+    backgroundAlign:  'center',
+    backgroundValign: 'center',
     backgroundImage:  false
   });
 
@@ -19,73 +22,67 @@ Template.compose.onCreated(function() {
   this.state.set({
     showPlaceholder:    true,
     advancedMode:       false,
-    highlightSyllables: true
+    highlightSyllables: false
   });
 
   // We have a few presets the user can choose from.
   // They will each have their own background images, font/overlay settings, etc.
   this.presets = [
     {
-      default: true,
-      presetName: 'no-bg',
-      backgroundImage: false,
-      backgroundThumb: '/images/no-background.png',
-      textColor: 'black',
-      textAlign: 'center',
-      textValign: 'center',
-      showOverlay: false,
-      overlayColor: 'black',
-      overlayDirection: 'right',
-      imageAlign:       'center',
-      imageValign:      'center'
+      default:          true,
+      presetName:       'no-bg',
+      backgroundImage:  false,
+      backgroundThumb:  '/images/no-background.png',
+      textColor:        'black',
+      textAlign:        'center',
+      textValign:       'center',
+      showOverlay:      false,
+      backgroundAlign: 'center',
+      backgroundValign:'center'
     }, {
-      presetName: 'flower-sun',
-      backgroundImage: '/images/sample-background-1.jpg',
-      backgroundThumb: '/images/sample-background-1.jpg',
-      textColor: 'black',
-      textAlign: 'center',
-      textValign: 'top',
-      showOverlay: true,
-      overlayColor: 'white',
+      presetName:       'flower-sun',
+      backgroundImage:  '/images/sample-background-1.jpg',
+      backgroundThumb:  '/images/sample-background-1.jpg',
+      textColor:        'black',
+      textAlign:        'center',
+      textValign:       'top',
+      showOverlay:      true,
+      overlayColor:     'white',
       overlayDirection: 'top',
-      imageAlign:       'center',
-      imageValign:      'center'
+      backgroundAlign: 'center',
+      backgroundValign:'center'
     }, {
-      presetName: 'forest-bridge',
-      backgroundImage: '/images/sample-background-2.jpg',
-      backgroundThumb: '/images/sample-background-2.jpg',
-      textColor: 'white',
-      textAlign: 'right',
-      textValign: 'bottom',
-      showOverlay: true,
-      overlayColor: 'black',
+      presetName:       'forest-bridge',
+      backgroundImage:  '/images/sample-background-2.jpg',
+      backgroundThumb:  '/images/sample-background-2.jpg',
+      textColor:        'white',
+      textAlign:        'right',
+      textValign:       'bottom',
+      showOverlay:      true,
+      overlayColor:     'black',
       overlayDirection: 'right',
-      imageAlign:       'center',
-      imageValign:      'center'
+      backgroundAlign: 'center',
+      backgroundValign:'center'
     }, {
-      presetName: 'night-sky',
-      backgroundImage: '/images/sample-background-3.jpg',
-      backgroundThumb: '/images/sample-background-3.jpg',
-      textColor: 'white',
-      textAlign: 'center',
-      textValign: 'center',
-      showOverlay: false,
-      overlayColor: 'black',
-      overlayDirection: 'right',
-      imageAlign:       'center',
-      imageValign:      'top'
+      presetName:       'night-sky',
+      backgroundImage:  '/images/sample-background-3.jpg',
+      backgroundThumb:  '/images/sample-background-3.jpg',
+      textColor:        'white',
+      textAlign:        'center',
+      textValign:       'center',
+      showOverlay:      false,
+      backgroundAlign: 'center',
+      backgroundValign:'top'
     }, {
-      presetName: 'parchment',
-      backgroundImage: '/images/sample-background-4.jpg',
-      backgroundThumb: '/images/sample-background-4.jpg',
-      textColor: 'black',
-      textAlign: 'left',
-      textValign: 'bottom',
-      showOverlay: false,
-      overlayColor: 'black',
-      overlayDirection: 'right',
-      imageAlign:       'center',
-      imageValign:      'center'
+      presetName:       'parchment',
+      backgroundImage:  '/images/sample-background-4.jpg',
+      backgroundThumb:  '/images/sample-background-4.jpg',
+      textColor:        'black',
+      textAlign:        'left',
+      textValign:       'bottom',
+      showOverlay:      false,
+      backgroundAlign: 'center',
+      backgroundValign:'center'
     },
   ];
 });
@@ -123,12 +120,13 @@ Template.compose.helpers({
   advancedModeSettings:    () => Template.instance().advancedModeSettings,
 
   // Haiku helpers
-  haikuBackgroundImage:   () => Template.instance().haiku.get('backgroundImage'),
+  syllableData:           () => Template.instance().haiku.get('syllables'),
   haikuTextColor:         () => Template.instance().haiku.get('textColor'),
   haikuTextAlign:         () => Template.instance().haiku.get('textAlign'),
   haikuTextValign:        () => Template.instance().haiku.get('textValign'),
-  haikuImageAlign:        () => Template.instance().haiku.get('imageAlign'),
-  haikuImageValign:       () => Template.instance().haiku.get('imageValign'),
+  haikuBackgroundImage:   () => Template.instance().haiku.get('backgroundImage'),
+  haikuBackgroundAlign:   () => Template.instance().haiku.get('backgroundAlign'),
+  haikuBackgroundValign:  () => Template.instance().haiku.get('backgroundValign'),
   haikuShowOverlay:       () => Template.instance().haiku.get('showOverlay'),
   haikuOverlayColor:      () => Template.instance().haiku.get('overlayColor'),
   haikuOverlayDirection:  () => Template.instance().haiku.get('overlayDirection'),
@@ -137,7 +135,6 @@ Template.compose.helpers({
     let body      = Template.instance().haiku.get('body');
     return ComposeUtils.formatSyllables(syllables, body);
   },
-  syllableData:           () => Template.instance().haiku.get('syllables'),
   haikuHasProperty:       (property, value) => {
     // If we don't pass in a value, we assume the property just needs to be truthy
     if ( typeof value === 'undefined' ) {
@@ -205,6 +202,8 @@ Template.compose.events({
    *  data attributes
    */
   'click .control': function(ev, instance) {
+    ev.preventDefault();
+
     // First: Find the button.
     // Because we're likely clicking an <i> or <img> inside the button,
     // we need to climb up the tree and find the button itself!
@@ -244,9 +243,7 @@ Template.compose.events({
       // If we've switched over to using a preset, don't un-set the preset
       // when our upload completes and the upload URL changes.
       if ( !instance.usingPresetBackground.get() ) {
-        instance.backgroundImage.set(
-          ComposeUtils.wrapImageUrl( instance.uploader.url(true) )
-        );
+        instance.haiku.set( 'backgroundImage', instance.uploader.url(true) );
       }
     });
 
@@ -298,38 +295,49 @@ Template.compose.events({
   'submit .post-haiku': function(ev, instance) {
     ev.preventDefault();
 
-    // Find our Haiku text, and split it into 3 lines.
-    let haiku_lines = $(ev.target)
-      .find('.haiku-text')
-      .html()
-      .replace(/<\/div>/gi, '')
-      .replace(/<\/?span>/gi, '')
-      .replace(/<div>/gi, '<br>')
-      .split('<br>');
-
-    if ( haiku_lines.length > 3 ) {
-      // TODO: Error handling and displaying for too many lines
-      return false;
-    } else if ( haiku_lines.length < 3 ) {
-      // TODO: Error handling/displaying for too few
-      return false;
-    }
-
-    // TODO: Syllable checking. Ensure this is really a haiku!
-    let attributes = {
-      line1: haiku_lines[0],
-      line2: haiku_lines[1],
-      line3: haiku_lines[2]
+    let haiku = {
+      body:             instance.haiku.get('body'),
+      textColor:        instance.haiku.get('textColor'),
+      textAlign:        instance.haiku.get('textAlign'),
+      textValign:       instance.haiku.get('textValign'),
+      backgroundImage:  instance.haiku.get('backgroundImage'),
+      backgroundAlign:  instance.haiku.get('backgroundAlign'),
+      backgroundValign: instance.haiku.get('backgroundValign'),
+      showOverlay:      instance.haiku.get('showOverlay'),
+      overlayColor:     instance.haiku.get('overlayColor'),
+      overlayDirection: instance.haiku.get('overlayDirection')
     };
 
-    if ( instance.backgroundImage.get() ) {
-      attributes.backgroundImage = instance.backgroundImage.get();
-    }
+    // Rather than shove a bunch of validations here, they'll be held in the
+    // colletion. They'll run simultaneously on client and server.
 
-    Meteor.call('postHaiku', attributes);
+    Meteor.call('publishHaiku', haiku, (err, result) => {
+      console.log("Publish callback", err, result);
 
-    Session.set('composingHaiku', false);
-
+      if (result == true) UiUtils.modal.deactivate();
+    });
+    // return false.
+    //
+    // console.log( typeof instance.haiku.keys.syllables);
+    // console.log( typeof instance.haiku.get('syllables'));
+    // return false
+    //
+    // if ( haikuLines.length > 3 ) {
+    //   // TODO: Error handling & displaying for too many lines
+    //   alert("Too many lines!")
+    //   return false;
+    // } else if ( haikuLines.length < 3 ) {
+    //   // TODO: Error handling & displaying for too few
+    //   alert("Too few lines!")
+    //   return false;
+    // }
+    //
+    //
+    //
+    // Meteor.call('postHaiku', instance.haiku);
+    //
+    // Session.set('composingHaiku', false);
+    //
     // TODO: Redirect to my profile page so I can see the Haiku I just posted?
   }
 });

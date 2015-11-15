@@ -2,26 +2,19 @@
   <li>
     <!-- There are lots of ways to customize the Haiku, passed in through data attributes. Using CSS3 selectors, we apply styles based on these data attributes! -->
     <div class="haiku"
-    data-text-color="white"
-    data-text-align="right"
-    data-text-valign="bottom"
-    data-overlay-color="black"
-    data-overlay-direction="right"
+    data-text-color="{{textColor}}"
+    data-text-align="{{textAlign}}"
+    data-text-valign="{{textValign}}"
+    data-background-align="{{backgroundAlign}}"
+    data-background-valign="{{backgroundValign}}"
+    data-overlay-color="{{overlayColor}}"
+    data-overlay-direction="{{overlayDirection}}"
     data-include-actions="true"
-    style="{{#if backgroundImage}}background-image: {{backgroundImage}}{{/if}}">
-
+    style="{{#if backgroundImage}}background-image: url({{backgroundImage}});{{/if}}">
       <div class="visibility-gradient"></div>
 
       <div class="haiku-text">
-        <div class="haiku-line">
-          {{line1}}
-        </div>
-        <div class="haiku-line">
-          {{line2}}
-        </div>
-        <div class="haiku-line">
-          {{line3}}
-        </div>
+        {{{body}}}
       </div>
       <ul class="haiku-actions">
         <li>
