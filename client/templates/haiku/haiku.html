@@ -1,0 +1,20 @@
+<!-- TODO: Find a way to integrate this into 'compose' -->
+<template name="haiku">
+  <!-- There are lots of ways to customize the Haiku, passed in through data attributes. Using CSS3 selectors, we apply styles based on these data attributes! -->
+  <div class="haiku"
+  data-text-color="{{textColor}}"
+  data-text-align="{{textAlign}}"
+  data-text-valign="{{textValign}}"
+  data-background-align="{{backgroundAlign}}"
+  data-background-valign="{{backgroundValign}}"
+  data-overlay-color="{{overlayColor}}"
+  data-overlay-direction="{{overlayDirection}}"
+  style="{{#if backgroundImage}}background-image: url({{backgroundImage}});{{/if}}">
+    <div class="visibility-gradient"></div>
+
+    <div class="haiku-text">
+      {{{body}}}
+    </div>
+  </div>
+
+</template>

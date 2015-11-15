@@ -43,43 +43,6 @@
         height: 13rem;
         // MOST haiku styles are in their own file, haiku.scss
       }
-
-      .haiku-actions {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 2rem;
-        line-height: 2rem;
-        color: $darkgray;
-        background: rgba(0,0,0,0.25);
-
-        li {
-          display: inline-block;
-          padding: 0 1rem;
-
-          &.liked {
-            // the user likes this haiku.
-            color: $fuscia;
-
-            button {
-              color: $fuscia;
-            }
-          }
-
-          button {
-            background: transparent;
-            border: 0;
-            outline: none;
-          }
-
-
-          .count {
-            display: inline-block;
-            padding-left: 0.5rem;
-          }
-        }
-      }
     }
 
 

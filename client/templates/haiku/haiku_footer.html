@@ -1,0 +1,22 @@
+<template name="haikuFooter">
+  <div class="haiku-footer flex">
+    <div class="haiku-author">
+      <div class="portrait" style="background-image: url('{{authorProfilePhoto}}')">
+
+      </div>
+    </div>
+    <ul class="haiku-actions flex-item">
+      <li>
+        <i class="fa fa-reply"></i><span class="count"></span>
+      </li>
+      <li>
+        <i class="fa fa-retweet"></i><span class="count">{{retweets}}</span>
+      </li>
+      <li class="{{#if doesLike}}liked{{else}}not-liked{{/if}}">
+        <button class="like"><i class="fa fa-heart"></i></button>
+        <span class="count">{{likes}}</span>
+      </li>
+    </ul>
+
+  </div>
+</template>

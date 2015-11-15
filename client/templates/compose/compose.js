@@ -9,7 +9,7 @@ Template.compose.onCreated(function() {
     textAlign:        'center',
     textValign:       'center',
     showOverlay:      false,
-    overlayColor:     'center',
+    overlayColor:     'white',
     overlayDirection: 'center',
     backgroundAlign:  'center',
     backgroundValign: 'center',
@@ -35,8 +35,8 @@ Template.compose.onCreated(function() {
       textAlign:        'center',
       textValign:       'center',
       showOverlay:      false,
-      backgroundAlign: 'center',
-      backgroundValign:'center'
+      backgroundAlign:  'center',
+      backgroundValign: 'center'
     }, {
       presetName:       'flower-sun',
       backgroundImage:  '/images/sample-background-1.jpg',
@@ -47,8 +47,8 @@ Template.compose.onCreated(function() {
       showOverlay:      true,
       overlayColor:     'white',
       overlayDirection: 'top',
-      backgroundAlign: 'center',
-      backgroundValign:'center'
+      backgroundAlign:  'center',
+      backgroundValign: 'center'
     }, {
       presetName:       'forest-bridge',
       backgroundImage:  '/images/sample-background-2.jpg',
@@ -59,8 +59,8 @@ Template.compose.onCreated(function() {
       showOverlay:      true,
       overlayColor:     'black',
       overlayDirection: 'right',
-      backgroundAlign: 'center',
-      backgroundValign:'center'
+      backgroundAlign:  'center',
+      backgroundValign: 'center'
     }, {
       presetName:       'night-sky',
       backgroundImage:  '/images/sample-background-3.jpg',
@@ -69,8 +69,8 @@ Template.compose.onCreated(function() {
       textAlign:        'center',
       textValign:       'center',
       showOverlay:      false,
-      backgroundAlign: 'center',
-      backgroundValign:'top'
+      backgroundAlign:  'center',
+      backgroundValign: 'top'
     }, {
       presetName:       'parchment',
       backgroundImage:  '/images/sample-background-4.jpg',
@@ -79,8 +79,8 @@ Template.compose.onCreated(function() {
       textAlign:        'left',
       textValign:       'bottom',
       showOverlay:      false,
-      backgroundAlign: 'center',
-      backgroundValign:'center'
+      backgroundAlign:  'center',
+      backgroundValign: 'center'
     },
   ];
 });

@@ -3,7 +3,11 @@
     <div class="haikus card">
       <ul class="haikus-list">
         {{#each haikus}}
-          {{> profileHaiku}}
+          <li>
+            {{> haiku}}
+            {{> haikuFooter}}
+          </li>
+
         {{/each}}
       </ul>
     </div>
