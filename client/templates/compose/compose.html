@@ -38,7 +38,9 @@
           {{/if}}
 
           <!-- An overlay that makes text more legible. -->
-          <div class="visibility-gradient"></div>
+          {{#if haikuShowOverlay}}
+            <div class="visibility-gradient"></div>
+          {{/if}}
         </div>
 
         <!-- Background-change and Syllable Indicator -->
@@ -73,40 +75,51 @@
         </h4>
 
         <!-- Advanced Mode controls dynamically added here on render. -->
-        <div class="advanced-mode-controls{{#if advancedMode}} active{{/if}}"></div>
+        <div class="advanced-mode-controls{{#if advancedMode}} active{{/if}}">
+          <span class="button-group">
+            <button class="control {{#if haikuHasProperty 'textAlign' 'left'}}selected{{/if}}" data-text-align="left">
+              <i class="fa fa-align-left"></i>
+            </button>
 
-            <!-- {{#each advancedModeSettings}}
-              <span class="button-group">
-                {{#each buttons}}
-                  <button><i {{attributes}}></i></button>
-                {{/each}}
-              </span>
-            {{/each}} -->
-            <!-- <span class="button-group">
-              <button class="{{#if haikuHasProperty 'textAlign' 'left'}}selected{{/if}}" data-text-align="left">
-                <i class="fa fa-align-left"></i>
-              </button>
-              <button class="{{#if haikuHasProperty 'textAlign' 'center'}}selected{{/if}}" data-text-align="center">
-                <i class="fa fa-align-center"></i>
-              </button>
-              <button class="{{#if haikuHasProperty 'textAlign' 'right'}}selected{{/if}}" data-text-align="right">
-                <i class="fa fa-align-right"></i>
-              </button>
-            </span>
-            <span class="button-group">
-              <button><img src="images/vertical-top.png" /></button>
-              <button><img src="images/vertical-center.png" /></button>
-              <button><img src="images/vertical-bottom.png" /></button>
-            </span>
-            <span class="button-group">
-              <button><i class="fa fa-font"></i></button>
-              <button class="dark"><i class="fa fa-font"></i></button>
-            </span>
-            <span class="button-group">
-              <button data-toggleable="true"><i class="fa fa-tint"></i></button>
-            </span> -->
-          <!-- </div>
-        {{/if}} -->
+            <button class="control {{#if haikuHasProperty 'textAlign' 'center'}}selected{{/if}}" data-text-align="center">
+              <i class="fa fa-align-center"></i>
+            </button>
+
+            <button class="control {{#if haikuHasProperty 'textAlign' 'right'}}selected{{/if}}" data-text-align="right">
+              <i class="fa fa-align-right"></i>
+            </button>
+          </span>
+
+          <span class="button-group">
+            <button class="control {{#if haikuHasProperty 'textValign' 'top'}}selected{{/if}}" data-text-valign="top">
+              <img src="images/vertical-top.png" />
+            </button>
+
+            <button class="control {{#if haikuHasProperty 'textValign' 'center'}}selected{{/if}}" data-text-valign="center">
+              <img src="images/vertical-center.png" />
+            </button>
+
+            <button class="control {{#if haikuHasProperty 'textValign' 'bottom'}}selected{{/if}}" data-text-valign="bottom">
+              <img src="images/vertical-bottom.png" />
+            </button>
+          </span>
+
+          <span class="button-group">
+            <button class="control {{#if haikuHasProperty 'textColor' 'black'}}selected{{/if}}" data-text-color="black">
+              <i class="fa fa-font"></i>
+            </button>
+
+            <button class="control dark {{#if haikuHasProperty 'textColor' 'white'}}selected{{/if}}" data-text-color="white">
+              <i class="fa fa-font"></i>
+            </button>
+          </span>
+
+          <span class="button-group">
+            <button class="control {{#if haikuHasProperty 'showOverlay' true}}selected{{/if}}" data-show-overlay="true" data-toggleable="true">
+              <i class="fa fa-tint"></i>
+            </button>
+          </span>
+        </div>
 
         <!-- Submit -->
         <button class='submit-haiku'>Post</button>

@@ -33,8 +33,9 @@ Template.compose.onCreated(function() {
       textColor: 'black',
       textAlign: 'center',
       textValign: 'center',
-      overlayColor: false,
-      overlayDirection: false,
+      showOverlay: false,
+      overlayColor: 'black',
+      overlayDirection: 'right',
       imageAlign:       'center',
       imageValign:      'center'
     }, {
@@ -44,6 +45,7 @@ Template.compose.onCreated(function() {
       textColor: 'black',
       textAlign: 'center',
       textValign: 'top',
+      showOverlay: true,
       overlayColor: 'white',
       overlayDirection: 'top',
       imageAlign:       'center',
@@ -55,6 +57,7 @@ Template.compose.onCreated(function() {
       textColor: 'white',
       textAlign: 'right',
       textValign: 'bottom',
+      showOverlay: true,
       overlayColor: 'black',
       overlayDirection: 'right',
       imageAlign:       'center',
@@ -66,8 +69,9 @@ Template.compose.onCreated(function() {
       textColor: 'white',
       textAlign: 'center',
       textValign: 'center',
-      overlayColor: false,
-      overlayDirection: false,
+      showOverlay: false,
+      overlayColor: 'black',
+      overlayDirection: 'right',
       imageAlign:       'center',
       imageValign:      'top'
     }, {
@@ -77,36 +81,61 @@ Template.compose.onCreated(function() {
       textColor: 'black',
       textAlign: 'left',
       textValign: 'bottom',
-      overlayColor: false,
-      overlayDirection: false,
+      showOverlay: false,
+      overlayColor: 'black',
+      overlayDirection: 'right',
       imageAlign:       'center',
       imageValign:      'center'
     },
   ];
 
-  this.advancedModeControls = [
-    // Group 1: Text Align
-    {
-      buttons: [
-        {
-          iconClass: 'fa fa-align-left',
-          data: {
-            textAlign: 'left'
-          }
-        }, {
-          iconClass: 'fa fa-align-center',
-          data: {
-            textAlign: 'center'
-          }
-        }, {
-          iconClass: 'fa fa-align-right',
-          data: {
-            textAlign: 'right'
-          }
-        }
-      ]
-    }
-  ]
+  // this.advancedModeControls = [
+  //   // Group 1: Text Align
+  //   {
+  //     buttons: [
+  //       {
+  //         iconClass: 'fa fa-align-left',
+  //         data: {
+  //           textAlign: 'left'
+  //         }
+  //       }, {
+  //         iconClass: 'fa fa-align-center',
+  //         data: {
+  //           textAlign: 'center'
+  //         }
+  //       }, {
+  //         iconClass: 'fa fa-align-right',
+  //         data: {
+  //           textAlign: 'right'
+  //         }
+  //       }
+  //     ]
+  //   },
+  //   // Group 2: Text Vertical Align
+  //   {
+  //     buttons: [
+  //       {
+  //         imageSrc: 'images/vertical-top.png',
+  //         data: {
+  //           textValign: 'top'
+  //         }
+  //       }, {
+  //         imageSrc: 'images/vertical-center.png',
+  //         data: {
+  //           textValign: 'center'
+  //         }
+  //       }, {
+  //         imageSrc: 'images/vertical-bottom.png',
+  //         data: {
+  //           textValign: 'bottom'
+  //         }
+  //       }
+  //     ]
+  //   },
+  //   {
+  //
+  //   }
+  // ]
 
 });
 
@@ -125,27 +154,30 @@ Template.compose.rendered = function() {
     });
 
     // Similarly, add our 'Advanced Mode' controls
-    this.advancedModeControls.forEach( (buttonGroup) => {
-      // Each group
-      let $group = $("<span>").addClass('button-group');
-
-      buttonGroup.buttons.forEach( (button) => {
-        console.log("Iterating with", button, )
-        let $button = $("<button>");
-
-        if ( button.iconClass ) {
-          $icon = $("<i>").addClass(button.iconClass);
-          $button.append($icon);
-        }
-
-        // TODO: support the buttons that use images for icons.
-
-        $group.append($button);
-
-      });
-      console.log("About to append", $group)
-      $(".advanced-mode-controls").append($group);
-    });
+    // this.advancedModeControls.forEach( (buttonGroup) => {
+    //   // Each group
+    //   let $group = $("<span>").addClass('button-group');
+    //
+    //   buttonGroup.buttons.forEach( (button) => {
+    //     console.log("Iterating with", button, )
+    //     let $button = $("<button>").addClass('control');
+    //
+    //     if ( button.iconClass ) {
+    //       $icon = $("<i>").addClass(button.iconClass);
+    //     } else if ( button.imageSrc ) {
+    //       $icon = $("<img>").attr('src', button.imageSrc);
+    //     }
+    //
+    //     $button
+    //       .append($icon)
+    //       .addClass("{{#if haikuHasProperty 'textAlign' 'right'}}selected{{/if}}")
+    //       .data(button.data)
+    //       .appendTo($group);
+    //
+    //   });
+    //   console.log("About to append", $group)
+    //   $(".advanced-mode-controls").append($group);
+    // });
   }
 };
 
@@ -172,6 +204,7 @@ Template.compose.helpers({
   haikuTextValign:        () => Template.instance().haiku.get('textValign'),
   haikuImageAlign:        () => Template.instance().haiku.get('imageAlign'),
   haikuImageValign:       () => Template.instance().haiku.get('imageValign'),
+  haikuShowOverlay:       () => Template.instance().haiku.get('showOverlay'),
   haikuOverlayColor:      () => Template.instance().haiku.get('overlayColor'),
   haikuOverlayDirection:  () => Template.instance().haiku.get('overlayDirection'),
   formattedHaikuBody: function() {
@@ -181,8 +214,14 @@ Template.compose.helpers({
   },
   syllableData:           () => Template.instance().haiku.get('syllables'),
   haikuHasProperty:       (property, value) => {
-    console.log("Comparing", Template.instance().haiku.get(property), value)
-    return Template.instance().haiku.get(property) === value;
+    console.log("Does haiku have property?", property, value, !!Template.instance().haiku.get(property))
+    // If we don't pass in a value, we assume the property just needs to be truthy
+    if ( typeof value === 'undefined' ) {
+
+      return !!Template.instance().haiku.get(property);
+    } else {
+      return Template.instance().haiku.get(property) === value;
+    }
   },
 
   // Misc helpers
@@ -236,6 +275,36 @@ Template.compose.events({
     // couple of superfluous bits. Remove them.
     let pertinent_data = _.omit(data, ['default', 'backgroundThumb']);
     instance.haiku.set(pertinent_data);
+  },
+
+  /**
+   *  Click one of the 'Advanced Mode' toggles. Behaviour is gleaned from
+   *  data attributes
+   */
+  'click .control': function(ev, instance) {
+    // First: Find the button.
+    // Because we're likely clicking an <i> or <img> inside the button,
+    // we need to climb up the tree and find the button itself!
+    $target = $(ev.target);
+    $button = $target.closest('.control')
+
+    // Next, apply the properties stored on this button to the Haiku.
+    let data = $button.data();
+
+    // If this button is an on/off toggle, we need to treat it differently.
+    if ( data.toggleable ) {
+      // Don't actually set the 'toggle' property on the haiku.
+      data = _.omit(data, 'toggleable');
+      _.keys(data).forEach( (dataKey) => {
+        let current_value = instance.haiku.get(dataKey);
+        console.log("Current value for", dataKey, "is", current_value)
+        instance.haiku.set(dataKey, !current_value);
+      });
+    } else {
+      instance.haiku.set(data);
+    }
+
+
   },
 
   /**

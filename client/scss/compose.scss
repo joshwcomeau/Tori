@@ -17,6 +17,7 @@
       font-weight: $fw-medium;
 
       &.highlight-syllables {
+        z-index: 9;
         color: transparent;
       }
 
@@ -221,8 +222,7 @@
       color: #111;
 
       &.selected {
-        background: $green;
-        color: $white;
+        background: $green !important;
       }
 
       &.dark {
