@@ -198,7 +198,13 @@
     }
   }
 
-  .advanced-mode-settings {
+  .advanced-mode-controls {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+
     .button-group {
       display: inline-block;
       margin-right: 0.5rem;

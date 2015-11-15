@@ -84,6 +84,30 @@ Template.compose.onCreated(function() {
     },
   ];
 
+  this.advancedModeControls = [
+    // Group 1: Text Align
+    {
+      buttons: [
+        {
+          iconClass: 'fa fa-align-left',
+          data: {
+            textAlign: 'left'
+          }
+        }, {
+          iconClass: 'fa fa-align-center',
+          data: {
+            textAlign: 'center'
+          }
+        }, {
+          iconClass: 'fa fa-align-right',
+          data: {
+            textAlign: 'right'
+          }
+        }
+      ]
+    }
+  ]
+
 });
 
 Template.compose.rendered = function() {
@@ -98,6 +122,29 @@ Template.compose.rendered = function() {
 
       if ( preset.default ) $node.addClass('selected');
       $(".presets").prepend($node);
+    });
+
+    // Similarly, add our 'Advanced Mode' controls
+    this.advancedModeControls.forEach( (buttonGroup) => {
+      // Each group
+      let $group = $("<span>").addClass('button-group');
+
+      buttonGroup.buttons.forEach( (button) => {
+        console.log("Iterating with", button, )
+        let $button = $("<button>");
+
+        if ( button.iconClass ) {
+          $icon = $("<i>").addClass(button.iconClass);
+          $button.append($icon);
+        }
+
+        // TODO: support the buttons that use images for icons.
+
+        $group.append($button);
+
+      });
+      console.log("About to append", $group)
+      $(".advanced-mode-controls").append($group);
     });
   }
 };
@@ -116,6 +163,7 @@ Template.compose.helpers({
       class: Template.instance().state.get('advancedMode') ? 'active' : undefined
     }
   },
+  advancedModeSettings:    () => Template.instance().advancedModeSettings,
 
   // Haiku helpers
   haikuBackgroundImage:   () => Template.instance().haiku.get('backgroundImage'),

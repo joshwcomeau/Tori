@@ -72,9 +72,17 @@
           <i class="fa fa-angle-{{advancedModeArrow}}"></i> Advanced Mode
         </h4>
 
-        {{#if advancedMode}}
-          <div class="advanced-mode-settings">
-            <span class="button-group">
+        <!-- Advanced Mode controls dynamically added here on render. -->
+        <div class="advanced-mode-controls{{#if advancedMode}} active{{/if}}"></div>
+
+            <!-- {{#each advancedModeSettings}}
+              <span class="button-group">
+                {{#each buttons}}
+                  <button><i {{attributes}}></i></button>
+                {{/each}}
+              </span>
+            {{/each}} -->
+            <!-- <span class="button-group">
               <button class="{{#if haikuHasProperty 'textAlign' 'left'}}selected{{/if}}" data-text-align="left">
                 <i class="fa fa-align-left"></i>
               </button>
@@ -96,9 +104,9 @@
             </span>
             <span class="button-group">
               <button data-toggleable="true"><i class="fa fa-tint"></i></button>
-            </span>
-          </div>
-        {{/if}}
+            </span> -->
+          <!-- </div>
+        {{/if}} -->
 
         <!-- Submit -->
         <button class='submit-haiku'>Post</button>
