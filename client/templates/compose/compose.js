@@ -108,6 +108,14 @@ Template.compose.helpers({
   showPlaceholder:        () => Template.instance().state.get('showPlaceholder'),
   highlightSyllables:     () => Template.instance().state.get('highlightSyllables'),
   advancedMode:           () => Template.instance().state.get('advancedMode'),
+  advancedModeArrow:      () => {
+    return Template.instance().state.get('advancedMode') ? 'down' : 'right'
+  },
+  advancedModeClasses:    () => {
+    return {
+      class: Template.instance().state.get('advancedMode') ? 'active' : undefined
+    }
+  },
 
   // Haiku helpers
   haikuBackgroundImage:   () => Template.instance().haiku.get('backgroundImage'),
@@ -121,10 +129,13 @@ Template.compose.helpers({
   formattedHaikuBody: function() {
     let syllables = Template.instance().haiku.get('syllables');
     let body      = Template.instance().haiku.get('body');
-    console.log("Formatting", ComposeUtils.formatSyllables(syllables, body))
     return ComposeUtils.formatSyllables(syllables, body);
   },
   syllableData:           () => Template.instance().haiku.get('syllables'),
+  haikuHasProperty:       (property, value) => {
+    console.log("Comparing", Template.instance().haiku.get(property), value)
+    return Template.instance().haiku.get(property) === value;
+  },
 
   // Misc helpers
   modalOpen:              () => UiUtils.modal.isActive('composingHaiku')
@@ -138,13 +149,7 @@ Template.compose.events({
    *  To prevent legitimate clicks from closing this window, we need to stop
    *  the event from bubbling up to the `body` element.
    */
-  'mouseup #compose': function(ev, instance) {
-    // We have a window handler to close the login popup. We want this to run
-    // except when the log-in menu, or one of its children, is clicked.
-    // Because of how events bubble, this trick will ensure that any click
-    // within the menu doesn't close the menu =)
-    ev.stopPropagation();
-  },
+  'mouseup #compose': (ev, instance) => ev.stopPropagation(),
 
   /**
    *  Close the 'compose' modal.
@@ -155,10 +160,14 @@ Template.compose.events({
   /**
    *  Focus the pseudo-textarea to begin typing
    */
-  'click .haiku': (ev) => {
-    // We want to transfer focus to the text element, which can be positioned
-    // more precisely.
-    $("#haiku-body").focus();
+  'click .haiku': ev => $("#haiku-body").focus(),
+
+  /**
+   * Toggle 'Advanced Mode'.
+   * Advanced mode features fine-grained control over text and image.
+   */
+  'click #advanced-mode-toggle': (ev, instance) => {
+    instance.state.set( 'advancedMode', !instance.state.get('advancedMode') );
   },
 
   /**
