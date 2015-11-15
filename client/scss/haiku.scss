@@ -124,13 +124,64 @@
 
   .haiku-text {
     position: absolute;
+    z-index: 1;
     font-size: 1.3rem;
   }
 }
 
+$footer-height: 3.2rem;
+
 .haiku-footer {
-  height: 3.2rem;
-  line-height: 3.2rem;
+  position: relative;
+  height: $footer-height;
+
+  .haiku-author {
+    position: relative;
+    white-space: nowrap;
+
+    .portrait {
+      position: relative;
+      width: $footer-height*1.5;
+      height: $footer-height*1.5;
+      background-size: cover;
+      background-position: center center;
+      margin: 0 1rem;
+      top: -$footer-height/4;
+      border-radius: 100%;
+      border: 3px solid $white;
+    }
+
+    .author-and-time {
+      position: absolute;
+      top: 0;
+      left: $footer-height*1.5 + 2rem;
+      bottom: 0;
+
+
+      .author-name {
+        position: absolute;
+        top: 0.8rem;
+        left: 0;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #333;
+        line-height: 1rem;
+
+        &:hover {
+          color: darken($green, 10%);
+        }
+      }
+      .relative-date {
+        position: absolute;
+        bottom: 0.6rem;
+        left: 0;
+        font-size: 0.7rem;
+        font-weight: 300;
+        color: #666;
+        line-height: 0.6rem;
+      }
+    }
+  }
 
   .haiku-actions {
     text-align: right;
@@ -138,13 +189,14 @@
     left: 0;
     right: 0;
     bottom: 0;
-
-    color: #222;
     background: $white;
 
     li {
       display: inline-block;
-      padding: 0 1rem;
+      padding: 0;
+      line-height: $footer-height * 1.1;
+      width: 4rem;
+      text-align: left;
 
       &.liked {
         // the user likes this haiku.
@@ -156,20 +208,27 @@
       }
 
       button {
+        position: relative;
         margin: 0;
         padding: 0;
-        width: 3.2rem;
-        height: 3.2rem;
-        background: #F00;
+        width: 2rem;
+        height: $footer-height;
+        background: transparent;
         border: 0;
         outline: none;
+        color: #222;
+        text-align: center;
+
+        i { }
+
       }
-
-
       .count {
-        display: inline-block;
-        padding-left: 0.5rem;
+        font-size: 0.7rem;
+        font-weight: 700;
       }
+
+
+
     }
   }
 }

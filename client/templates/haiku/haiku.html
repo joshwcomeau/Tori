@@ -10,11 +10,14 @@
   data-overlay-color="{{overlayColor}}"
   data-overlay-direction="{{overlayDirection}}"
   style="{{#if backgroundImage}}background-image: url({{backgroundImage}});{{/if}}">
-    <div class="visibility-gradient"></div>
 
     <div class="haiku-text">
       {{{body}}}
     </div>
-  </div>
 
+    {{#if showOverlay}}
+      <div class="visibility-gradient"></div>
+    {{/if}}
+
+  </div>
 </template>

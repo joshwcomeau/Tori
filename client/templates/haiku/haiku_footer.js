@@ -9,8 +9,20 @@ Template.haikuFooter.helpers({
   doesLike: function() {
     return Likes.findOne({ haikuId: this._id })
   },
-  authorProfilePhoto: function() {
-    console.log(this);
+  portraitAttr: function() {
+    return {
+      class: "portrait",
+      style: `background-image: url('${this.author.photo}')`
+    };
+  },
+  authorLinkAttr: function() {
+    return {
+      class: 'author-name',
+      href: `/${this.author.username}`
+    }
+  },
+  relativeDate: function() {
+    return moment(this.createdAt).fromNow();
   }
 });
 
