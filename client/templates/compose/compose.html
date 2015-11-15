@@ -20,7 +20,7 @@
         data-overlay-color="{{haikuOverlayColor}}"
         data-overlay-direction="{{haikuOverlayDirection}}"
         data-include-actions="false"
-        style="{{#if haikuBackgroundImage}}background-image: url({{haikuBackgroundImage}});{{/if}}">
+        style="{{#if haikuBackgroundImage}}background-image: url('{{haikuBackgroundImage}}');{{/if}}">
 
           <!-- OUR MAIN HAIKU. What the app listens to -->
           <div id="haiku-body" class="haiku-text" contenteditable="true"></div>
@@ -40,6 +40,11 @@
           <!-- An overlay that makes text more legible. -->
           {{#if haikuShowOverlay}}
             <div class="visibility-gradient"></div>
+          {{/if}}
+
+          <!-- Progress bar for uploading images -->
+          {{#if showProgressBar}}
+            <div class="progress-bar" style="width: {{progress}}%"></div>
           {{/if}}
         </div>
 

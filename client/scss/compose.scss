@@ -49,6 +49,17 @@
       opacity: 0.6;
       pointer-events:none;
     }
+
+    .progress-bar {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 10px;
+      width: 0; // overwritten by Javascript on upload
+      background-color: $grass;
+      border-radius: 0 0 2px 2px;
+      transition: 0.3s;
+    }
   }
 
 

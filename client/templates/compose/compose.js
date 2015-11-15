@@ -1,6 +1,4 @@
 Template.compose.onCreated(function() {
-  this.backgroundImage = new ReactiveVar(null);
-  this.usingPresetBackground = new ReactiveVar(false);
   this.uploader = new Slingshot.Upload("background");
 
   this.haiku = new ReactiveDict('haiku');
@@ -145,8 +143,9 @@ Template.compose.helpers({
   },
 
   // Misc helpers
-  modalOpen:              () => UiUtils.modal.isActive('composingHaiku')
-
+  modalOpen:              () => UiUtils.modal.isActive('composingHaiku'),
+  showProgressBar:        () => Template.instance().uploader.progress() < 1,
+  progress:               () => Template.instance().uploader.progress() * 100
 });
 
 
@@ -236,17 +235,6 @@ Template.compose.events({
   'change .upload-background': function(ev, instance) {
     ev.preventDefault();
 
-    instance.usingPresetBackground.set(false);
-
-    // Latency compensation
-    Tracker.autorun( () => {
-      // If we've switched over to using a preset, don't un-set the preset
-      // when our upload completes and the upload URL changes.
-      if ( !instance.usingPresetBackground.get() ) {
-        instance.haiku.set( 'backgroundImage', instance.uploader.url(true) );
-      }
-    });
-
     // Mark the 'upload' button (instead of one of the preset thumbs) as selected.
     $('.background-select-option').removeClass('selected');
     $(ev.target).addClass('selected');
@@ -257,6 +245,7 @@ Template.compose.events({
         console.error('Error uploading', instance.uploader.xhr.response);
         alert (error);
       }
+      instance.haiku.set( 'backgroundImage', image_url );
     });
   },
 
