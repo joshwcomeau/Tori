@@ -12,7 +12,7 @@ Template.sidebar.helpers({
     }
     // Otherwise, if we're logged in, show our own
     if ( Meteor.user() ) {
-      return Meteor.user().profile;
+      return Meteor.user();
     }
     // If we're not logged in, we shouldn't be on a page that has a sidebar.
   },
@@ -23,6 +23,14 @@ Template.sidebar.helpers({
         FlowRouter.getParam('profile_name')
       );
     }
+  },
+  showFollowButton: () => {
+    let profileName = FlowRouter.getParam('profile_name');
+
+    // If we're not on a user's profile page, we definitely don't want to show it
+    if ( !profileName ) return false;
+
+    return UserUtils.isCurrentUserFollowing(profileName);
   }
 });
 

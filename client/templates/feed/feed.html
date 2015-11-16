@@ -1,3 +1,12 @@
 <template name="feed">
-  <h3>Your Feed</h3>
+  <div id="feed">
+    <div class="card">
+      {{#each haikus}}
+        {{> haiku}}
+        {{> haikuFooter}}
+      {{/each}}
+    </div>
+  </div>
+
+
 </template>

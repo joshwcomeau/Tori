@@ -46,3 +46,12 @@ Meteor.publish('activeHaiku', function(haiku_id) {
     Events.find({ haikuId: haiku_id })
   ];
 });
+
+Meteor.publish('homeFeed', function() {
+  // Find all Haikus from people we are following
+  let followedByUserCursor = Follows.find({ fromUserId: this.userId });
+  let authorIds = followedByUserCursor.map( follow => follow.toUserId );
+  let haikuCursor = Haikus.find({ userId: { $in: authorIds } });
+
+  return followedByUserCursor, haikuCursor;
+})
