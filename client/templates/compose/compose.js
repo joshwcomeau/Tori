@@ -1,6 +1,12 @@
+Template.compose.onDestroyed( function() {
+  console.log("Running on destroyed", ReactiveDict._dicsToMigrate);
+  delete ReactiveDict._dictsToMigrate['haiku'];
+  delete ReactiveDict._dictsToMigrate['state'];
+});
+
 Template.compose.onCreated(function() {
   this.uploader = new Slingshot.Upload("background");
-
+  console.log("Running on created!")
   this.haiku = new ReactiveDict('haiku');
   this.haiku.set({
     body:             '',

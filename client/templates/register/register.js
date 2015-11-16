@@ -78,6 +78,9 @@ Template.register.events({
         password: $("#password").val()
       }
 
+      // TODO: Call this on the server, inside a Method, so I can do some
+      // additional verifications. Ensure no one tries to use reserved
+      // keywords like 'register' or 'haiku' for their username.
       Accounts.createUser(user_fields);
     }
   }

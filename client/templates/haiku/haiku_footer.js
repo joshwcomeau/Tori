@@ -7,7 +7,10 @@ Template.haikuFooter.onCreated(function() {
 
 Template.haikuFooter.helpers({
   doesLike: function() {
-    return Likes.findOne({ haikuId: this._id })
+    return Events.findOne({
+      haikuId: this._id,
+      type: 'like'
+    });
   },
   portraitAttr: function() {
     return {
@@ -23,6 +26,13 @@ Template.haikuFooter.helpers({
   },
   relativeDate: function() {
     return moment(this.createdAt).fromNow();
+  },
+  humanizedShares: function() {
+    return this.shares > 0 ? this.shares : '';
+  },
+  humanizedLikes: function() {
+    // TODO: Util that makes the numbers nicer. '3.2k' instead of '3278'.
+    return this.likes > 0 ? this.likes : '';
   }
 });
 

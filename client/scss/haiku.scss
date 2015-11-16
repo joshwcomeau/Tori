@@ -145,7 +145,7 @@ $footer-height: 3.2rem;
       height: $footer-height*1.5;
       background-size: cover;
       background-position: center center;
-      margin: 0 1rem;
+      margin: 0 0.5rem;
       top: -$footer-height/4;
       border-radius: 100%;
       border: 3px solid $white;
@@ -154,7 +154,7 @@ $footer-height: 3.2rem;
     .author-and-time {
       position: absolute;
       top: 0;
-      left: $footer-height*1.5 + 2rem;
+      left: $footer-height*1.5 + 1rem;
       bottom: 0;
 
 
@@ -231,4 +231,43 @@ $footer-height: 3.2rem;
 
     }
   }
+}
+
+$event-row-height: 3rem;
+.haiku-events {
+  background: $lightgray !important;
+  line-height: $event-row-height;
+  padding: 2rem;
+
+  li {
+    padding: 0 1rem;
+    border-bottom: 1px solid $mediumgray;
+  }
+
+  .event-icon {
+    display: inline-block;
+    font-size: 1.25rem;
+
+    .fa-heart {
+      color: $fuscia;
+    }
+  }
+
+  .event-description {
+    display: inline-block;
+    padding: 0 1rem;
+
+    strong {
+      font-weight: 700;
+    }
+  }
+
+  .event-timestamp {
+    display: inline-block;
+    float: right;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #555;
+  }
+
 }

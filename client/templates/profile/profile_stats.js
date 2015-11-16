@@ -1,5 +1,5 @@
 Template.profileStats.onCreated(function() {
-  this.autorun( () => this.subscribe('activeProfile', FlowRouter.getParam('profile_name')) );
+  this.autorun( () => this.subscribe('activeProfile', FlowRouter.getParam('profile_name').toLowerCase()) );
 });
 
 Template.profileStats.helpers({

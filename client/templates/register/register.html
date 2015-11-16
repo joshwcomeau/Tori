@@ -11,11 +11,11 @@
         <div class="card-body">
           <!-- Step 1 - Auth info like email/pass, or Oauth verification -->
           {{#unless currentUser}}
-            <button class="twitter">
+            <button class="button twitter">
               <i class="fa fa-twitter"></i>
               Sign Up With Twitter
             </button>
-            <button class="google">
+            <button class="button google">
               <i class="fa fa-google-plus"></i>
               Sign Up With Google
             </button>
@@ -45,7 +45,7 @@
               <span class="error-message">{{errorMessage 'password'}}</span>
             </div>
 
-            <button {{firstButtonAttributes}}>
+            <button class="button">
               <i class="fa fa-caret-right right"></i>
               Continue
             </button>

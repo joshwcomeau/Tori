@@ -1,0 +1,13 @@
+<template name="haikuShow">
+  <div id="haiku-show">
+    {{#if Template.subscriptionsReady}}
+      {{#with selectedHaiku}}
+        <div class="card">
+          {{> haiku }}
+          {{> haikuFooter }}
+          {{> haikuEventsList }}
+        </div>
+      {{/with}}
+    {{/if}}
+  </div>
+</template>
