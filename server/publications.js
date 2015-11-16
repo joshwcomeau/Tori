@@ -51,7 +51,11 @@ Meteor.publish('homeFeed', function() {
   // Find all Haikus from people we are following
   let followedByUserCursor = Follows.find({ fromUserId: this.userId });
   let authorIds = followedByUserCursor.map( follow => follow.toUserId );
-  let haikuCursor = Haikus.find({ userId: { $in: authorIds } });
+
+  // Naturally, I'm allowed to see my own haikus as well.
+  authorIds.push( this.userId );
+
+  let haikuCursor = Haikus.find({ userId: { $in: authorIds } }, { sort: { createdAt: -1} });
 
   return followedByUserCursor, haikuCursor;
 })

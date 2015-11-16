@@ -36,6 +36,8 @@ Meteor.startup(function() {
       textColor: 'white',
       textAlign: 'left',
       textValign: 'bottom',
+      showOverlay: false,
+      showBackground: true,
       backgroundImage: '/images/sample-background-3.jpg',
       userId: rollingHillsId,
       author: {
@@ -51,6 +53,8 @@ Meteor.startup(function() {
       textColor: 'black',
       textAlign: 'center',
       textValign: 'center',
+      showOverlay: false,
+      showBackground: false,
       author: {
         displayName: rollingHills.profile.displayName,
         photo: rollingHills.profile.photo
@@ -65,6 +69,8 @@ Meteor.startup(function() {
       textColor: 'black',
       textAlign: 'left',
       textValign: 'center',
+      showOverlay: false,
+      showBackground: false,
       author: {
         displayName: poet.profile.displayName,
         photo: poet.profile.photo

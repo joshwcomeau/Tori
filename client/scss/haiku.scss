@@ -1,14 +1,36 @@
 @import 'variables';
 @import "{francocatena:compass}/compass";
 
+.haikus-list {
+  overflow: hidden;
+}
+
+.haikus-list > li {
+  position: relative;
+  border-top: 2px solid $white;
+
+  &:first-of-type {
+    border-top: none;
+
+    .haiku {
+      border-radius: 2px 2px 0 0;
+    }
+  }
+}
+
 .haiku {
   position: relative;
   background-position: center center;
   background-size: cover;
+  background-color: $white;
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;
   height: 11rem;
+
+  &.with-white-bg {
+    border-top: 1px solid #EEE;
+  }
 
   ///////////////// PROPERTIES /////////////////
 
@@ -65,6 +87,12 @@
     }
   }
 
+  // Image On/Off
+  // (styles for haikus without images)
+  &[data-show-image="false"] {
+    border-top: 1px solid #EEE;
+  }
+
   // Image Horizontal Position
   $horizontal-align: ('left', 'center', 'right');
   $vertical-align: ('top', 'center', 'bottom');
@@ -74,6 +102,13 @@
       &[data-background-align="#{$horizontal}"][data-background-valign="#{$vertical}"] {
         background-position: #{$horizontal} #{$vertical};
       }
+    }
+  }
+
+  // Overlay On/Off
+  &[data-show-overlay='true'] {
+    .visibility-gradient {
+      display: block;
     }
   }
 
@@ -116,6 +151,7 @@
 
   .visibility-gradient {
     position: absolute;
+    display: none; // Toggled on by data attributes, specified above.
     z-index: 0;
     top: 0;
     left: 0;
@@ -135,6 +171,14 @@ $footer-height: 3.2rem;
 .haiku-footer {
   position: relative;
   height: $footer-height;
+
+  &.haiku-has-white-bg {
+    border-top: 3px solid $green;
+  }
+  &.haiku-has-bg-image {
+
+  }
+
 
   .haiku-author {
     position: relative;
@@ -243,6 +287,16 @@ $event-row-height: 3rem;
   li {
     padding: 0 1rem;
     border-bottom: 1px solid $mediumgray;
+
+    &.placeholder {
+      border-bottom: none;
+      padding: 1rem 2rem;
+      font-style: italic;
+      font-size: 1.2rem;
+      font-weight: 300;
+      text-align: center;
+      color: darken($mediumgray, 15%);
+    }
   }
 
   .event-icon {

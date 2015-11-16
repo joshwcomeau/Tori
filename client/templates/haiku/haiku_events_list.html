@@ -1,9 +1,13 @@
 <template name="haikuEventsList">
   <div class="card haiku-events">
     <ul>
-      {{#each events}}
-        {{> haikuEvent}}
-      {{/each}}
+      {{#if noEvents}}
+        <li class="placeholder">Nobody's liked this Haiku yet. Be the first!</li>
+      {{else}}
+        {{#each events}}
+          {{> haikuEvent}}
+        {{/each}}
+      {{/if}}
     </ul>
   </div>
 </template>

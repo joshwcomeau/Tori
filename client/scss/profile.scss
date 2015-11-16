@@ -35,25 +35,12 @@
     margin-top: 2rem;
     font-weight: $fw-medium;
 
-    .haikus-list > li {
-      position: relative;
-      border-top: 2px solid $white;
+    .haiku {
+      height: 13rem;
+      // MOST haiku styles are in their own file, haiku.scss
 
-      &:first-of-type {
-        border-top: none;
-
-        .haiku {
-          border-radius: 2px 2px 0 0;
-        }
-      }
-
-
-      .haiku {
-        height: 13rem;
-        // MOST haiku styles are in their own file, haiku.scss
-
-      }
     }
+
 
 
 

@@ -6,6 +6,14 @@ Template.haikuFooter.onCreated(function() {
 });
 
 Template.haikuFooter.helpers({
+  footerClasses: function() {
+    // If this HAiku has a background image, it'll be styled differently in CSS.
+    if ( !!this.backgroundImage ) {
+      return "haiku-has-bg-image";
+    } else {
+      return "haiku-has-white-bg";
+    }
+  },
   doesLike: function() {
     return Events.findOne({
       haikuId: this._id,

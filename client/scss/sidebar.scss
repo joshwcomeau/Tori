@@ -7,9 +7,9 @@
   width: $size-sidebar;
   background: $green;
   padding-top: $size-header + 2rem;
-  color: #FFF;
+  color: $white;
   text-align: center;
-  
+
   .profile-image {
     position: relative;
     margin: 0 auto;
@@ -20,55 +20,55 @@
     background-position: center center;
     border: 3px solid $white;
   }
-  
+
   h5 {
     margin: 0.4rem 0;
     font-size: 1.3rem;
   }
-  
+
   p {
     padding: 0 1rem;
   }
-  
+
   .link {
     margin: 1.5rem 0;
   }
-  
+
   .follow {
     border: 0;
     outline: 0;
     border-radius: 2rem;
     padding: 0.5rem;
     width: $size-sidebar * 0.5;
-    
+
     &.not-following {
       background: rgba(0,0,0,0.1);
       transition: background 0.5s;
 
-      
+
       &:hover {
         background: rgba(0,0,0,0.2);
         transition: background 0.2s;
       }
-      
+
       &:before {
         content: 'Follow';
       }
     }
-    
+
     &.following {
       background: $yellow;
       transition: background 0.5s;
       font-weight: $fw-medium;
-      
+
       &:before {
         content: 'Following';
       }
-      
+
       &:hover {
         background: $orange;
         transition: background 0.2s;
-        
+
         &:before {
           content: 'Unfollow';
         }
