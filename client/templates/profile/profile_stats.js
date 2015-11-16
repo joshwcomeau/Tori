@@ -1,9 +1,11 @@
 Template.profileStats.onCreated(function() {
-  this.autorun( () => this.subscribe('activeProfile', FlowRouter.getParam('profile_name').toLowerCase()) );
+  this.autorun( () => this.subscribe(
+    'activeProfile', FlowRouter.getParam('profile_name'))
+  );
 });
 
 Template.profileStats.helpers({
   profile: function() {
-    return UserUtils.findUserByProfileName( FlowRouter.getParam('profile_name').toLowerCase() );
+    return UserUtils.findUserByProfileName( FlowRouter.getParam('profile_name') );
   }
 });

@@ -1,19 +1,29 @@
 Meteor.publish('activeProfile', function(profile_name) {
-  return Meteor.users.find({ username: profile_name });
+  // Return the active profile, and whether or not the current user is
+  // following it
+  if (profile_name) profile_name = profile_name.toLowerCase();
+
+  let publications = [Meteor.users.find({ username: profile_name })]
+
+  if ( this.userId ) {
+    let user_profile = Meteor.users.findOne({ username: profile_name });
+    if ( user_profile ) {
+      publications.push( Follows.find({
+        fromUserId: this.userId,
+        toUserId: user_profile._id
+      }) );
+    }
+  }
+
+  return publications;
 });
 
 Meteor.publish('activeProfileHaikus', function(profile_name) {
   // TODO: Combine this into activeProfile?
+  if (profile_name) profile_name = profile_name.toLowerCase();
+
   let user_id = Meteor.users.findOne({ username: profile_name })._id;
   return Haikus.find({ userId: user_id });
-});
-
-Meteor.publish('followingActiveProfile', function(profile_name) {
-  let user_id = Meteor.users.findOne({ username: profile_name })._id;
-  return Follows.find({
-    fromUserId: this.userId,
-    toUserId: user_id
-  });
 });
 
 Meteor.publish('myLikesForHaiku', function(haiku_id) {
