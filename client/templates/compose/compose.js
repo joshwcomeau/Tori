@@ -1,12 +1,10 @@
 Template.compose.onDestroyed( function() {
-  console.log("Running on destroyed", ReactiveDict._dicsToMigrate);
   delete ReactiveDict._dictsToMigrate['haiku'];
   delete ReactiveDict._dictsToMigrate['state'];
 });
 
 Template.compose.onCreated(function() {
   this.uploader = new Slingshot.Upload("background");
-  console.log("Running on created!")
   this.haiku = new ReactiveDict('haiku');
   this.haiku.set({
     body:             '',
@@ -224,7 +222,6 @@ Template.compose.events({
       data = _.omit(data, 'toggleable');
       _.keys(data).forEach( (dataKey) => {
         let current_value = instance.haiku.get(dataKey);
-        console.log("Current value for", dataKey, "is", current_value)
         instance.haiku.set(dataKey, !current_value);
       });
     } else {
@@ -307,32 +304,8 @@ Template.compose.events({
     // colletion. They'll run simultaneously on client and server.
 
     Meteor.call('publishHaiku', haiku, (err, result) => {
-      console.log("Publish callback", err, result);
-
       if (result == true) UiUtils.modal.deactivate();
     });
-    // return false.
-    //
-    // console.log( typeof instance.haiku.keys.syllables);
-    // console.log( typeof instance.haiku.get('syllables'));
-    // return false
-    //
-    // if ( haikuLines.length > 3 ) {
-    //   // TODO: Error handling & displaying for too many lines
-    //   alert("Too many lines!")
-    //   return false;
-    // } else if ( haikuLines.length < 3 ) {
-    //   // TODO: Error handling & displaying for too few
-    //   alert("Too few lines!")
-    //   return false;
-    // }
-    //
-    //
-    //
-    // Meteor.call('postHaiku', instance.haiku);
-    //
-    // Session.set('composingHaiku', false);
-    //
     // TODO: Redirect to my profile page so I can see the Haiku I just posted?
   }
 });

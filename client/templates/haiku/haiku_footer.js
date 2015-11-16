@@ -9,6 +9,7 @@ Template.haikuFooter.helpers({
   doesLike: function() {
     return Events.findOne({
       haikuId: this._id,
+      "from.userId": Meteor.user()._id,
       type: 'like'
     });
   },

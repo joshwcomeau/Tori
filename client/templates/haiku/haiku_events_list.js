@@ -3,7 +3,6 @@
 // the URL params. This feels slightly less decoupled.
 Template.haikuEventsList.helpers({
   events: function() {
-    console.log("Searching for", this, this._id)
     return Events.find({ haikuId: this._id})
   }
 });

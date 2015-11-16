@@ -61,10 +61,6 @@ wordList = fs.readFile(dict_path, 'utf-8', function(err, data) {
     // Check if our validate comes up with the same solution
     validated_word = validate(word);
 
-    if ( typeof validated_word !== 'object' ) {
-      console.log("VALIDATED WORD IS NOT AN ARRAY", validated_word, word)
-    }
-
     if ( validate(word).length != syllables_array.length ) {
       exception_count++;
       exceptions[word] = syllables_array;
