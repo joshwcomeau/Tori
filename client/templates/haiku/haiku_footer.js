@@ -26,6 +26,15 @@ Template.haikuFooter.helpers({
       type: 'like'
     });
   },
+  hasShared: function() {
+    if ( !Meteor.user() ) return false;
+
+    return Events.findOne({
+      haikuId: this._id,
+      fromUserId: Meteor.user()._id,
+      type: 'share'
+    })
+  },
   portraitAttr: function() {
     return {
       class: "portrait",
@@ -53,6 +62,10 @@ Template.haikuFooter.helpers({
 Template.haikuFooter.events({
   'click .like': function(ev, instance) {
     let haiku_id = instance.data._id;
-    Meteor.call('toggleLike', haiku_id);
+    Meteor.call('toggleEvent', haiku_id, 'like');
+  },
+  'click .share': function(ev, instance) {
+    let haiku_id = instance.data._id;
+    Meteor.call('toggleEvent', haiku_id, 'share');
   }
 });
