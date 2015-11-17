@@ -38,14 +38,18 @@ Meteor.publish('myLikesForHaiku', function(haiku_id) {
 });
 
 Meteor.publish('activeHaiku', function(haiku_id) {
+  let query = {
+    $or: [
+      { _id:          haiku_id },
+      { shareOfId:    haiku_id },
+      { inReplyToId:  haiku_id }
+    ]
+  };
+  let options = { sort: { createdAt: -1} }
+
+  getHaikusWithAuthors(this, query, options);
+
   return [
-    Haikus.find({
-      $or: [
-        { _id:          haiku_id },
-        { shareOfId:    haiku_id },
-        { inReplyToId:  haiku_id }
-      ]
-    }),
     Events.find({ haikuId: haiku_id })
   ];
 });
@@ -68,20 +72,42 @@ Meteor.publish('homeFeed', function() {
 
 
 // HELPERS
+function publishAssociatedUser(userId, handles) {
+  let userCursor = Meteor.users.find({_id: userId });
+  handles[userId] = Mongo.Collection._publishCursor(userCursor, sub, 'users');
+}
+
+function getEventsWithUsers(haikuId) {
+  // Takes a cursor for events, and finds event users
+  let query   = { haikuId: haikuId };
+  let options = { sort: { createdAt: -1} };
+
+  let userHandles = {};
+
+  let eventsHandle = Events.find(query, options).observeChanges({
+    added: function(id, event) {
+      publishAssociatedUser(event.fromUserId, userHandles);
+      sub.added('events', id, event);
+    },
+    changed: function(id, fields) {
+      sub.changed('events', id, fields);
+    },
+    removed: function(id) {
+      if ( )
+    }
+  });
+}
 
 function getHaikusWithAuthors(sub, query, options) {
-  function publishHaikuAuthor(haikuId, haiku) {
-    let userCursor = Meteor.users.find({_id: haiku.userId });
-    userHandles[haikuId] = Mongo.Collection._publishCursor(userCursor, sub, 'users');
-  }
 
-  let userHandles = [];
+
+  let userHandles = {};
 
   let haikuHandle = Haikus.find(query, options).observeChanges({
     added: function(id, haiku) {
       // In addition to publishing this new Haiku, we need to fetch and
       // publish its author!
-      publishHaikuAuthor(id, haiku);
+      publishAssociatedUser(haiku.userId, userHandles);
 
       sub.added('haikus', id, haiku);
     },

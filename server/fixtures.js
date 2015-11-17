@@ -77,16 +77,8 @@ Meteor.startup(function() {
       type: 'like',
       seen: false,
       haikuId: haiku_id,
-      to: {
-        userId: rollingHillsId,
-        username: rollingHills.username,
-        displayName: rollingHills.profile.displayName
-      },
-      from: {
-        userId: poetId,
-        username: poet.username,
-        displayName: poet.profile.displayName
-      }
+      toUserId: rollingHillsId,
+      fromUserId: poetId
     });
 
     console.log("Fixture data inserted!");

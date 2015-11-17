@@ -284,6 +284,11 @@ $event-row-height: 3rem;
   line-height: $event-row-height;
   padding: 2rem;
 
+  a {
+    font-weight: 700;
+    color: #111;
+  }
+
   li {
     padding: 0 1rem;
     border-bottom: 1px solid $mediumgray;

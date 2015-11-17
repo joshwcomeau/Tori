@@ -22,7 +22,7 @@ Template.haikuFooter.helpers({
 
     return Events.findOne({
       haikuId: this._id,
-      "from.userId": Meteor.user()._id,
+      fromUserId: Meteor.user()._id,
       type: 'like'
     });
   },
