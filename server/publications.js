@@ -29,29 +29,27 @@ Meteor.publish('activeProfileHaikus', function(profile_name) {
 });
 
 
-Meteor.publish('myLikesForHaiku', function(haiku_id) {
+Meteor.publish('myLikesForHaiku', function(haikuId) {
   return Events.find({
     type: 'like',
-    haikuId: haiku_id,
-    "from.userId": this.userId
+    haikuId: haikuId,
+    fromUserId: this.userId
   });
 });
 
-Meteor.publish('activeHaiku', function(haiku_id) {
+Meteor.publish('activeHaiku', function(haikuId) {
   let query = {
     $or: [
-      { _id:          haiku_id },
-      { shareOfId:    haiku_id },
-      { inReplyToId:  haiku_id }
+      { _id:          haikuId },
+      { shareOfId:    haikuId },
+      { inReplyToId:  haikuId }
     ]
   };
   let options = { sort: { createdAt: -1} }
 
   getHaikusWithAuthors(this, query, options);
+  getEventsWithUsers(this, haikuId);
 
-  return [
-    Events.find({ haikuId: haiku_id })
-  ];
 });
 
 Meteor.publish('homeFeed', function() {
@@ -72,12 +70,12 @@ Meteor.publish('homeFeed', function() {
 
 
 // HELPERS
-function publishAssociatedUser(userId, handles) {
+function publishAssociatedUser(userId, handles, sub) {
   let userCursor = Meteor.users.find({_id: userId });
   handles[userId] = Mongo.Collection._publishCursor(userCursor, sub, 'users');
 }
 
-function getEventsWithUsers(haikuId) {
+function getEventsWithUsers(sub, haikuId) {
   // Takes a cursor for events, and finds event users
   let query   = { haikuId: haikuId };
   let options = { sort: { createdAt: -1} };
@@ -86,28 +84,31 @@ function getEventsWithUsers(haikuId) {
 
   let eventsHandle = Events.find(query, options).observeChanges({
     added: function(id, event) {
-      publishAssociatedUser(event.fromUserId, userHandles);
+      publishAssociatedUser(event.fromUserId, userHandles, sub);
       sub.added('events', id, event);
     },
     changed: function(id, fields) {
       sub.changed('events', id, fields);
     },
     removed: function(id) {
-      if ( )
+      if ( userHandles[id] ) userHandles[id].stop();
+      sub.removed('events', id);
     }
   });
+  sub.ready();
+
+  sub.onStop( () => eventsHandle.stop() );
+
 }
 
 function getHaikusWithAuthors(sub, query, options) {
-
-
   let userHandles = {};
 
   let haikuHandle = Haikus.find(query, options).observeChanges({
     added: function(id, haiku) {
       // In addition to publishing this new Haiku, we need to fetch and
       // publish its author!
-      publishAssociatedUser(haiku.userId, userHandles);
+      publishAssociatedUser(haiku.userId, userHandles, sub);
 
       sub.added('haikus', id, haiku);
     },
