@@ -20,11 +20,45 @@ Meteor.publish('activeProfile', function(profile_name) {
 
 Meteor.publish('activeProfileHaikus', function(profile_name) {
   // TODO: Combine this into activeProfile?
+  // if (profile_name) profile_name = profile_name.toLowerCase();
+  //
+  // let user_id = Meteor.users.findOne({ username: profile_name })._id;
+  // return Haikus.find({ userId: user_id });
   if (profile_name) profile_name = profile_name.toLowerCase();
 
+  let userHandles = [];
+  let sub = this;
+
+  function publishHaikuAuthor(haikuId, haiku) {
+    let userCursor = Meteor.users.find({_id: haiku.userId });
+    userHandles[haikuId] = Mongo.Collection._publishCursor(userCursor, sub, 'users')
+  }
+
   let user_id = Meteor.users.findOne({ username: profile_name })._id;
-  return Haikus.find({ userId: user_id });
+
+  let haikuHandle = Haikus.find({ userId: user_id }).observeChanges({
+    added: function(id, haiku) {
+      // In addition to publishing this new Haiku, we need to fetch and
+      // publish its author!
+      publishHaikuAuthor(id, haiku);
+
+      sub.added('haikus', id, haiku);
+    },
+    changed: function(id, fields) {
+      sub.changed('haikus', id, fields);
+    },
+    removed: function(id) {
+      if ( userHandles[id] ) userHandles[id].stop();
+      sub.removed('haikus', id);
+    }
+  });
+
+  sub.ready();
+
+  sub.onStop( () => haikuHandle.stop() );
+
 });
+
 
 Meteor.publish('myLikesForHaiku', function(haiku_id) {
   return Events.find({

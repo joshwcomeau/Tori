@@ -1,14 +1,16 @@
 <template name="haikuFooter">
   <div class="haiku-footer flex {{footerClasses}}">
-    <div class="haiku-author flex-item">
-      <div {{portraitAttr}}></div>
-      <div class="author-and-time">
-        <a {{authorLinkAttr}}>{{author.displayName}}</a>
-        <br>
-        <span class="relative-date">{{relativeDate}}</span>
+    {{#with author}}
+      <div class="haiku-author flex-item">
+        <div {{portraitAttr}}></div>
+        <div class="author-and-time">
+          <a {{authorLinkAttr}}>{{profile.displayName}}</a>
+          <br>
+          <span class="relative-date">{{relativeDate}}</span>
+        </div>
       </div>
+    {{/with}}
 
-    </div>
     <ul class="haiku-actions">
       <li class="{{#if hasShared}}shared{{else}}not-shared{{/if}}">
         <button class="share">

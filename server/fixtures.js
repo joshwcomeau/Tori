@@ -40,10 +40,6 @@ Meteor.startup(function() {
       showBackground: true,
       backgroundImage: '/images/sample-background-3.jpg',
       userId: rollingHillsId,
-      author: {
-        displayName: rollingHills.profile.displayName,
-        photo: rollingHills.profile.photo
-      },
       createdAt: moment().subtract(33, 'minutes').toISOString(),
       retweets: 4
     });
@@ -55,10 +51,6 @@ Meteor.startup(function() {
       textValign: 'center',
       showOverlay: false,
       showBackground: false,
-      author: {
-        displayName: rollingHills.profile.displayName,
-        photo: rollingHills.profile.photo
-      },
       userId: rollingHillsId,
       createdAt: moment().subtract(2, 'hours').toISOString(),
       likes: 2
@@ -71,10 +63,6 @@ Meteor.startup(function() {
       textValign: 'center',
       showOverlay: false,
       showBackground: false,
-      author: {
-        displayName: poet.profile.displayName,
-        photo: poet.profile.photo
-      },
       userId: poetId,
       createdAt: moment().subtract(2, 'hours').toISOString(),
       likes: 2

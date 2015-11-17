@@ -6,6 +6,9 @@ Template.haikuFooter.onCreated(function() {
 });
 
 Template.haikuFooter.helpers({
+  author: function() {
+    return Meteor.users.findOne({ _id: this.userId });
+  },
   footerClasses: function() {
     // If this HAiku has a background image, it'll be styled differently in CSS.
     if ( !!this.backgroundImage ) {
@@ -15,6 +18,8 @@ Template.haikuFooter.helpers({
     }
   },
   doesLike: function() {
+    if ( !Meteor.user() ) return false;
+
     return Events.findOne({
       haikuId: this._id,
       "from.userId": Meteor.user()._id,
@@ -24,13 +29,13 @@ Template.haikuFooter.helpers({
   portraitAttr: function() {
     return {
       class: "portrait",
-      style: `background-image: url('${this.author.photo}')`
+      style: `background-image: url('${this.profile.photo}')`
     };
   },
   authorLinkAttr: function() {
     return {
       class: 'author-name',
-      href: `/${this.author.username}`
+      href: `/${this.username}`
     }
   },
   relativeDate: function() {
