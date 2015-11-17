@@ -19,44 +19,13 @@ Meteor.publish('activeProfile', function(profile_name) {
 });
 
 Meteor.publish('activeProfileHaikus', function(profile_name) {
-  // TODO: Combine this into activeProfile?
-  // if (profile_name) profile_name = profile_name.toLowerCase();
-  //
-  // let user_id = Meteor.users.findOne({ username: profile_name })._id;
-  // return Haikus.find({ userId: user_id });
   if (profile_name) profile_name = profile_name.toLowerCase();
-
-  let userHandles = [];
-  let sub = this;
-
-  function publishHaikuAuthor(haikuId, haiku) {
-    let userCursor = Meteor.users.find({_id: haiku.userId });
-    userHandles[haikuId] = Mongo.Collection._publishCursor(userCursor, sub, 'users')
-  }
-
   let user_id = Meteor.users.findOne({ username: profile_name })._id;
 
-  let haikuHandle = Haikus.find({ userId: user_id }).observeChanges({
-    added: function(id, haiku) {
-      // In addition to publishing this new Haiku, we need to fetch and
-      // publish its author!
-      publishHaikuAuthor(id, haiku);
+  let query   = { userId: user_id }
+  let options = { sort: { createdAt: -1} }
 
-      sub.added('haikus', id, haiku);
-    },
-    changed: function(id, fields) {
-      sub.changed('haikus', id, fields);
-    },
-    removed: function(id) {
-      if ( userHandles[id] ) userHandles[id].stop();
-      sub.removed('haikus', id);
-    }
-  });
-
-  sub.ready();
-
-  sub.onStop( () => haikuHandle.stop() );
-
+  getHaikusWithAuthors(this, query, options);
 });
 
 
@@ -89,7 +58,43 @@ Meteor.publish('homeFeed', function() {
   // Naturally, I'm allowed to see my own haikus as well.
   authorIds.push( this.userId );
 
-  let haikuCursor = Haikus.find({ userId: { $in: authorIds } }, { sort: { createdAt: -1} });
+  let query   = { userId: { $in: authorIds } }
+  let options = { sort: { createdAt: -1} }
 
-  return followedByUserCursor, haikuCursor;
-})
+  getHaikusWithAuthors(this, query, options);
+
+});
+
+
+
+// HELPERS
+
+function getHaikusWithAuthors(sub, query, options) {
+  function publishHaikuAuthor(haikuId, haiku) {
+    let userCursor = Meteor.users.find({_id: haiku.userId });
+    userHandles[haikuId] = Mongo.Collection._publishCursor(userCursor, sub, 'users');
+  }
+
+  let userHandles = [];
+
+  let haikuHandle = Haikus.find(query, options).observeChanges({
+    added: function(id, haiku) {
+      // In addition to publishing this new Haiku, we need to fetch and
+      // publish its author!
+      publishHaikuAuthor(id, haiku);
+
+      sub.added('haikus', id, haiku);
+    },
+    changed: function(id, fields) {
+      sub.changed('haikus', id, fields);
+    },
+    removed: function(id) {
+      if ( userHandles[id] ) userHandles[id].stop();
+      sub.removed('haikus', id);
+    }
+  });
+
+  sub.ready();
+
+  sub.onStop( () => haikuHandle.stop() );
+}
