@@ -6,7 +6,6 @@ Template.haikuEventsList.helpers({
     return Events.find({ haikuId: this._id})
   },
   noEvents: function() {
-    console.log("Counted", Events.find({ haikuId: this._id}).count())
     return Events.find({ haikuId: this._id}).count() === 0
   }
 });

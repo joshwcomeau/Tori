@@ -283,6 +283,7 @@ $event-row-height: 3rem;
   background: $lightgray !important;
   line-height: $event-row-height;
   padding: 2rem;
+  min-height: 145px;
 
   a {
     font-weight: 700;
