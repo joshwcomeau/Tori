@@ -41,7 +41,8 @@ Meteor.startup(function() {
       backgroundImage: '/images/sample-background-3.jpg',
       userId: rollingHillsId,
       createdAt: moment().subtract(33, 'minutes').toISOString(),
-      retweets: 4
+      likes: [ poetId ],
+      shares: []
     });
 
     Haikus.insert({
@@ -53,7 +54,8 @@ Meteor.startup(function() {
       showBackground: false,
       userId: rollingHillsId,
       createdAt: moment().subtract(2, 'hours').toISOString(),
-      likes: 2
+      likes: [],
+      shares: []
     });
 
     Haikus.insert({
@@ -65,7 +67,8 @@ Meteor.startup(function() {
       showBackground: false,
       userId: poetId,
       createdAt: moment().subtract(2, 'hours').toISOString(),
-      likes: 2
+      likes: [],
+      shares: []
     });
 
     Follows.insert({
@@ -74,7 +77,7 @@ Meteor.startup(function() {
     });
 
     Events.insert({
-      type: 'like',
+      eventType: 'like',
       seen: false,
       haikuId: haiku_id,
       toUserId: rollingHillsId,
