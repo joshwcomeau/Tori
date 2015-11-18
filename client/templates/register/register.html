@@ -4,9 +4,11 @@
     <div class="card">
       <form>
         <div class="card-header">
-          <h1>Welcome to Tori!</h1>
-          <h2>Registration is simple.</h2>
-          <h3>Use the form below.</h3>
+          {{#unless currentUser}}
+            <h1>Welcome to Tori!</h1>
+            <h2>Registration is simple.</h2>
+            <h3>Use the form below.</h3>
+          {{/unless}}
         </div>
         <div class="card-body">
           <!-- Step 1 - Auth info like email/pass, or Oauth verification -->
@@ -52,16 +54,26 @@
 
           <!-- Step 2 - User has an account but needs to enter pertinent details -->
           {{else}}
-
-            <div class="profile-photo" style="background-image: url('{{photo}}')"></div>
-
-            <div class="floating-input">
-              <input type="text" name="displayName" id="displayName" class="profile-field displayName" required="true" value={{currentUser.profile.displayName}}>
-              <label for="displayName">Display Name</label>
-            </div>
-            <div class="floating-input">
-              <textarea type="text" name="summary" id="summary" class="profile-field summary" required="true">{{currentUser.profile.summary}}</textarea>
-              <label for="summary">Self-Summary</label>
+            <div class="flex">
+              <div class="profile-photo-container">
+                <div class="profile-photo" style="background-image: url('{{photo}}')"></div>
+              </div>
+              <div class="flex-item">
+                <h3>Profile Photo</h3>
+                <p>
+                  Upload a photo.<br>
+                  File formats accepted:<br>
+                  JPEG, GIF, or PNG.<br>
+                </p>
+                <div class="floating-input">
+                  <input type="text" name="displayName" id="displayName" class="profile-field displayName" required="true" value={{currentUser.profile.displayName}}>
+                  <label for="displayName">Display Name</label>
+                </div>
+                <div class="floating-input">
+                  <textarea type="text" name="summary" id="summary" class="profile-field summary" required="true">{{currentUser.profile.summary}}</textarea>
+                  <label for="summary">Self-Summary</label>
+                </div>
+              </div>
             </div>
           {{/unless}}
         </div>

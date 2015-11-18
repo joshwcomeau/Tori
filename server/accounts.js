@@ -41,7 +41,7 @@ Accounts.onCreateUser(function(options, user) {
     });
   }
 
-  user.profile.url = `www.tori.com/${user.username}`;
+  user.profile.photo = '/images/default-profile-photo.png';
 
   user.haikus     = 0;
   user.followers  = 0;

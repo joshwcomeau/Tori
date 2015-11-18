@@ -6,7 +6,9 @@
   <p>
     {{ profile.summary }}
   </p>
-  <p class="link">
-    <i class="fa fa-link"></i> {{ profile.url }}
-  </p>
+  {{#if profile.location}}
+    <p class="link">
+      <i class="fa fa-globe"></i> {{ profile.location }}
+    </p>
+  {{/if}}
 </template>
