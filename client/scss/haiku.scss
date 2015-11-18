@@ -252,6 +252,15 @@ $footer-height: 3.2rem;
         }
       }
 
+      &.shared {
+        // the user likes this haiku.
+        color: darken($green, 15%);
+
+        button {
+          color: darken($green, 15%);
+        }
+      }
+
       button {
         position: relative;
         margin: 0;
@@ -311,6 +320,10 @@ $event-row-height: 3rem;
 
     .fa-heart {
       color: $fuscia;
+    }
+
+    .fa-retweet {
+      color: darken($green, 15%);
     }
   }
 
