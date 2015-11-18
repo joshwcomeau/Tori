@@ -1,7 +1,7 @@
 Template.haikuFooter.onCreated(function() {
   this.autorun( () => {
     let haiku_id = this.data._id;
-    this.subscribe('myLikesForHaiku', haiku_id);
+    this.subscribe('myInteractionsWithHaiku', haiku_id);
   });
 });
 
@@ -23,7 +23,7 @@ Template.haikuFooter.helpers({
     return Events.findOne({
       haikuId: this._id,
       fromUserId: Meteor.user()._id,
-      type: 'like'
+      eventType: 'like'
     });
   },
   hasShared: function() {
@@ -32,7 +32,7 @@ Template.haikuFooter.helpers({
     return Events.findOne({
       haikuId: this._id,
       fromUserId: Meteor.user()._id,
-      type: 'share'
+      eventType: 'share'
     })
   },
   portraitAttr: function() {
@@ -48,14 +48,15 @@ Template.haikuFooter.helpers({
     }
   },
   relativeDate: function() {
+    console.log("Getting date of", this, this.createdAt)
     return moment(this.createdAt).fromNow();
   },
   humanizedShares: function() {
-    return this.shares > 0 ? this.shares : '';
+    return this.shares.length > 0 ? this.shares.length : '';
   },
   humanizedLikes: function() {
     // TODO: Util that makes the numbers nicer. '3.2k' instead of '3278'.
-    return this.likes > 0 ? this.likes : '';
+    return this.likes.length > 0 ? this.likes.length : '';
   }
 });
 

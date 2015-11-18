@@ -28,10 +28,19 @@ Meteor.publish('activeProfileHaikus', function(profile_name) {
   getHaikusWithAuthors(this, query, options);
 });
 
+Meteor.publish('activeProfileEvents', function(profile_name) {
+  if (profile_name) profile_name = profile_name.toLowerCase();
+  let user_id = Meteor.users.findOne({ username: profile_name })._id;
 
-Meteor.publish('myLikesForHaiku', function(haikuId) {
   return Events.find({
-    type: 'like',
+    fromUserId: this.userId,
+    toUserId: user_id
+  });
+});
+
+
+Meteor.publish('myInteractionsWithHaiku', function(haikuId) {
+  return Events.find({
     haikuId: haikuId,
     fromUserId: this.userId
   });
