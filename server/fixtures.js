@@ -1,5 +1,18 @@
 Meteor.startup(function() {
   if ( Haikus.find().count() === 0 ) {
+    // Add twitter OAuth details to DB
+    ServiceConfiguration.configurations.upsert(
+      { service: "twitter" },
+      {
+        $set: {
+          loginStyle:   "popup",
+          consumerKey:  Meteor.settings.TwitterConsumerKey,
+          secret:       Meteor.settings.TwitterSecretKey
+        }
+      }
+    );
+
+
     // Create two users
     let poetId = Meteor.users.insert({
       username: 'thepoet',
