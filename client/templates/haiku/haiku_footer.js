@@ -47,15 +47,20 @@ Template.haikuFooter.helpers({
       href: `/${this.username}`
     }
   },
+  isASharedHaiku: function() {
+    console.log("Comparing", this.username, FlowRouter.getParam('profile_name'))
+    return this.username !== FlowRouter.getParam('profile_name');
+  },
   relativeDate: function() {
-    console.log("Getting date of", this, this.createdAt)
     return moment(this.createdAt).fromNow();
   },
   humanizedShares: function() {
+    if ( !this.shares ) return '';
     return this.shares.length > 0 ? this.shares.length : '';
   },
   humanizedLikes: function() {
     // TODO: Util that makes the numbers nicer. '3.2k' instead of '3278'.
+    if ( !this.likes ) return '';
     return this.likes.length > 0 ? this.likes.length : '';
   }
 });

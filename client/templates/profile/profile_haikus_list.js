@@ -6,14 +6,17 @@ Template.profileHaikusList.onCreated(function() {
 });
 
 Template.profileHaikusList.helpers({
+  authorUsername: () => FlowRouter.getParam('profile_name'),
+
   haikus: function() {
     profile = UserUtils.findUserByProfileName(
       FlowRouter.getParam('profile_name')
     );
 
-    return Haikus.find({
-      userId: profile._id
-    });
+    // Find all Haikus posted OR shared by this user.
+    return Haikus.find({ $or: [
+      { userId: profile._id },
+      { shares: { $in: [profile._id] }}
+    ]});
   }
-
-})
+});

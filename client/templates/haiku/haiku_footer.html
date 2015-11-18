@@ -3,6 +3,9 @@
 
     <div class="haiku-author flex-item">
       {{#with author}}
+        {{#if isASharedHaiku}}
+          SHARED
+        {{/if}}
         <div {{portraitAttr}}></div>
       {{/with}}
       <div class="author-and-time">

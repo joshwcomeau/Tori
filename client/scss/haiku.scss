@@ -171,6 +171,7 @@ $footer-height: 3.2rem;
 .haiku-footer {
   position: relative;
   height: $footer-height;
+  box-shadow: 0px 1px 5px -2px rgba(0,0,0,0.3);
 
   &.haiku-has-white-bg {
     border-top: 3px solid $green;
