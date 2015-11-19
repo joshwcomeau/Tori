@@ -1,11 +1,11 @@
 @import 'variables';
 @import "{francocatena:compass}/compass";
 
-.haikus-list {
+.haiku-container {
   overflow: hidden;
 }
 
-.haikus-list > li {
+.haiku-container > li {
   position: relative;
   border-top: 2px solid $white;
 
@@ -294,6 +294,8 @@ $event-row-height: 3rem;
   line-height: $event-row-height;
   padding: 2rem;
   min-height: 145px;
+  box-shadow: inset 0px 3px 3px -4px rgba(0,0,0,0.3);
+  border-top: 3px solid $white;
 
   a {
     font-weight: 700;

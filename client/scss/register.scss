@@ -8,9 +8,9 @@
     margin: 0 auto;
 
     .card-header {
-      padding: 2rem;
+      padding: 1rem 2rem;
       background: $lightgray;
-      border-radius: 3px 3px 0 0;
+      border-radius: 2px 2px 0 0;
     }
     .card-body {
       padding: 2rem;
@@ -54,19 +54,78 @@
       }
     }
   }
-  .profile-photo-container {
-    flex: 0 0 266px;
-  }
-  .profile-photo {
-    position: relative;
-    margin: 0 auto;
-    width: 250px;
-    height: 250px;
-    border-radius: 100%;
-    border: 3px solid #FFF;
-    box-shadow: 1px 1px 4px rgba(0,0,0,0.2);
-    background-size: cover;
-    background-position: center center;
+
+  .card-body.step-2 {
+    padding: 0;
+
+    .step-2-header {
+      padding: 1rem 2rem;
+      border-radius: 2px 2px 0 0;
+      font-size: 1.75rem;
+      font-weight: 700;
+      height: 4rem;
+      line-height: 2.4rem;
+    }
+
+    .profile-photo-header {
+      text-align: right;
+      color: $lightgray;
+      background: $orange;
+    }
+    .profile-details-header {
+      color: $orange;
+      background: $lightgray;
+    }
+
+
+    .profile-photo {
+      float: left;
+      position: relative;
+      margin: 0 auto;
+      width: 250px;
+      height: 250px;
+      border-radius: 100%;
+      border: 3px solid #FFF;
+      box-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+      background-size: cover;
+      background-position: center center;
+    }
+
+    .profile-photo-container {
+      margin-top: -2rem;
+      padding: 0 2rem 1.5rem;
+      border-bottom: 1px solid #EEE;
+    }
+    .profile-photo-details {
+      padding: 4rem 1rem 0 0;
+      text-align: right;
+
+      h5 {
+        font-size: 1rem;
+        font-weight: 500;
+        margin: 0 0 0.5rem;
+      }
+
+      .button {
+        margin-top: 2rem;
+        width: 180px;
+        background: $blue;
+      }
+    }
+
+    .profile-details-container {
+      .profile-details-header {
+
+      }
+      .profile-details {
+        padding: 1rem 2rem 3rem;
+
+        .display-name-container {
+          padding-right: 0.5rem;
+        }
+
+      }
+    }
   }
 
   .handle-display {

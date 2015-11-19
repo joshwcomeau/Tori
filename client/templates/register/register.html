@@ -3,16 +3,14 @@
 
     <div class="card">
       <form>
-        <div class="card-header">
-          {{#unless currentUser}}
-            <h1>Welcome to Tori!</h1>
-            <h2>Registration is simple.</h2>
-            <h3>Use the form below.</h3>
-          {{/unless}}
-        </div>
-        <div class="card-body">
+        {{#unless currentUser}}
+          <div class="card-header">
+              <h1>Welcome to Tori!</h1>
+              <h2>Registration is simple.</h2>
+              <h3>Use the form below.</h3>
+          </div>
+          <div class="card-body">
           <!-- Step 1 - Auth info like email/pass, or Oauth verification -->
-          {{#unless currentUser}}
             <button class="button twitter">
               <i class="fa fa-twitter"></i>
               Sign Up With Twitter
@@ -52,31 +50,52 @@
               Continue
             </button>
 
+        </div>
+        {{else}}
           <!-- Step 2 - User has an account but needs to enter pertinent details -->
-          {{else}}
-            <div class="flex">
-              <div class="profile-photo-container">
-                <div class="profile-photo" style="background-image: url('{{photo}}')"></div>
-              </div>
-              <div class="flex-item">
-                <h3>Profile Photo</h3>
-                <p>
-                  Upload a photo.<br>
-                  File formats accepted:<br>
-                  JPEG, GIF, or PNG.<br>
-                </p>
-                <div class="floating-input">
-                  <input type="text" name="displayName" id="displayName" class="profile-field displayName" required="true" value={{currentUser.profile.displayName}}>
-                  <label for="displayName">Display Name</label>
-                </div>
-                <div class="floating-input">
-                  <textarea type="text" name="summary" id="summary" class="profile-field summary" required="true">{{currentUser.profile.summary}}</textarea>
-                  <label for="summary">Self-Summary</label>
-                </div>
+          <div class="card-body step-2">
+            <div class="step-2-header profile-photo-header">
+              Profile Photo
+            </div>
+            <div class="profile-photo-container clearfix">
+              <div class="profile-photo" style="background-image: url('{{photo}}')"></div>
+
+              <div class="profile-photo-details">
+                <h5 class="photo-headers">Upload a photo.</h5>
+                <h5 class="photo-headers">File formats accepted:</h5>
+                <h5 class="photo-headers">JPEG, GIF, or PNG.</h5>
+                <button class="button">Choose File</button>
               </div>
             </div>
-          {{/unless}}
-        </div>
+
+            <div class="profile-details-container">
+              <div class="step-2-header profile-details-header">
+                Profile Information
+              </div>
+              <div class="profile-details">
+                <div class="flex">
+                  <div class="floating-input flex-item display-name-container">
+                    <input type="text" name="displayName" id="displayName" class="profile-field displayName" required="true" value={{currentUser.profile.displayName}}>
+                    <label for="displayName">Display Name</label>
+                  </div>
+                  <div class="floating-input flex-item">
+                    <input type="text" name="location" id="location" class="profile-field location" required="true" value={{currentUser.profile.displayName}}>
+                    <label for="location">Location</label>
+                  </div>
+                </div>
+
+                <div class="floating-input flex-item">
+                  <textarea type="text" name="summary" id="summary" class="profile-field summary">
+                    {{currentUser.profile.summary}}
+                  </textarea>
+                  <label for="summary">Self-Summary</label>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        {{/unless}}
+
       </form>
     </div>
   </div>

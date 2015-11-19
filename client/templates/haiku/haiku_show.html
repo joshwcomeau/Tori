@@ -3,8 +3,11 @@
     {{#if Template.subscriptionsReady}}
       {{#with selectedHaiku}}
         <div class="card">
-          {{> haiku }}
-          {{> haikuFooter }}
+          <div class="haiku-container">
+            {{> haiku }}
+            {{> haikuFooter }}
+          </div>
+
           {{> haikuEventsList }}
         </div>
       {{/with}}
