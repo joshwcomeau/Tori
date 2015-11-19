@@ -269,6 +269,22 @@ form {
 
   }
 
+  .is-valid {
+    input {
+      border-bottom: 3px solid $green;
+    }
+    &.floating-input {
+      input + label {
+        transform: translate(0,-24px);
+        font-size: 0.7em;
+        transition: 0.2s;
+        color: $green;
+      }
+    }
+
+
+  }
+
   .floating-input {
     position: relative;
     margin-top: 1.5rem;
@@ -283,11 +299,11 @@ form {
       padding: 0 0.5rem;
       outline: none;
 
-      &:focus, &.valid {
+      &:focus {
         border-bottom: 3px solid $green;
       }
 
-      &:focus + label, &.valid + label {
+      &:focus + label {
         transform: translate(0,-24px);
         font-size: 0.7em;
         transition: 0.2s;

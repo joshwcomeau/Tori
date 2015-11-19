@@ -11,31 +11,13 @@ Template.register.onCreated(function() {
 
 Template.register.helpers({
   errorMessage: field => Template.instance().errors.get(field),
-  errorClass:   field => !!Template.instance().errors.get(field) ? 'has-error' : '',
+  errorClass:   field => !!Template.instance().errors.get(field) ? 'has-error' : 'is-valid',
 
   // User Fields
   username: () => Template.instance().user.get('username'),
   url:      () => Meteor.settings.public.SiteUrl + Template.instance().user.get('username'),
   email:    () => Template.instance().user.get('email'),
   photo:    () => Meteor.user().profile.photo,
-
-  // State stuff
-  firstButtonAttributes: () => {
-    // On the first step, we can green-light the button if there are no
-    // errors and we have input in the 3 required fields.
-    // let required_fields = [ $('#email'), $('#password'), $('#username') ];
-    //
-    // let valid = _.every(required_fields, ($field) => {
-    //   return !_.isEmpty($field.val()) && !$field.parent().hasClass('has-error')
-    // });
-    //
-    // console.log("Valid?", valid)
-    //
-    // return {
-    //   disabled: valid
-    // };
-  }
-
 });
 
 Template.register.events({
