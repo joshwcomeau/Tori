@@ -2,12 +2,11 @@ Template.register.onCreated(function() {
   this.user   = new ReactiveDict('registrationUser');
   this.errors = new ReactiveDict('registrationErrors');
   this.state  = new ReactiveDict('registrationState');
-
-  ValidationUtils.registerValidations(Template.register, 'keyup', {
-    '#username':  ['required', 'alphanumeric'],
-    '#email':     ['required', 'email']
-  });
 });
+
+Template.register.rendered = function() {
+  this.validator = new MagnesiumValidations("#register-form", this.user, this.errors);
+};
 
 Template.register.helpers({
   errorMessage: field => Template.instance().errors.get(field),

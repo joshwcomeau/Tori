@@ -2,7 +2,7 @@
   <div id="register">
 
     <div class="card">
-      <form>
+      <form id="register-form">
         {{#unless currentUser}}
           <div class="card-header">
               <h1>Welcome to Tori!</h1>
@@ -23,7 +23,15 @@
             <div class="divider" data-text="Or"></div>
 
             <div class="floating-input {{errorClass 'username'}}">
-              <input type="text" name="username" id="username" class="user-field username" required="true" value="{{username}}" autocomplete="false">
+              <input type="text"
+              name="username"
+              id="username"
+              class="user-field username"
+              value="{{username}}"
+              autocomplete="false"
+              mg-required="true"
+              mg-max-length="20"
+              >
               <label for="username">Username</label>
               <span class="error-message">{{errorMessage 'username'}}</span>
             </div>
