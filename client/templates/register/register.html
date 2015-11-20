@@ -22,7 +22,7 @@
 
             <div class="divider" data-text="Or"></div>
 
-            <div class="floating-input {{errorClass 'username'}}">
+            <div class="floating-input">
               <input type="text"
               name="username"
               id="username"
@@ -33,7 +33,7 @@
               mg-max-length="20"
               >
               <label for="username">Username</label>
-              <span class="error-message">{{errorMessage 'username'}}</span>
+              <span class="error-message {{errorClass 'username'}}">{{errorMessage 'username'}}</span>
             </div>
 
             <!-- <div class="note handle-display {{#unless username}}hide{{/unless}}">

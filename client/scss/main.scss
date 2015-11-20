@@ -242,47 +242,19 @@ form {
     -webkit-box-shadow: 0 0 0px 1000px white inset;
   }
   .error-message {
-    display: none;
     position: relative;
     color: $orange;
     padding: 0.5rem;
     font-size: 0.7rem;
     font-weight: 700;
-  }
 
-  .has-error {
-    input {
-      border-bottom: 3px solid $orange !important;
-    }
-    .error-message {
+    &.invalid {
       display: block;
     }
 
-    &.floating-input {
-      input + label {
-        transform: translate(0,-24px);
-        font-size: 0.7em;
-        transition: 0.2s;
-        color: $orange !important;
-      }
+    &.valid {
+      display: none;
     }
-
-  }
-
-  .is-valid {
-    input {
-      border-bottom: 3px solid $green;
-    }
-    &.floating-input {
-      input + label {
-        transform: translate(0,-24px);
-        font-size: 0.7em;
-        transition: 0.2s;
-        color: $green;
-      }
-    }
-
-
   }
 
   .floating-input {
@@ -302,11 +274,25 @@ form {
       &:focus {
         border-bottom: 3px solid $green;
       }
+      &.invalid {
+        border-bottom: 3px solid $orange !important;
+      }
+      &.valid {
+        border-bottom: 3px solid $green;
+      }
 
-      &:focus + label {
+
+      &:focus + label, &.invalid + label, &.valid + label {
         transform: translate(0,-24px);
         font-size: 0.7em;
         transition: 0.2s;
+      }
+
+      &.invalid + label {
+        color: $orange !important;
+      }
+
+      &.valid + label {
         color: $green;
       }
     }
@@ -320,8 +306,6 @@ form {
       height: 6rem;
     }
 
-
-
     label {
       position: absolute;
       z-index: 1;
@@ -334,8 +318,8 @@ form {
       color: $mediumgray;
     }
   }
-
 }
+
 
 .dropdown-menu {
   position: absolute;

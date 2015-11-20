@@ -10,7 +10,7 @@ Template.register.rendered = function() {
 
 Template.register.helpers({
   errorMessage: field => Template.instance().errors.get(field),
-  errorClass:   field => !!Template.instance().errors.get(field) ? 'has-error' : 'is-valid',
+  errorClass:   field => !!Template.instance().errors.get(field) ? 'invalid' : 'valid',
 
   // User Fields
   username: () => Template.instance().user.get('username'),
