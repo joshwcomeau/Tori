@@ -1,0 +1,80 @@
+<template name="registerStep1">
+  <form id="register-form-step1">
+    <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
+    <input style="display:none" type="text" name="fakeusernameremembered"/>
+    <input style="display:none" type="password" name="fakepasswordremembered"/>
+
+    <!-- Step 1 - Auth info like email/pass, or Oauth verification -->
+    <div class="card-header">
+        <h1>Welcome to Tori!</h1>
+        <h2>Registration is simple.</h2>
+        <h3>Use the form below.</h3>
+    </div>
+    <div class="card-body">
+      <button class="button twitter">
+        <i class="fa fa-twitter"></i>
+        Sign Up With Twitter
+      </button>
+      <button class="button google">
+        <i class="fa fa-google-plus"></i>
+        Sign Up With Google
+      </button>
+
+      <div class="divider" data-text="Or"></div>
+
+      <div class="floating-input">
+        <input type="text"
+        name="username"
+        id="username"
+        class="user-field username"
+        value="{{username}}"
+        autocomplete="false"
+        mg-required="true"
+        mg-max-length="20"
+        mg-alphanumeric="true"
+        >
+        <label for="username">Username</label>
+        <span class="error-message {{errorClass 'username'}}">{{errorMessage 'username'}}</span>
+      </div>
+
+      <!-- <div class="note handle-display {{#unless username}}hide{{/unless}}">
+        You will be reached at <a>{{url}}</a><br>
+        <small>Don't worry, you can always change it later :)</small>
+      </div> -->
+
+      <div class="floating-input {{errorClass 'email'}}">
+        <input type="text"
+        name="email"
+        id="email"
+        class="user-field email"
+        value="{{email}}"
+        autocomplete="false"
+        mg-required="true"
+        mg-email="true"
+        >
+        <label for="email">Email Address</label>
+        <span class="error-message {{errorClass 'email'}}">{{errorMessage 'email'}}</span>
+      </div>
+
+      <div class="floating-input {{errorClass 'password'}}">
+        <input type="password"
+        name="password"
+        id="password"
+        value="{{password}}"
+        class="user-field password"
+        autocomplete="false"
+        mg-min-length="8"
+        mg-required="true"
+        >
+        <label for="password">Password</label>
+        <span class="error-message {{errorClass 'password'}}">{{errorMessage 'password'}}</span>
+      </div>
+
+      <button class="button continue">
+        <i class="fa fa-caret-right right"></i>
+        Continue
+      </button>
+
+    </div>
+  </form>
+</template>

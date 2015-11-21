@@ -1,112 +1,18 @@
 <template name="register">
+
   <div id="register">
 
     <div class="card">
-      <form id="register-form">
-        {{#unless currentUser}}
-          <div class="card-header">
-              <h1>Welcome to Tori!</h1>
-              <h2>Registration is simple.</h2>
-              <h3>Use the form below.</h3>
-          </div>
-          <div class="card-body">
-          <!-- Step 1 - Auth info like email/pass, or Oauth verification -->
-            <button class="button twitter">
-              <i class="fa fa-twitter"></i>
-              Sign Up With Twitter
-            </button>
-            <button class="button google">
-              <i class="fa fa-google-plus"></i>
-              Sign Up With Google
-            </button>
 
-            <div class="divider" data-text="Or"></div>
+      {{#unless currentUser}}
 
-            <div class="floating-input">
-              <input type="text"
-              name="username"
-              id="username"
-              class="user-field username"
-              value="{{username}}"
-              autocomplete="false"
-              mg-required="true"
-              mg-max-length="20"
-              >
-              <label for="username">Username</label>
-              <span class="error-message {{errorClass 'username'}}">{{errorMessage 'username'}}</span>
-            </div>
+        {{> registerStep1}}
+      {{else}}
 
-            <!-- <div class="note handle-display {{#unless username}}hide{{/unless}}">
-              You will be reached at <a>{{url}}</a><br>
-              <small>Don't worry, you can always change it later :)</small>
-            </div> -->
+        {{> registerStep2}}
+      {{/unless}}
 
-            <div class="floating-input {{errorClass 'email'}}">
-              <input type="text" name="email" id="email" class="user-field email" required="true" value="{{email}}" autocomplete="false">
-              <label for="email">Email Address</label>
-              <span class="error-message">{{errorMessage 'email'}}</span>
-            </div>
 
-            <div class="floating-input {{errorClass 'password'}}">
-              <input type="password" name="password" id="password" class="user-field password" required="true" autocomplete="false">
-              <label for="password">Password</label>
-              <span class="error-message">{{errorMessage 'password'}}</span>
-            </div>
-
-            <button class="button continue">
-              <i class="fa fa-caret-right right"></i>
-              Continue
-            </button>
-
-        </div>
-        {{else}}
-          <!-- Step 2 - User has an account but needs to enter pertinent details -->
-          <div class="card-body step-2">
-            <div class="step-2-header profile-photo-header">
-              Profile Photo
-            </div>
-            <div class="profile-photo-container clearfix">
-              <div class="profile-photo" style="background-image: url('{{photo}}')"></div>
-
-              <div class="profile-photo-details">
-                <h5 class="photo-headers">Upload a photo.</h5>
-                <h5 class="photo-headers">File formats accepted:</h5>
-                <h5 class="photo-headers">JPEG, GIF, or PNG.</h5>
-                <button class="button">Choose File</button>
-              </div>
-            </div>
-
-            <div class="profile-details-container">
-              <div class="step-2-header profile-details-header">
-                Profile Information
-              </div>
-              <div class="profile-details">
-                <div class="flex">
-                  <div class="floating-input flex-item display-name-container {{errorClass 'displayName'}}">
-                    <input type="text" name="displayName" id="displayName" class="profile-field displayName" required="true" value={{currentUser.profile.displayName}}>
-                    <label for="displayName">Display Name</label>
-                    <span class="error-message">{{errorMessage 'displayName'}}</span>
-                  </div>
-                  <div class="floating-input flex-item {{errorClass 'location'}}">
-                    <input type="text" name="location" id="location" class="profile-field location" required="true" value={{currentUser.profile.displayName}}>
-                    <label for="location">Location</label>
-                    <span class="error-message">{{errorMessage 'location'}}</span>
-                  </div>
-                </div>
-
-                <div class="floating-input flex-item">
-                  <textarea type="text" name="summary" id="summary" class="profile-field summary">
-                    {{currentUser.profile.summary}}
-                  </textarea>
-                  <label for="summary">Self-Summary</label>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        {{/unless}}
-
-      </form>
     </div>
   </div>
 </template>

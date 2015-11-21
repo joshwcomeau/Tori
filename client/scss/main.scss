@@ -274,25 +274,25 @@ form {
       &:focus {
         border-bottom: 3px solid $green;
       }
-      &.invalid {
+      &.invalid.dirty {
         border-bottom: 3px solid $orange !important;
       }
-      &.valid {
+      &.touched {
         border-bottom: 3px solid $green;
       }
 
 
-      &:focus + label, &.invalid + label, &.valid + label {
+      &:focus + label, &.invalid.dirty + label, &.valid + label {
         transform: translate(0,-24px);
         font-size: 0.7em;
         transition: 0.2s;
       }
 
-      &.invalid + label {
+      &.invalid.dirty + label {
         color: $orange !important;
       }
 
-      &.valid + label {
+      &.touched + label {
         color: $green;
       }
     }

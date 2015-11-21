@@ -69,18 +69,14 @@
       font-weight: 700;
       height: 4rem;
       line-height: 2.4rem;
+      color: $orange;
+      background: $lightgray;
+
     }
 
     .profile-photo-header {
       text-align: right;
-      color: $lightgray;
-      background: $orange;
     }
-    .profile-details-header {
-      color: $orange;
-      background: $lightgray;
-    }
-
 
     .profile-photo {
       float: left;

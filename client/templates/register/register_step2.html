@@ -1,0 +1,52 @@
+<template name="registerStep2">
+  <!-- Step 2 - User has an account but needs to enter pertinent details -->
+  <form id="register-form-step2">
+    <div class="card-body step-2">
+      <div class="step-2-header profile-photo-header">
+        Profile Photo
+      </div>
+      <div class="profile-photo-container clearfix">
+        <div class="profile-photo" style="background-image: url('{{photo}}')"></div>
+
+        <div class="profile-photo-details">
+          <h5 class="photo-headers">Upload a photo.</h5>
+          <h5 class="photo-headers">File formats accepted:</h5>
+          <h5 class="photo-headers">JPEG, GIF, or PNG.</h5>
+          <button class="button">Choose File</button>
+        </div>
+      </div>
+
+      <div class="profile-details-container">
+        <div class="step-2-header profile-details-header">
+          Profile Information
+        </div>
+        <div class="profile-details">
+          <div class="flex">
+            <div class="floating-input flex-item display-name-container {{errorClass 'displayName'}}">
+              <input type="text" name="displayName" id="displayName" class="profile-field displayName" value={{currentUser.profile.displayName}}>
+              <label for="displayName">Display Name</label>
+              <span class="error-message">{{errorMessage 'displayName'}}</span>
+            </div>
+            <div class="floating-input flex-item {{errorClass 'location'}}">
+              <input type="text" name="location" id="location" class="profile-field location" value={{currentUser.profile.location}}>
+              <label for="location">Location</label>
+              <span class="error-message">{{errorMessage 'location'}}</span>
+            </div>
+          </div>
+
+          <div class="floating-input flex-item">
+            <textarea type="text" name="summary" id="summary" class="profile-field summary">{{currentUser.profile.summary}}</textarea>
+            <label for="summary">Self-Summary</label>
+          </div>
+
+          <button class="button continue">
+            <i class="fa fa-caret-right right"></i>
+            Complete!
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  </form>
+</template>
