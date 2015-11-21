@@ -24,14 +24,9 @@ Template.sidebar.helpers({
       );
     }
   },
-  showFollowButton: () => {
-    let profileName = FlowRouter.getParam('profile_name');
+  // Show the follow button when we're logged in, and on a profile page.
+  showFollowButton: () => Meteor.user() && FlowRouter.getParam('profile_name')
 
-    // If we're not on a user's profile page, we definitely don't want to show it
-    if ( !profileName ) return false;
-
-    return UserUtils.isCurrentUserFollowing(profileName);
-  }
 });
 
 Template.sidebar.events({
