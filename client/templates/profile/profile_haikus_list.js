@@ -6,8 +6,6 @@ Template.profileHaikusList.onCreated(function() {
 });
 
 Template.profileHaikusList.helpers({
-  authorUsername: () => FlowRouter.getParam('profile_name'),
-
   haikus: function() {
     profile = UserUtils.findUserByProfileName(
       FlowRouter.getParam('profile_name')

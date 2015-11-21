@@ -2,7 +2,11 @@
   <div id="best-haikus">
     <h2 class="card-cutout-header">Best Haikus</h2>
     <div class="card">
-      Hiya!
+      {{#if Template.subscriptionsReady}}
+        {{> haikusList haikus}}
+      {{else}}
+        Loading...
+      {{/if}}
     </div>
   </div>
 </template>

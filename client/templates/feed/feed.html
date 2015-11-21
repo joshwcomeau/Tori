@@ -1,14 +1,7 @@
 <template name="feed">
   <div id="feed">
     <div class="card">
-      <ul class="haiku-container">
-        {{#each haikus}}
-          <li>
-            <a href="{{haikuAuthor}}/haikus/{{_id}}">{{> haiku}}</a>
-            {{> haikuFooter}}
-          </li>
-        {{/each}}
-      </ul>
+      {{> haikusList haikus}}
     </div>
   </div>
 

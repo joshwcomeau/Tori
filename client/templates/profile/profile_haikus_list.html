@@ -1,15 +1,7 @@
 <template name="profileHaikusList">
   {{#if Template.subscriptionsReady}}
     <div class="haikus card">
-      <ul class="haiku-container">
-        {{#each haikus}}
-          <li>
-            <a href="{{authorUsername}}/haikus/{{_id}}">{{> haiku}}</a>
-            {{> haikuFooter}}
-          </li>
-
-        {{/each}}
-      </ul>
+      {{> haikusList haikus}}
     </div>
   {{/if}}
 </template>

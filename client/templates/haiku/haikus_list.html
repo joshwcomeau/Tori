@@ -1,0 +1,11 @@
+<template name="haikusList">
+  <ul class="haiku-container">
+    {{#each this}}
+      <li>
+        <a href="{{haikuAuthor}}/haikus/{{_id}}">{{> haiku}}</a>
+        {{> haikuFooter}}
+      </li>
+
+    {{/each}}
+  </ul>
+</template>
