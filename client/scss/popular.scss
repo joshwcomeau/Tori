@@ -1,7 +1,7 @@
 @import 'variables';
 @import 'mixins';
 
-#best-haikus {
+#popular-haikus {
   @include centered-at-max-width;
 
   .card {

@@ -48,7 +48,8 @@ Template.haikuFooter.helpers({
     }
   },
   isASharedHaiku: function() {
-    console.log("Comparing", this.username, FlowRouter.getParam('profile_name'))
+    // It's a shared haiku if:
+    //  - We're on a user's profile page and their userId is in the `shares` arr
     return this.username !== FlowRouter.getParam('profile_name');
   },
   relativeDate: function() {

@@ -21,7 +21,7 @@ Meteor.publish('activeProfile', function(profile_name) {
 Meteor.publish('activeProfileHaikus', function(profile_name) {
   if (profile_name) profile_name = profile_name.toLowerCase();
   let user_id = Meteor.users.findOne({ username: profile_name })._id;
-  console.log("Looking for haikus with shares in ", user_id)
+
   let query   = { $or: [
     { userId: user_id },
     { shares: { $in: [user_id] }}
@@ -79,7 +79,7 @@ Meteor.publish('homeFeed', function() {
 
 });
 
-Meteor.publish('bestHaikus', function(limit) {
+Meteor.publish('popularHaikus', function(limit) {
   check(limit, Number);
 
   // Find all the top-ranked Haikus.

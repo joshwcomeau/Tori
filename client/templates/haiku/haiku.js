@@ -15,7 +15,7 @@ Template.haiku.helpers({
       'data-overlay-color':     this.overlayColor,
       'data-overlay-direction': this.overlayDirection,
       'data-show-overlay':      this.showOverlay,
-      'data-show-image':        this.showImage
+      'data-show-background':   this.showBackground
     };
   }
 });
