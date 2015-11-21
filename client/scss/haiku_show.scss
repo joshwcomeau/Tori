@@ -1,5 +1,8 @@
+@import 'mixins';
+
+
 #haiku-show {
-  padding: 2rem;
+  @include centered-at-max-width;
 
   .card {
 

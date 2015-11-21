@@ -129,6 +129,16 @@ ul {
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
 }
 
+.card-cutout-header {
+  position: relative;
+  z-index: -1;
+  color: $white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  margin: 0 0 -23px 1rem;
+  font-size: 4rem;
+  letter-spacing: -1px;
+}
+
 .divider {
   position: relative;
   height: 2rem;

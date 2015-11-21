@@ -1,0 +1,12 @@
+@import 'variables';
+
+@mixin centered-at-max-width {
+  position: relative;
+  width: 100%;
+  max-width: $size-max-width;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem;
+}

@@ -1,0 +1,10 @@
+@import 'variables';
+@import 'mixins';
+
+#best-haikus {
+  @include centered-at-max-width;
+
+  .card {
+    padding: 2rem 0;
+  }
+}
