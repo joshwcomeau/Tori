@@ -7,7 +7,6 @@ Template.feed.onCreated( function() {
 Template.feed.helpers({
   haikus: () => Haikus.find({}),
   haikuAuthor: function() {
-    console.log('author context', this)
-    Meteor.users.find({ _id: this.userId }).username
+    return Meteor.users.findOne(this.userId).username
   }
 })
