@@ -2,11 +2,12 @@
   <div id="best-haikus">
     <h2 class="card-cutout-header">Best Haikus</h2>
     <div class="card">
-      {{#if Template.subscriptionsReady}}
+      {{#if initialLoad}}
         {{> haikusList haikus}}
       {{else}}
         Loading...
       {{/if}}
+      <button class="load-more">Load More!</button>
     </div>
   </div>
 </template>

@@ -79,10 +79,12 @@ Meteor.publish('homeFeed', function() {
 
 });
 
-Meteor.publish('bestHaikus', function() {
+Meteor.publish('bestHaikus', function(limit) {
+  check(limit, Number);
+
   // Find all the top-ranked Haikus.
   let query   = { }
-  let options = { sort: { likeCount: -1} }
+  let options = { sort: { likeCount: -1}, limit: limit }
 
   getHaikusWithAuthors(this, query, options);
 
