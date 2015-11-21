@@ -9,18 +9,24 @@ Template.headerLogIn.helpers({
 })
 
 Template.headerLogIn.events({
-  'mouseup .log-in-menu': function(ev, instance) {
-    // We have a window handler to close the login popup. We want this to run
-    // except when the log-in menu, or one of its children, is clicked.
-    // Because of how events bubble, this trick will ensure that any click
-    // within the menu doesn't close the menu =)
-    ev.stopPropagation();
-  },
-  'mouseup .log-in-text': function(ev, instance) {
+  // We have a window handler to close the login popup. We want this to run
+  // except when the log-in menu, or one of its children, is clicked.
+  // Because of how events bubble, this trick will ensure that any click
+  // within the menu doesn't close the menu =)
+  'mouseup .log-in-menu': (ev, instance) => ev.stopPropagation(),
+
+  'mouseup .log-in-text': (ev, instance) => {
     ev.stopPropagation();
     UiUtils.modal.activate(instance.menuName);
   },
-  'submit .log-in-form': function(ev, instance) {
+  'click .button.twitter': (ev, instance) => {
+    ev.preventDefault();
+    Meteor.loginWithTwitter({}, function(err) {
+      if (err) return console.error("PROBLEM WITH TWITTER OAUTH", err);
+      FlowRouter.go('/')
+    });
+  },
+  'submit .log-in-form': (ev, instance) => {
     ev.preventDefault();
 
     let $form = $(ev.target);
@@ -40,5 +46,7 @@ Template.headerLogIn.events({
         UiUtils.modal.deactivate();
       }
     });
-  }
+  },
+  // When clicking a link (eg. Register now), we want to close the menu
+  'click a': (ev, instance) => UiUtils.modal.deactivate()
 })
