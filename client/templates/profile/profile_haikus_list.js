@@ -15,6 +15,6 @@ Template.profileHaikusList.helpers({
     return Haikus.find({ $or: [
       { userId: profile._id },
       { shares: { $in: [profile._id] }}
-    ]});
+    ]}, { sort: { createdAt: -1 } });
   }
 });

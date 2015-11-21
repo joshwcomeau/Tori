@@ -5,5 +5,5 @@ Template.feed.onCreated( function() {
 })
 
 Template.feed.helpers({
-  haikus: () => Haikus.find({}),
+  haikus: () => Haikus.find({}, { sort: { createdAt: -1} }),
 })
