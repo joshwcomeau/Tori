@@ -7,24 +7,15 @@ Template.haikuFooter.onCreated(function() {
 
 Template.haikuFooter.helpers({
   author: function() {
-    return Meteor.users.findOne({ _id: this.userId });
+    return Meteor.users.findOne( this.userId );
   },
   footerClasses: function() {
-    // If this HAiku has a background image, it'll be styled differently in CSS.
+    // If this Haiku has a background image, it'll be styled differently in CSS.
     if ( !!this.backgroundImage ) {
       return "haiku-has-bg-image";
     } else {
       return "haiku-has-white-bg";
     }
-  },
-  doesLike: function() {
-    if ( !Meteor.user() ) return false;
-
-    return Events.findOne({
-      haikuId: this._id,
-      userId: Meteor.user()._id,
-      eventType: 'like'
-    });
   },
   shareButtonDisabled: function() {
     // This button will be disabled if:
@@ -33,11 +24,9 @@ Template.haikuFooter.helpers({
     return !Meteor.user() || Meteor.userId() === this.userId;
   },
   shareButtonClass: function() {
-    if ( !Meteor.user() ) return 'not-shared';
-
     let preExistingShare = Events.findOne({
       haikuId: this._id,
-      userId: Meteor.user()._id,
+      userId: Meteor.userId(),
       eventType: 'share'
     });
 
@@ -47,23 +36,21 @@ Template.haikuFooter.helpers({
     return !Meteor.user();
   },
   likeButtonClass: function() {
-    if ( !Meteor.user() ) return 'not-liked';
-
     let preExistingLike = Events.findOne({
       haikuId: this._id,
-      userId: Meteor.user()._id,
+      userId: Meteor.userId(),
       eventType: 'like'
     });
 
     return preExistingLike ? 'liked' : 'not-liked';
   },
-  portraitAttr: function() {
+  portraitAttrs: function() {
     return {
       class: "portrait",
       style: `background-image: url('${this.profile.photo}')`
     };
   },
-  authorLinkAttr: function() {
+  authorLinkAttrs: function() {
     return {
       class: 'author-name',
       href: `/${this.username}`
@@ -82,6 +69,32 @@ Template.haikuFooter.helpers({
       eventType: 'share',
       haikuId: this._id
     });
+  },
+  sharedAuthor: function() {
+    // If we're on a profile page, we know that any Shares on this page were
+    // from this person! So we can just return that
+    let profileUser = UserUtils.findUserByProfileName( FlowRouter.getParam('profile_name') )
+
+    if ( profileUser ) return profileUser;
+
+
+    // If we're on our home feed, things are a bit trickier.
+    // A Haiku could show up from someone we aren't following, but which was
+    // shared by 3 people we are following, and maybe even us too.
+    // Which sharedAuthor do we want?
+    // Let's assume, despite it not being a perfect solution, that the earliest
+    // sharer is the one we need.
+    let event = Events.findOne({
+      haikuId: this._id,
+      eventType: 'share'
+    }, {
+      sort: { createdAt: -1 },
+      limit: 1
+    });
+
+    // Presumably now we have a single Share event. We just need to find the
+    // user responsible for it.
+    return Meteor.users.findOne( event.userId );
   },
   relativeDate: function() {
     return moment(this.createdAt).fromNow();

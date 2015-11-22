@@ -167,6 +167,7 @@
 }
 
 $footer-height: 3.2rem;
+$shared-indentation: 3rem;
 
 .haiku-footer {
   position: relative;
@@ -197,11 +198,48 @@ $footer-height: 3.2rem;
       border: 3px solid $white;
     }
 
+    .shared-icon-container {
+      position: absolute;
+      z-index: 5;
+      top: 0;
+      bottom: 0;
+      overflow: hidden;
+      width: 32px;
+      left: 44px;
+
+      i {
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 28px;
+        height: 28px;
+        line-height: 24px;
+        padding-left: 1px;
+        text-align: center;
+        background: $white;
+        border-radius: 100%;
+        color: darken($green, 10%);
+        font-size: 1rem;
+      }
+    }
+
+    // When a haiku is shared, the author's avatar is nudged over a little.
+    // This is because it overlaps the sharER's avatar.
+    .original-author-shared {
+      position: absolute;
+      top: 0;
+      left: $shared-indentation;
+    }
+
     .author-and-time {
       position: absolute;
       top: 0;
-      left: $footer-height*1.5 + 1rem;
+      left: $footer-height*1.5 + 1.5rem;
       bottom: 0;
+
+      &.indented {
+        left: $footer-height*1.5 + 1.5rem + $shared-indentation;
+      }
 
 
       .author-name {

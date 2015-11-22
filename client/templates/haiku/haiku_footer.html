@@ -3,14 +3,28 @@
 
     <div class="haiku-author flex-item">
       {{#if isASharedHaiku}}
-        SHARED
-      {{/if}}
-      {{#with author}}
-        <div {{portraitAttr}}></div>
-      {{/with}}
-      <div class="author-and-time">
+        <div class="shared-icon-container">
+          <i class="fa fa-retweet shared-icon"></i>
+        </div>
+
+        <div class="shared-author">
+          {{#with sharedAuthor}}
+            <div {{portraitAttrs}}></div>
+          {{/with}}
+        </div>
+        <div class="original-author-shared">
+          {{#with author}}
+            <div {{portraitAttrs}}></div>
+          {{/with}}
+        </div>
+      {{else}}
         {{#with author}}
-          <a {{authorLinkAttr}}>{{profile.displayName}}</a>
+          <div {{portraitAttrs}}></div>
+        {{/with}}
+      {{/if}}
+      <div class="author-and-time {{#if isASharedHaiku}}indented{{/if}}">
+        {{#with author}}
+          <a {{authorLinkAttrs}}>{{profile.displayName}}</a>
         {{/with}}
         <br>
         <span class="relative-date">{{relativeDate}}</span>
