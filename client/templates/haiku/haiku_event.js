@@ -12,10 +12,10 @@ Template.haikuEvent.helpers({
   eventTimestamp: function() {
     return moment(this.createdAt).format("MMMM Do YYYY, h:mm a");
   },
-  authorDisplayName: function() {
-    return Meteor.users.findOne(this.fromUserId).profile.displayName;
+  userDisplayName: function() {
+    return Meteor.users.findOne(this.userId).profile.displayName;
   },
-  authorProfileUrl: function() {
-    return Meteor.users.findOne(this.fromUserId).username;
+  userProfileUrl: function() {
+    return Meteor.users.findOne(this.userId).username;
   }
 })

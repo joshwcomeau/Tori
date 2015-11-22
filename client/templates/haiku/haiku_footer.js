@@ -22,7 +22,7 @@ Template.haikuFooter.helpers({
 
     return Events.findOne({
       haikuId: this._id,
-      fromUserId: Meteor.user()._id,
+      userId: Meteor.user()._id,
       eventType: 'like'
     });
   },
@@ -31,7 +31,7 @@ Template.haikuFooter.helpers({
 
     return Events.findOne({
       haikuId: this._id,
-      fromUserId: Meteor.user()._id,
+      userId: Meteor.user()._id,
       eventType: 'share'
     })
   },

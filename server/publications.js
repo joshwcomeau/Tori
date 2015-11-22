@@ -1,6 +1,6 @@
 Meteor.publish('activeProfile', function(profile_name) {
   // Return the active profile, and whether or not the current user is
-  // following it
+  // following him/her
   if (profile_name) profile_name = profile_name.toLowerCase();
 
   let publications = [Meteor.users.find({ username: profile_name })]
@@ -37,7 +37,14 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 3) {
   let eventQuery = {
     eventType:  { $in: ['haiku', 'share'] },
     userId:     user._id
-  }
+  };
+
+  // NOTE: We aren't sending down info about whether the current user has
+  // liked or shared these Haikus, information that is necessary when
+  // displaying them. Because that data is also stored in Events, and we're
+  // limiting this publication to the most recent 25 Haiku/Share events by the
+  // profile author, there's a conflict of what is possible to send down at
+  // one time. Instead, that will be tackled in a separate publication.
 
   this.addDependency('events', 'haikuId', function(event) {
     // Find the Haiku associated with this event.
@@ -53,7 +60,9 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 3) {
     } });
   });
 
-  return Events.find(eventQuery, { sort: { createdAt: -1 }, limit: limit });
+  return [
+    Events.find(eventQuery, { sort: { createdAt: -1 }, limit: limit })
+  ];
 
 });
 
@@ -61,7 +70,7 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 3) {
 Meteor.publish('myInteractionsWithHaiku', function(haikuId) {
   return Events.find({
     haikuId: haikuId,
-    fromUserId: this.userId
+    userId: this.userId
   });
 });
 
