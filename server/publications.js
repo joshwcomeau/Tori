@@ -20,11 +20,13 @@ Meteor.publish('activeProfile', function(profile_name) {
 
 Meteor.publish('activeProfileHaikus', function(profile_name) {
   if (profile_name) profile_name = profile_name.toLowerCase();
-  let user_id = Meteor.users.findOne({ username: profile_name })._id;
+  let user = Meteor.users.findOne({ username: profile_name });
+  if ( !user ) return false;
+
 
   let query   = { $or: [
-    { userId: user_id },
-    { shares: { $in: [user_id] }}
+    { userId: user._id },
+    { shares: { $in: [user._id] }}
   ]};
   let options = { sort: { createdAt: -1} }
 
@@ -129,7 +131,7 @@ function getHaikusWithAuthors(sub, query, options) {
   let haikuHandle = Haikus.find(query, options).observeChanges({
     added: function(id, haiku) {
       // In addition to publishing this new Haiku, we need to fetch and
-      // publish its author!
+      // publish its author! As well as anyone sharing it.
       publishAssociatedUser(haiku.userId, userHandles, sub);
 
       sub.added('haikus', id, haiku);

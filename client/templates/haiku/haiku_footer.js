@@ -56,12 +56,10 @@ Template.haikuFooter.helpers({
     return moment(this.createdAt).fromNow();
   },
   humanizedShares: function() {
-    if ( !this.shares ) return '';
     return this.shareCount > 0 ? this.shareCount : '';
   },
   humanizedLikes: function() {
     // TODO: Util that makes the numbers nicer. '3.2k' instead of '3278'.
-    if ( !this.likes ) return '';
     return this.likeCount > 0 ? this.likeCount : '';
   }
 });
