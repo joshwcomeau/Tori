@@ -61,6 +61,10 @@ Template.haikuFooter.helpers({
     // on a shared haiku, it should take me to the source.
     if ( FlowRouter.getParam('haiku_id') ) return false;
 
+    // Don't show sharing info on the Popular page, either.
+    // It's not the 'share' that's popular, it's the original post!
+    if ( FlowRouter.getRouteName() === 'popular' ) return false;
+
     // If I'm looking at a list of Haikus, I ought to have the Event available
     // locally that indicates that it's shared.
     // Therefore, all I should have to do is check for the presence of an
