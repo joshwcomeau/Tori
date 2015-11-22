@@ -1,7 +1,7 @@
 <template name="profileHaikusList">
-  {{#if Template.subscriptionsReady}}
-    <div class="haikus card">
+  <div class="haikus card">
+    {{#if activeProfileLoaded}}
       {{> haikusList haikus}}
-    </div>
-  {{/if}}
+    {{/if}}
+  </div>
 </template>

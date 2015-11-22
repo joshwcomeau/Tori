@@ -25,6 +25,11 @@ Template.profileHaikusList.onCreated(function() {
 });
 
 Template.profileHaikusList.helpers({
+  activeProfileLoaded: () => {
+    return Meteor.users.find({
+      username: FlowRouter.getParam('profile_name')
+    }).count();
+  },
   haikus: function() {
     profile = UserUtils.findUserByProfileName(
       FlowRouter.getParam('profile_name')
@@ -35,8 +40,10 @@ Template.profileHaikusList.helpers({
       eventType: { $in: ['share', 'haiku'] }
     }).map( (event) => event.haikuId);
 
+    return Haikus.find({ _id: { $in: eventIds } });
+
     // Find all Haikus associated with each event
-    // We need to fetch() them, so that we can sort by it's Event createdAt.
+    // We need to fetch() them, so that we can sort by its Event createdAt.
     haikus = Haikus.find({ _id: { $in: eventIds } }).fetch();
 
     // Sort time!

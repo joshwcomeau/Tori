@@ -7,8 +7,6 @@ Template.popularHaikus.onCreated(function() {
 
 Template.popularHaikus.helpers({
   haikus: () => Haikus.find({}, { sort: { likeCount: -1 } }),
-  initialLoad: () => Haikus.find({}).fetch().length
-
 });
 
 Template.popularHaikus.events({

@@ -18,7 +18,7 @@ Meteor.publish('activeProfile', function(profile_name) {
   return publications;
 });
 
-Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 3) {
+Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 20) {
   // This method returns the most recent Haikus written or shared by a given
   // user. This is a surprisingly complex process, because we want them ordered
   // by when the GIVEN USER posted or shared them.
