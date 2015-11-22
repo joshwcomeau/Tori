@@ -49,8 +49,7 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 20) {
 
   check(limit, Number);
 
-  if (profile_name) profile_name = profile_name.toLowerCase();
-  let user = Meteor.users.findOne({ username: profile_name });
+  let user = UserUtils.findUserByProfileName(profile_name);
   if ( !user ) return false;
 
   // Find all Events of the right type by the user we're visiting.
@@ -58,24 +57,14 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 20) {
     eventType:  { $in: ['haiku', 'share'] },
     userId:     user._id
   };
+  let eventOptions = { sort: { createdAt: -1 }, limit: limit };
 
-  this.addDependency('events', 'haikuId', function(event) {
-    // Find the Haiku associated with this event.
-    return Haikus.find(event.haikuId);
-  });
 
-  this.addDependency('events', 'haikuAuthorId', function(event) {
-    // Share the author of this Haiku! It isn't necessarily the same as the
-    // user whose page we're visiting, if that user has Shared another user's
-    // Haiku.
-    return Meteor.users.find(event.haikuAuthorId, { fields: {
-      profile: 1,
-      username: 1
-    } });
-  });
+  addHaikuDependencyToEvents.call(this);
+  addAuthorDependencyToEvents.call(this);
 
   return [
-    Events.find(eventQuery, { sort: { createdAt: -1 }, limit: limit })
+    Events.find(eventQuery, eventOptions)
   ];
 
 });
@@ -102,22 +91,13 @@ Meteor.smartPublish('homeFeedHaikus', function(limit = 5) {
     eventType:  { $in: ['haiku', 'share'] },
     userId:     { $in: userIds }
   };
+  let eventOptions = { sort: { createdAt: -1 }, limit: limit };
 
-  this.addDependency('events', 'haikuId', function(event) {
-    // Find the Haiku associated with this event.
-    return Haikus.find(event.haikuId);
-  });
-
-  this.addDependency('events', 'haikuAuthorId', function(event) {
-    // Share the author of this Haiku!
-    return Meteor.users.find(event.haikuAuthorId, { fields: {
-      profile: 1,
-      username: 1
-    } });
-  });
+  addHaikuDependencyToEvents.call(this);
+  addAuthorDependencyToEvents.call(this);
 
   return [
-    Events.find(eventQuery, { sort: { createdAt: -1 }, limit: limit })
+    Events.find(eventQuery, eventOptions)
   ];
 
 });
@@ -141,18 +121,6 @@ Meteor.smartPublish('popularHaikus', function(limit = 5) {
   return [ Haikus.find(haikuQuery, haikuOptions) ];
 
 });
-//
-// Meteor.publish('popularHaikus', function(limit) {
-//   check(limit, Number);
-//
-//   // Find all the top-ranked Haikus.
-//   let query   = { }
-//   let options = { sort: { likeCount: -1}, limit: limit }
-//
-//   getHaikusWithAuthors(this, query, options);
-//
-// });
-
 
 
 Meteor.publish('myInteractionsWithHaikus', function(haikuIds) {
@@ -188,6 +156,27 @@ Meteor.publish('activeHaiku', function(haikuId) {
 
 
 // HELPERS
+function addAuthorDependencyToEvents() {
+  this.addDependency('events', 'haikuAuthorId', function(event) {
+    // Share the author of this Haiku! It isn't necessarily the same as the
+    // user whose page we're visiting, if that user has Shared another user's
+    // Haiku.
+    return Meteor.users.find(event.haikuAuthorId, { fields: {
+      profile: 1,
+      username: 1
+    } });
+  });
+}
+
+function addHaikuDependencyToEvents() {
+  this.addDependency('events', 'haikuId', function(event) {
+    // Find the Haiku associated with this event.
+    return Haikus.find(event.haikuId);
+  });
+}
+
+
+
 function publishAssociatedUser(userId, handles, sub) {
   let userCursor = Meteor.users.find({_id: userId });
   handles[userId] = Mongo.Collection._publishCursor(userCursor, sub, 'users');

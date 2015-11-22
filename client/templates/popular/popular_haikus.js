@@ -1,7 +1,7 @@
 Template.popularHaikus.onCreated(function() {
-  this.limit = new ReactiveVar(3)
+  this.limit = new ReactiveVar(3);
   this.autorun( () => {
-    this.subscribe('popularHaikus', this.limit.get());
+    this.subscribe( 'popularHaikus', this.limit.get() );
   });
 });
 
@@ -10,6 +10,7 @@ Template.popularHaikus.helpers({
 });
 
 Template.popularHaikus.events({
+  // TODO: Turn this into a Spacebars Helper that uses a scroll event?
   'click .load-more': (ev, instance) => {
     ev.preventDefault();
     instance.limit.set( instance.limit.get() + 3 )
