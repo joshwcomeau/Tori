@@ -11,20 +11,20 @@ Template.profileHaikusList.helpers({
       FlowRouter.getParam('profile_name')
     );
 
-    console.log("Haikus helper running")
-
     // Find all the Haiku IDs for haiku/share events
-    let events = Events.find({
+    let eventIds = Events.find({
       eventType: { $in: ['share', 'haiku'] }
-    }, {
-      sort: { createdAt: -1 }
-    }).fetch();
+    }).map( (event) => event.haikuId);
 
-    let eventHaikuIds = _.pluck(events, 'haikuId');
+    // Find all Haikus associated with each event
+    // We need to fetch() them, so that we can sort by it's Event createdAt.
+    haikus = Haikus.find({ _id: { $in: eventIds } }).fetch();
 
-    console.log("Found event IDs", eventHaikuIds)
+    // Sort time!
+    return _.sortBy(haikus, (haiku) => {
+      // Find the corresponding Event
+      return Events.findOne({ haikuId: haiku._id }).createdAt
+    }).reverse();
 
-    // Find all Haikus posted
-    return Haikus.find({ _id: { $in: eventHaikuIds } });
   }
 });
