@@ -27,6 +27,8 @@ Template.profileHaikusList.onCreated(function() {
 });
 
 Template.profileHaikusList.helpers({
+  loading: () => Template.instance().loading.get(),
+
   haikus: function() {
     // Find all the Haiku IDs for haiku/share events
     let eventIds = Events.find({
@@ -44,7 +46,5 @@ Template.profileHaikusList.helpers({
     }).reverse();
 
     return sortedList;
-  },
-  loading: () => Template.instance().loading.get()
-
+  }
 });

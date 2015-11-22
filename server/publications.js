@@ -18,7 +18,7 @@ Meteor.publish('activeProfile', function(profile_name) {
   return publications;
 });
 
-Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 20) {
+Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 4) {
   // This method returns the most recent Haikus written or shared by a given
   // user. This is a surprisingly complex process, because we want them ordered
   // by when the GIVEN USER posted or shared them.
@@ -68,7 +68,7 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 20) {
 
 });
 
-Meteor.smartPublish('homeFeedHaikus', function(limit = 5) {
+Meteor.smartPublish('homeFeedHaikus', function(limit = 4) {
   check(limit, Number);
   // Must be logged in for this to make any sense.
   if ( !this.userId ) return;
@@ -101,7 +101,7 @@ Meteor.smartPublish('homeFeedHaikus', function(limit = 5) {
 
 });
 
-Meteor.smartPublish('popularHaikus', function(limit = 5) {
+Meteor.smartPublish('popularHaikus', function(limit = 4) {
   check(limit, Number);
 
   // Because we don't have the same who-shared-when concerns as with the other

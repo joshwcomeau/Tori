@@ -2,7 +2,10 @@
   <div id="feed">
     <div class="card">
       {{> haikusList haikus}}
-      <button class="load-more">Load More</button>
+      {{#if loading}}
+        {{> spinner }}
+      {{/if}}
+
     </div>
   </div>
 
