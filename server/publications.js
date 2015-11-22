@@ -46,7 +46,6 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 20) {
   //    4) The client figures out which haikuIds it needs `like`/`share` Event
   //       info for, makes a request to `myInteractionsWithHaikus` publication.
   //    5) In that other publication, the server returns all the events needed.
-  Meteor._sleepForMs(2000)
   check(limit, Number);
 
   let user = UserUtils.findUserByProfileName(profile_name);
@@ -132,22 +131,27 @@ Meteor.publish('myInteractionsWithHaikus', function(haikuIds) {
 Meteor.smartPublish('activeHaiku', function(haikuId) {
   check(haikuId, String);
 
+  // TODO: Paginate events.
+
+  // Get the Haiku's author
   addAuthorDependencyToHaikus.call(this);
 
-  // Get all the events that have taken place on this haiku
-  // TODO: Paginate.
-  this.addDependency('haikus', '_id', function(haiku) {
-    return Events.find({
-      eventType:  { $in: ['like', 'share', 'reply'] },
-      haikuId:    haiku._id
-    });
+  // Get the users responsible for all likes/shares
+  this.addDependency('events', 'userId', function(event) {
+    return Meteor.users.find(event.userId, { fields: {
+      profile: 1,
+      username: 1
+    } });
   });
 
-  // Get all user info for the events on this Haiku
-  addAuthorDependencyToEvents.call(this);
+
 
   return [
-    Haikus.find(haikuId)
+    Haikus.find( haikuId ),
+    Events.find({
+      eventType: { $in: ['like', 'share', 'reply'] },
+      haikuId: haikuId
+    })
   ];
 });
 
