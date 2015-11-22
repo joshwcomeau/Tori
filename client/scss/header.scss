@@ -37,7 +37,11 @@ header {
     bottom: 0;
 
     & > div {
-      display: inline-block;
+      float:left;
+    }
+
+    a {
+      cursor: pointer;
     }
 
     .compose-button-container {
@@ -50,16 +54,16 @@ header {
         outline: none;
         width: $size-header-button;
         height: $size-header-button;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: auto;
+        top: ($size-header - $size-header-button) / 2;
+        left: ($size-header - $size-header-button) / 2;
+        right: ($size-header - $size-header-button) / 2;
+        bottom: ($size-header - $size-header-button) / 2;
+        margin: 0;
         border-radius: 100%;
         transition: background 0.5s;
 
         &:hover {
-          background: darken($green, 8%);
+          background: darken($green, 8%) !important;
           transition: background 0.2s;
         }
 
@@ -83,8 +87,41 @@ header {
           text-align: center;
         }
       }
-
     }
+
+    .secondary {
+      position: relative;
+      margin-left: ($size-header - $size-header-button) / 2;
+      margin-right: 0;
+      width: $size-header-button;
+      height: $size-header;
+      font-size: 14px;
+
+      a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        display: block;
+        border: 1px solid #CCC;
+        border-radius: 100%;
+        width: $size-header-button;
+        height: $size-header-button;
+
+        i {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          line-height: $size-header-button;
+          text-align: center;
+        }
+      }
+    }
+
   }
 
   .right-nav {

@@ -3,9 +3,19 @@
     <div class="left-nav">
       {{#if currentUser}}
         <div class="compose-button-container">
-          <button class='compose-button filled'>
+          <a class='compose-button filled'>
             <i class="fa fa-pencil"></i>
-          </button>
+          </a>
+        </div>
+        <div class="notifications secondary">
+          <a>
+            <i class="fa fa-bell"></i>
+          </a>
+        </div>
+        <div class="popular secondary">
+          <a href="{{popularLink}}">
+            <i class="fa fa-trophy"></i>
+          </a>
         </div>
       {{/if}}
     </div>
