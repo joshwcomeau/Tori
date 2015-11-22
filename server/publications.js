@@ -47,6 +47,7 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 20) {
   //       info for, makes a request to `myInteractionsWithHaikus` publication.
   //    5) In that other publication, the server returns all the events needed.
 
+  check(limit, Number);
 
   if (profile_name) profile_name = profile_name.toLowerCase();
   let user = Meteor.users.findOne({ username: profile_name });
@@ -80,6 +81,7 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 20) {
 });
 
 Meteor.smartPublish('homeFeedHaikus', function(limit = 5) {
+  check(limit, Number);
   // Must be logged in for this to make any sense.
   if ( !this.userId ) return;
 
@@ -120,6 +122,38 @@ Meteor.smartPublish('homeFeedHaikus', function(limit = 5) {
 
 });
 
+Meteor.smartPublish('popularHaikus', function(limit = 5) {
+  check(limit, Number);
+
+  // Because we don't have the same who-shared-when concerns as with the other
+  // Haiku-getting methods, I don't need to fetch Events first.
+  // Instead, I can just find the top N Haikus, and fetch them with their
+  // authors.
+  let haikuQuery    = {};
+  let haikuOptions  = { sort: { likeCount: -1}, limit: limit };
+
+  this.addDependency('haikus', 'userId', function(haiku) {
+    return Meteor.users.find(haiku.userId, { fields: {
+      profile: 1, username: 1
+    }});
+  });
+
+  return [ Haikus.find(haikuQuery, haikuOptions) ];
+
+});
+//
+// Meteor.publish('popularHaikus', function(limit) {
+//   check(limit, Number);
+//
+//   // Find all the top-ranked Haikus.
+//   let query   = { }
+//   let options = { sort: { likeCount: -1}, limit: limit }
+//
+//   getHaikusWithAuthors(this, query, options);
+//
+// });
+
+
 
 Meteor.publish('myInteractionsWithHaikus', function(haikuIds) {
   // Ignore bogus requests
@@ -150,31 +184,7 @@ Meteor.publish('activeHaiku', function(haikuId) {
 
 });
 
-Meteor.publish('homeFeed', function() {
-  // Find all Haikus from people we are following
-  let followedByUserCursor = Follows.find({ fromUserId: this.userId });
-  let authorIds = followedByUserCursor.map( follow => follow.toUserId );
 
-  // Naturally, I'm allowed to see my own haikus as well.
-  authorIds.push( this.userId );
-
-  let query   = { userId: { $in: authorIds } }
-  let options = { sort: { createdAt: -1} }
-
-  getHaikusWithAuthors(this, query, options);
-
-});
-
-Meteor.publish('popularHaikus', function(limit) {
-  check(limit, Number);
-
-  // Find all the top-ranked Haikus.
-  let query   = { }
-  let options = { sort: { likeCount: -1}, limit: limit }
-
-  getHaikusWithAuthors(this, query, options);
-
-});
 
 
 // HELPERS
