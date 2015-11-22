@@ -113,6 +113,14 @@ Meteor.smartPublish('popularHaikus', function(limit = 5) {
 
   addAuthorDependencyToHaikus.call(this);
 
+  // Let's also send along my interactions with these top posts.
+  this.addDependency('haikus', '_id', function(haiku) {
+    return Events.find({
+      eventType: { $in: ['like', 'share', 'reply'] },
+      haikuId: haiku._id
+    })
+  });
+
   return [ Haikus.find(haikuQuery, haikuOptions) ];
 
 });
