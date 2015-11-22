@@ -18,29 +18,43 @@ Meteor.publish('activeProfile', function(profile_name) {
   return publications;
 });
 
-Meteor.publish('activeProfileHaikus', function(profile_name) {
+Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 3) {
   if (profile_name) profile_name = profile_name.toLowerCase();
   let user = Meteor.users.findOne({ username: profile_name });
   if ( !user ) return false;
 
+  // The PRIMARY thing we're publishing isn't actually Haikus, it's Events.
+  // Every original Haiku, as well as every Share, has its own event.
+  // The reason for this is ordering. Let's say Tom retweets Sally's Haiku about
+  // sweaters. That post may have been created a week ago, but it should appear
+  // at the TOP of Tom's feed, above his own posts from a few days ago.
+  // By sorting by the _event_, we make sure the Haikus appear in the right
+  // order.
 
-  let query   = { $or: [
-    { userId: user._id },
-    { shares: { $in: [user._id] }}
-  ]};
-  let options = { sort: { createdAt: -1} }
+  // In other words, we first fetch the most recent N events that this user
+  // has created, and then fetch the event's dependencies (including the haiku,
+  // and the)
+  let eventQuery = {
+    eventType:  { $in: ['haiku', 'share'] },
+    userId:     user._id
+  }
 
-  getHaikusWithAuthors(this, query, options);
-});
-
-Meteor.publish('activeProfileEvents', function(profile_name) {
-  if (profile_name) profile_name = profile_name.toLowerCase();
-  let user_id = Meteor.users.findOne({ username: profile_name })._id;
-
-  return Events.find({
-    fromUserId: this.userId,
-    toUserId: user_id
+  this.addDependency('events', 'haikuId', function(event) {
+    // Find the Haiku associated with this event.
+    return Haikus.find(event.haikuId);
   });
+
+  this.addDependency('events', 'haikuAuthorId', function(event) {
+    // When this user shares the haiku of another user, we need to ensure
+    // that we've included that other user's username and profile.
+    return Meteor.users.find(event.haikuAuthorId, { fields: {
+      profile: 1,
+      username: 1
+    } });
+  });
+
+  return Events.find(eventQuery, { sort: { createdAt: -1 }, limit: limit });
+
 });
 
 

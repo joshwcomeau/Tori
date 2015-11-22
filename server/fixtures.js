@@ -90,11 +90,11 @@ Meteor.startup(function() {
     });
 
     Events.insert({
-      eventType: 'like',
-      seen: false,
-      haikuId: haiku_id,
-      toUserId: rollingHillsId,
-      fromUserId: poetId
+      eventType:      'like',
+      seen:           false,
+      haikuId:        haiku_id,
+      userId:         rollingHillsId,
+      haikuAuthorId:  poetId
     });
 
     console.log("Fixture data inserted!");
