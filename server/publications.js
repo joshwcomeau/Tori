@@ -120,7 +120,7 @@ Meteor.smartPublish('popularHaikus', function(limit = 5) {
 
 
 Meteor.publish('myInteractionsWithHaikus', function(haikuIds) {
-  check(haikuId, [String]);
+  check(haikuIds, [String]);
 
   return Events.find({
     eventType:  { $in: ['like', 'share'] },

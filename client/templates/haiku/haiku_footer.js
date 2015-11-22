@@ -26,14 +26,36 @@ Template.haikuFooter.helpers({
       eventType: 'like'
     });
   },
-  hasShared: function() {
-    if ( !Meteor.user() ) return false;
+  shareButtonDisabled: function() {
+    // This button will be disabled if:
+    //   - You are not logged in, or
+    //   - You're the author of the Haiku in question
+    return !Meteor.user() || Meteor.userId() === this.userId;
+  },
+  shareButtonClass: function() {
+    if ( !Meteor.user() ) return 'not-shared';
 
-    return Events.findOne({
+    let preExistingShare = Events.findOne({
       haikuId: this._id,
       userId: Meteor.user()._id,
       eventType: 'share'
-    })
+    });
+
+    return preExistingShare ? 'shared' : 'not-shared';
+  },
+  likeButtonDisabled: function() {
+    return !Meteor.user();
+  },
+  likeButtonClass: function() {
+    if ( !Meteor.user() ) return 'not-liked';
+
+    let preExistingLike = Events.findOne({
+      haikuId: this._id,
+      userId: Meteor.user()._id,
+      eventType: 'like'
+    });
+
+    return preExistingLike ? 'liked' : 'not-liked';
   },
   portraitAttr: function() {
     return {

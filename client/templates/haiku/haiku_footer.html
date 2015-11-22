@@ -24,14 +24,14 @@
           <i class="fa fa-reply"></i>
         </button>
       </li>
-      <li class="{{#if hasShared}}shared{{else}}not-shared{{/if}}">
-        <button class="share">
+      <li class="{{shareButtonClass}}">
+        <button class="share" disabled="{{shareButtonDisabled}}">
           <i class="fa fa-retweet"></i>
         </button>
         <span class="count">{{humanizedShares}}</span>
       </li>
-      <li class="{{#if doesLike}}liked{{else}}not-liked{{/if}}">
-        <button class="like">
+      <li class="{{likeButtonClass}}">
+        <button class="like" disabled="{{likeButtonDisabled}}">
           <i class="fa fa-heart"></i>
         </button>
         <span class="count">{{humanizedLikes}}</span>

@@ -244,6 +244,10 @@ $footer-height: 3.2rem;
       width: 4rem;
       text-align: left;
 
+      button:disabled {
+        opacity: 0.5;
+      }
+
       &.liked {
         // the user likes this haiku.
         color: $fuscia;
