@@ -14,8 +14,6 @@ Template.profileHaikusList.onCreated(function() {
     if ( !_.isEmpty(haikuIds.get()) ) {
       this.subscribe('myInteractionsWithHaikus', haikuIds.get() );
     }
-
-
   });
 
   this.autorun( () => {
@@ -25,16 +23,7 @@ Template.profileHaikusList.onCreated(function() {
 });
 
 Template.profileHaikusList.helpers({
-  activeProfileLoaded: () => {
-    return Meteor.users.find({
-      username: FlowRouter.getParam('profile_name')
-    }).count();
-  },
   haikus: function() {
-    profile = UserUtils.findUserByProfileName(
-      FlowRouter.getParam('profile_name')
-    );
-
     // Find all the Haiku IDs for haiku/share events
     let eventIds = Events.find({
       eventType: { $in: ['share', 'haiku'] }

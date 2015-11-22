@@ -79,6 +79,47 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 20) {
 
 });
 
+Meteor.smartPublish('homeFeedHaikus', function(limit = 5) {
+  // Must be logged in for this to make any sense.
+  if ( !this.userId ) return;
+
+  // Essentially, this is the same as looking at a given user's profile page,
+  // except instead of just 1 user, it's all the users we're following. We'll
+  // also include our own Haikus as well.
+
+  // Get an array of all the userIds we're following.
+  let userIds = Follows.find({ fromUserId: this.userId }).map(
+    follow => follow.toUserId
+  );
+
+  // Include our own stuff
+  userIds.push( this.userId );
+
+  // Find all Events of the right type by the given users.
+  let eventQuery = {
+    eventType:  { $in: ['haiku', 'share'] },
+    userId:     { $in: userIds }
+  };
+
+  this.addDependency('events', 'haikuId', function(event) {
+    // Find the Haiku associated with this event.
+    return Haikus.find(event.haikuId);
+  });
+
+  this.addDependency('events', 'haikuAuthorId', function(event) {
+    // Share the author of this Haiku!
+    return Meteor.users.find(event.haikuAuthorId, { fields: {
+      profile: 1,
+      username: 1
+    } });
+  });
+
+  return [
+    Events.find(eventQuery, { sort: { createdAt: -1 }, limit: limit })
+  ];
+
+});
+
 
 Meteor.publish('myInteractionsWithHaikus', function(haikuIds) {
   // Ignore bogus requests
