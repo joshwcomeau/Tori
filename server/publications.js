@@ -112,11 +112,7 @@ Meteor.smartPublish('popularHaikus', function(limit = 5) {
   let haikuQuery    = {};
   let haikuOptions  = { sort: { likeCount: -1}, limit: limit };
 
-  this.addDependency('haikus', 'userId', function(haiku) {
-    return Meteor.users.find(haiku.userId, { fields: {
-      profile: 1, username: 1
-    }});
-  });
+  addAuthorDependencyToHaikus.call(this);
 
   return [ Haikus.find(haikuQuery, haikuOptions) ];
 
@@ -124,11 +120,7 @@ Meteor.smartPublish('popularHaikus', function(limit = 5) {
 
 
 Meteor.publish('myInteractionsWithHaikus', function(haikuIds) {
-  // Ignore bogus requests
-  if ( _.isEmpty(haikuIds) ) return;
-
-  // Make sure haikuIds is always an array
-  if ( !_.isArray(haikuIds) ) haikuIds = [haikuIds];
+  check(haikuId, [String]);
 
   return Events.find({
     eventType:  { $in: ['like', 'share'] },
@@ -137,19 +129,26 @@ Meteor.publish('myInteractionsWithHaikus', function(haikuIds) {
   });
 });
 
-Meteor.publish('activeHaiku', function(haikuId) {
-  let query = {
-    $or: [
-      { _id:          haikuId },
-      { shareOfId:    haikuId },
-      { inReplyToId:  haikuId }
-    ]
-  };
-  let options = { sort: { createdAt: -1} }
+Meteor.smartPublish('activeHaiku', function(haikuId) {
+  check(haikuId, String);
 
-  getHaikusWithAuthors(this, query, options);
-  getEventsWithUsers(this, haikuId);
+  addAuthorDependencyToHaikus.call(this);
 
+  // Get all the events that have taken place on this haiku
+  // TODO: Paginate.
+  this.addDependency('haikus', '_id', function(haiku) {
+    return Events.find({
+      eventType:  { $in: ['like', 'share', 'reply'] },
+      haikuId:    haiku._id
+    });
+  });
+
+  // Get all user info for the events on this Haiku
+  addAuthorDependencyToEvents.call(this);
+
+  return [
+    Haikus.find(haikuId)
+  ];
 });
 
 
@@ -175,60 +174,10 @@ function addHaikuDependencyToEvents() {
   });
 }
 
-
-
-function publishAssociatedUser(userId, handles, sub) {
-  let userCursor = Meteor.users.find({_id: userId });
-  handles[userId] = Mongo.Collection._publishCursor(userCursor, sub, 'users');
-}
-
-function getEventsWithUsers(sub, haikuId) {
-  // Takes a cursor for events, and finds event users
-  let query   = { haikuId: haikuId };
-  let options = { sort: { createdAt: -1} };
-
-  let userHandles = {};
-
-  let eventsHandle = Events.find(query, options).observeChanges({
-    added: function(id, event) {
-      publishAssociatedUser(event.fromUserId, userHandles, sub);
-      sub.added('events', id, event);
-    },
-    changed: function(id, fields) {
-      sub.changed('events', id, fields);
-    },
-    removed: function(id) {
-      if ( userHandles[id] ) userHandles[id].stop();
-      sub.removed('events', id);
-    }
+function addAuthorDependencyToHaikus() {
+  this.addDependency('haikus', 'userId', function(haiku) {
+    return Meteor.users.find(haiku.userId, { fields: {
+      profile: 1, username: 1
+    }});
   });
-  sub.ready();
-
-  sub.onStop( () => eventsHandle.stop() );
-
-}
-
-function getHaikusWithAuthors(sub, query, options) {
-  let userHandles = {};
-
-  let haikuHandle = Haikus.find(query, options).observeChanges({
-    added: function(id, haiku) {
-      // In addition to publishing this new Haiku, we need to fetch and
-      // publish its author! As well as anyone sharing it.
-      publishAssociatedUser(haiku.userId, userHandles, sub);
-
-      sub.added('haikus', id, haiku);
-    },
-    changed: function(id, fields) {
-      sub.changed('haikus', id, fields);
-    },
-    removed: function(id) {
-      if ( userHandles[id] ) userHandles[id].stop();
-      sub.removed('haikus', id);
-    }
-  });
-
-  sub.ready();
-
-  sub.onStop( () => haikuHandle.stop() );
 }

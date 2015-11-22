@@ -3,7 +3,7 @@
 // the URL params. This feels slightly less decoupled.
 Template.haikuEventsList.helpers({
   events: function() {
-    return Events.find({ haikuId: this._id})
+    return Events.find({ haikuId: this._id}, { sort: { createdAt: -1 } });
   },
   noEvents: function() {
     return Events.find({ haikuId: this._id}).count() === 0
