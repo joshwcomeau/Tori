@@ -2,10 +2,10 @@
   <div class="haiku-footer flex {{footerClasses}}">
 
     <div class="haiku-author flex-item">
+      {{#if isASharedHaiku}}
+        SHARED
+      {{/if}}
       {{#with author}}
-        {{#if isASharedHaiku}}
-          SHARED
-        {{/if}}
         <div {{portraitAttr}}></div>
       {{/with}}
       <div class="author-and-time">

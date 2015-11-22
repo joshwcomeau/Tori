@@ -46,7 +46,7 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 20) {
   //    4) The client figures out which haikuIds it needs `like`/`share` Event
   //       info for, makes a request to `myInteractionsWithHaikus` publication.
   //    5) In that other publication, the server returns all the events needed.
-
+  Meteor._sleepForMs(2000)
   check(limit, Number);
 
   let user = UserUtils.findUserByProfileName(profile_name);

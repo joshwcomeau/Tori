@@ -1,5 +1,8 @@
 <template name="profileHaikusList">
   <div class="haikus card">
     {{> haikusList haikus}}
+    {{#if loading}}
+      {{> spinner }}
+    {{/if}}
   </div>
 </template>

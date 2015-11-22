@@ -70,9 +70,18 @@ Template.haikuFooter.helpers({
     }
   },
   isASharedHaiku: function() {
-    // It's a shared haiku if:
-    //  - We're on a user's profile page and their userId is in the `shares` arr
-    return this.username !== FlowRouter.getParam('profile_name');
+    // When looking at a single Haiku, sharing is irrelevant. Even if I click
+    // on a shared haiku, it should take me to the source.
+    if ( FlowRouter.getParam('haiku_id') ) return false;
+
+    // If I'm looking at a list of Haikus, I ought to have the Event available
+    // locally that indicates that it's shared.
+    // Therefore, all I should have to do is check for the presence of an
+    // appropriate `share` event.
+    return !!Events.findOne({
+      eventType: 'share',
+      haikuId: this._id
+    });
   },
   relativeDate: function() {
     return moment(this.createdAt).fromNow();

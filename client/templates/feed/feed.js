@@ -1,17 +1,12 @@
 Template.feed.onCreated( function() {
-  let haikuIds  = new ReactiveVar;
-  this.limit    = new ReactiveVar(3);
+  this.limit    = new ReactiveVar(4);
 
   this.autorun( () => {
-    this.subscribe( 'homeFeedHaikus', this.limit.get() );
-    if ( !_.isEmpty(haikuIds.get()) ) {
-      this.subscribe( 'myInteractionsWithHaikus', haikuIds.get() );
+    let haikuSubscription = this.subscribe( 'homeFeedHaikus', this.limit.get() );
+    if ( haikuSubscription.ready() ) {
+      let haikuIds = Haikus.find().map( (haiku) => haiku._id );
+      this.subscribe( 'myInteractionsWithHaikus', haikuIds );
     }
-  });
-
-  this.autorun( () => {
-    // Set our reactive var to the list of available Haiku IDs.
-    haikuIds.set( Haikus.find().map( (haiku) => haiku._id ) );
   });
 });
 
