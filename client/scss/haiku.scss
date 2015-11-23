@@ -323,9 +323,48 @@ $shared-indentation: 3rem;
         font-size: 0.7rem;
         font-weight: 700;
       }
-
-
-
     }
+  }
+}
+
+.no-haikus {
+  padding: 2rem;
+  text-align: center;
+
+  h4 {
+    position: relative;
+    display: block;
+    margin: 0;
+  }
+
+  h4:nth-child(1) {
+    font-size: 2rem;
+    letter-spacing: -1px;
+    font-weight: 900;
+
+    span {
+      position: relative;
+      display: inline-block;
+    }
+
+    span:after {
+      content: '';
+      position: absolute;
+      left: 0.4rem;
+      right: 0.4rem;
+      bottom: 0px;
+      border-bottom: 3px solid $orange;
+    }
+  }
+  h4:nth-child(2) {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 3rem;
+    color: $green;
+  }
+  h4:nth-child(3) {
+    font-weight: 100;
+    font-size: 1.1rem;
+    color: $darkgray;
   }
 }
