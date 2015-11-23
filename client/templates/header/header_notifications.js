@@ -38,7 +38,10 @@ Template.headerNotifications.helpers({
     let userName = Meteor.users.findOne({ _id: this.userId }).username;
     let userDisplayName = Meteor.users.findOne({ _id: this.userId }).profile.displayName;
 
-    let haikuUrl = FlowRouter.path('haiku', { haiku_id: this.haikuId });
+    let haikuUrl = FlowRouter.path('haiku', {
+      profile_name: Meteor.user().username,
+      haiku_id: this.haikuId
+    });
     let userUrl  = FlowRouter.path('profile', { profile_name: userName });
 
     switch (this.eventType) {
