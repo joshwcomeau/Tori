@@ -6,7 +6,7 @@ Template.headerLogIn.helpers({
   menuOpen: function() {
     return UiUtils.modal.isActive(Template.instance().menuName);
   }
-})
+});
 
 Template.headerLogIn.events({
   // We have a window handler to close the login popup. We want this to run

@@ -60,7 +60,7 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 4) {
 
 
   addHaikuDependencyToEvents.call(this);
-  addAuthorDependencyToEvents.call(this);
+  addUserDependencyToEvents.call(this, 'haikuAuthorId');
 
   return [
     Events.find(eventQuery, eventOptions)
@@ -93,7 +93,7 @@ Meteor.smartPublish('homeFeedHaikus', function(limit = 4) {
   let eventOptions = { sort: { createdAt: -1 }, limit: limit };
 
   addHaikuDependencyToEvents.call(this);
-  addAuthorDependencyToEvents.call(this);
+  addUserDependencyToEvents.call(this, 'haikuAuthorId');
 
   return [
     Events.find(eventQuery, eventOptions)
@@ -125,6 +125,24 @@ Meteor.smartPublish('popularHaikus', function(limit = 4) {
 
 });
 
+Meteor.smartPublish('myNotifications', function() {
+  let eventQuery = {
+    seen: false,
+    haikuAuthorId: this.userId
+  };
+  let eventOptions = {
+    sort: { createdAt: -1 },
+    limit: 10
+  };
+
+  // We need to send some user info about the people sending these events.
+  addUserDependencyToEvents.call(this, 'userId');
+
+  return [
+    Events.find(eventQuery, eventOptions)
+  ];
+});
+
 
 Meteor.publish('myInteractionsWithHaikus', function(haikuIds) {
   check(haikuIds, [String]);
@@ -145,14 +163,7 @@ Meteor.smartPublish('activeHaiku', function(haikuId) {
   addAuthorDependencyToHaikus.call(this);
 
   // Get the users responsible for all likes/shares
-  this.addDependency('events', 'userId', function(event) {
-    return Meteor.users.find(event.userId, { fields: {
-      profile: 1,
-      username: 1
-    } });
-  });
-
-
+  addUserDependencyToEvents.call(this, 'userId');
 
   return [
     Haikus.find( haikuId ),
@@ -167,12 +178,12 @@ Meteor.smartPublish('activeHaiku', function(haikuId) {
 
 
 // HELPERS
-function addAuthorDependencyToEvents() {
-  this.addDependency('events', 'haikuAuthorId', function(event) {
+function addUserDependencyToEvents(userField) {
+  this.addDependency('events', userField, function(event) {
     // Share the author of this Haiku! It isn't necessarily the same as the
     // user whose page we're visiting, if that user has Shared another user's
     // Haiku.
-    return Meteor.users.find(event.haikuAuthorId, { fields: {
+    return Meteor.users.find(event[userField], { fields: {
       profile: 1,
       username: 1
     } });

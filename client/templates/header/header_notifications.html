@@ -1,0 +1,34 @@
+<template name="headerNotifications">
+  <div class="notifications secondary">
+    <button class="header-button notifications-button">
+      <i class="fa fa-bell"></i>
+      {{#if hasUnreadNotifications}}
+        <div class="unread-notifications-indicator"></div>
+      {{/if}}
+    </button>
+    {{#if menuOpen}}
+      <div class="dropdown-menu-blocker notifications-menu-blocker"></div>
+      <div class="dropdown-menu notifications-menu left-arrow">
+        <ul>
+          {{#if Template.subscriptionsReady}}
+            {{#each notifications}}
+              <li>
+                <div class="notification-avatar-and-icon">
+                  <div class="notification-avatar" style="background-image: url('{{avatar}}')"></div>
+                  <i class="fa fa-{{eventIcon}}"></i>
+                </div>
+                {{{ notificationText }}}
+                <div class="close">
+                  {{> close}}
+                </div>
+              </li>
+            {{/each}}
+          {{/if}}
+        </ul>
+        <a href="/notifications">View All</a>
+      </div>
+    {{/if}}
+
+  </div>
+
+</template>
