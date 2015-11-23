@@ -1,15 +1,12 @@
 <template name="haikusList">
-  {{#if initialLoadCompleted}}
-    <ul class="haiku-container">
-      {{#each this}}
-        <li>
-          <a href="{{haikuAuthor}}/haikus/{{_id}}">{{> haiku}}</a>
-          {{> haikuFooter}}
-        </li>
-
-      {{/each}}
-    </ul>
-  {{else}}
-    {{> spinner}}
-  {{/if}}
+  <ul class="haiku-container">
+    {{#each this}}
+      <li>
+        <a href="{{haikuAuthor}}/haikus/{{_id}}">
+          {{> haiku}}
+        </a>
+        {{> haikuFooter}}
+      </li>
+    {{/each}}
+  </ul>
 </template>

@@ -46,5 +46,8 @@ Template.profileHaikusList.helpers({
     }).reverse();
 
     return sortedList;
-  }
+  },
+
+  // TODO: Smarten this? What if there are Haikus loaded for another reason?
+  noHaikus: () => Haikus.find().count() === 0
 });

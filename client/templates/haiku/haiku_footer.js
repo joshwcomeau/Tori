@@ -11,7 +11,7 @@ Template.haikuFooter.helpers({
   },
   footerClasses: function() {
     // If this Haiku has a background image, it'll be styled differently in CSS.
-    if ( !!this.backgroundImage ) {
+    if ( this.showBackground ) {
       return "haiku-has-bg-image";
     } else {
       return "haiku-has-white-bg";
@@ -65,13 +65,23 @@ Template.haikuFooter.helpers({
     // It's not the 'share' that's popular, it's the original post!
     if ( FlowRouter.getRouteName() === 'popular' ) return false;
 
-    // If I'm looking at a list of Haikus, I ought to have the Event available
-    // locally that indicates that it's shared.
-    // Therefore, all I should have to do is check for the presence of an
-    // appropriate `share` event.
+    // If I'm on a profile page, the only posts that show up as shared are ones
+    // where the PROFILE user has shared some other person's Haiku.
+    if ( FlowRouter.getRouteName() === 'profile' ) {
+      let userId = UserUtils.findUserByProfileName( FlowRouter.getParam('profile_name') );
+      return !!Events.findOne({
+        eventType:  'share',
+        haikuId:    this._id,
+        userId:     userId
+      })
+    }
+
+    // If I'm looking at my home feed, things are tricky, but it stands to
+    // reason that if I have a `share` event for it, it's shared. The exact
+    // user we show as the sharER is a bit complex; see `sharedAuthor`.
     return !!Events.findOne({
-      eventType: 'share',
-      haikuId: this._id
+      eventType:  'share',
+      haikuId:    this._id
     });
   },
   sharedAuthor: function() {

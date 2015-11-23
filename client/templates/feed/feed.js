@@ -37,10 +37,3 @@ Template.feed.helpers({
     }).reverse();
   }
 });
-
-Template.feed.events({
-  'click .load-more': (ev, instance) => {
-    ev.preventDefault();
-    instance.limit.set( instance.limit.get() + 3 )
-  }
-});
