@@ -209,7 +209,7 @@ header {
         }
 
         &:hover {
-          .close {
+          .mark-as-seen {
             display: block;
 
             &:hover {
@@ -219,7 +219,7 @@ header {
             }
           }
         }
-        .close {
+        .mark-as-seen {
           position: absolute;
           display: none;
           right: -4px;

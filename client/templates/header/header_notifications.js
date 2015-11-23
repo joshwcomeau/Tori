@@ -62,13 +62,22 @@ Template.headerNotifications.events({
   // within the menu doesn't close the menu =)
   'mouseup .notifications-menu': (ev, instance) => ev.stopPropagation(),
 
-  'click .notifications-button': (ev, instance) => {
+  'mouseup .notifications-button': (ev, instance) => {
+    UiUtils.modal.toggle(instance.menuName);
     ev.preventDefault();
     ev.stopPropagation();
 
-    UiUtils.modal.activate(instance.menuName);
+
   },
 
   // When clicking a link (eg. View all), we want to close the menu
-  'click a': (ev, instance) => UiUtils.modal.deactivate()
+  'click a': (ev, instance) => UiUtils.modal.deactivate(),
+
+  'click .mark-as-seen': (ev, instance) => {
+    // Its parent <li> has a data-event-id attribute, which holds the event
+    // we're dismissing.
+    let eventId = $(ev.target).closest('li').data('event-id');
+
+    Meteor.call('markAsSeen', eventId);
+  }
 })
