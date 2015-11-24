@@ -24,15 +24,7 @@ Template.headerNotifications.onCreated(function() {
         if ( !Notifications.findOne(item._id) )
           Notifications.insert(item);
       },
-      removed:  (item) => {
-        Notifications.remove(item._id)
-      },
-      changed:  (newItem, oldItem) => {
-        // The only real 'update' I can think of is marking one as dismissed,
-        // by setting 'seen' to True. In this case, we actually just want to
-        // destroy the Notification.
-        if ( newItem.seen ) Notifications.remove(oldItem._id);
-      }
+      removed:  (item) => Notifications.remove(item._id)
     };
 
     Follows.find(followQuery).observe(observable);
