@@ -5,37 +5,13 @@ Template.headerNotifications.onCreated(function() {
 
   instance.autorun(() => {
     instance.subscribe('myNotifications');
-
-    let eventQuery = {
-      seen: false, haikuAuthorId: Meteor.userId(), eventType: { $ne: 'haiku'}
-    };
-
-    let followQuery = {
-      seen: false, toUserId: Meteor.userId()
-    };
-
-    // `myNotifications` publishes both unseen Events and unseen Follows.
-    // We want to combine them into a local-only collection, Notifications,
-    // and sort by createdAt.
-    let observable = {
-      added:    (item) => {
-        // Sometimes, it may try and add an already-present item, if a new
-        // template subscription pulls in the same document.
-        if ( !Notifications.findOne(item._id) )
-          Notifications.insert(item);
-      },
-      removed:  (item) => Notifications.remove(item._id)
-    };
-
-    Follows.find(followQuery).observe(observable);
-    Events.find(eventQuery).observe(observable);
   });
 });
 
 Template.headerNotifications.helpers({
   menuOpen: () => UiUtils.modal.isActive(Template.instance().menuName),
   hasUnreadNotifications: () => {
-    return !!Events.findOne({ seen: false, haikuAuthorId: Meteor.userId() });
+    return !!Notifications.findOne({ seen: false });
   },
   notifications: () => {
     return Notifications.find({}, {
@@ -43,13 +19,13 @@ Template.headerNotifications.helpers({
     });
   },
 
-  avatar: function() {
+  profilePhoto: function() {
     let notification = Blaze.getData();
     return Meteor.users.findOne({ _id: notification.fromUserId }).profile.photo
   },
-  eventIcon: function() {
+  notificationIcon: function() {
     let notification = Blaze.getData();
-    switch (notification.eventType) {
+    switch (notification.notificationType) {
       case 'like':
         return 'heart';
       case 'share':
@@ -79,7 +55,7 @@ Template.headerNotifications.helpers({
 
     let userUrl  = FlowRouter.path('profile', { profile_name: userName });
 
-    switch (notification.eventType) {
+    switch (notification.notificationType) {
       case 'like':
         return `<a href="${userUrl}">${userDisplayName}</a> liked <a href="${haikuUrl}">your Haiku</a>.`
       case 'share':
@@ -119,4 +95,4 @@ Template.headerNotifications.events({
 
     Meteor.call('markAsSeen', sourceId, sourceCollection);
   }
-})
+});

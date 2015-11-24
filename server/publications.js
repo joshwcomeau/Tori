@@ -126,26 +126,20 @@ Meteor.smartPublish('popularHaikus', function(limit = 4) {
 });
 
 Meteor.smartPublish('myNotifications', function() {
-  let eventQuery = {
-    seen: false,
-    haikuAuthorId: this.userId
-  };
-  let followQuery = {
+  let notificationQuery = {
     seen: false,
     toUserId: this.userId
   };
-  let options = {
+  let notificationOptions = {
     sort: { createdAt: -1 },
     limit: 10
   };
 
-  // We need to send some user info about the people sending these events.
-  addUserDependencyToCollection.call(this, 'userId', 'events');
-  addUserDependencyToCollection.call(this, 'fromUserId', 'follows');
+  // Send some user info about the people these notifications are from
+  addUserDependencyToCollection.call(this, 'fromUserId', 'notifications');
 
   return [
-    Events.find(eventQuery, options),
-    Follows.find(followQuery, options)
+    Notifications.find(notificationQuery, notificationOptions)
   ];
 });
 
