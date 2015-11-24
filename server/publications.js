@@ -166,7 +166,7 @@ Meteor.smartPublish('activeHaiku', function(haikuId) {
   // TODO: Paginate events.
 
   // Get the Haiku's author
-  addAuthorDependencyToHaikus.call(this);
+  addUserDependencyToCollection.call(this, 'userId', 'haikus');
 
   // Get the users responsible for all likes/shares
   addUserDependencyToCollection.call(this, 'userId', 'events');

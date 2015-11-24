@@ -12,7 +12,7 @@
         <ul>
           {{#if Template.subscriptionsReady}}
             {{#each notifications}}
-              <li data-event-id="{{_id}}">
+              <li data-source-id="{{_id}}" data-source-name="{{sourceCollectionName}}">
                 <div class="notification-avatar-and-icon">
                   <div class="notification-avatar" style="background-image: url('{{avatar}}')"></div>
                   <i class="fa fa-{{eventIcon}}"></i>

@@ -4,13 +4,13 @@ Notifications.before.insert( function(userId, doc) {
   // We need to do a bit of standardizing: after all, this collection consists
   // of two disparate object types, Events and Follows.
 
-  doc.toUserId    = doc.toUserId || doc.userId;
-  doc.fromUserId  = doc.fromUserId || doc.haikuAuthorId;
+  doc.toUserId    = doc.toUserId || doc.haikuAuthorId;
+  doc.fromUserId  = doc.fromUserId || doc.userId;
 
   // This part is a bit hacky: I need to tell if this document was originally
   // a Follow or an Event. Because I know they have different fields, I can
   // use them to tell.
-  doc.sourceCollectionName = doc.haikuId ? 'events' : 'follows';
+  doc.sourceCollectionName = doc.haikuId ? 'Events' : 'Follows';
 
   // Events naturally come with their own eventType; I just need to add one
   // for Follows:

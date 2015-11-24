@@ -18,8 +18,15 @@ Template.headerNotifications.onCreated(function() {
     // We want to combine them into a local-only collection, Notifications,
     // and sort by createdAt.
     let observable = {
-      added:    (item) => Notifications.insert(item),
-      removed:  (item) => Notifications.remove(item._id),
+      added:    (item) => {
+        // Sometimes, it may try and add an already-present item, if a new
+        // template subscription pulls in the same document.
+        if ( !Notifications.findOne(item._id) )
+          Notifications.insert(item);
+      },
+      removed:  (item) => {
+        Notifications.remove(item._id)
+      },
       changed:  (newItem, oldItem) => {
         // The only real 'update' I can think of is marking one as dismissed,
         // by setting 'seen' to True. In this case, we actually just want to
@@ -28,8 +35,8 @@ Template.headerNotifications.onCreated(function() {
       }
     };
 
-    Follows.find( followQuery ).observe(observable);
-    Events.find( eventQuery ).observe(observable);
+    Follows.find(followQuery).observe(observable);
+    Events.find(eventQuery).observe(observable);
   });
 });
 
@@ -79,7 +86,7 @@ Template.headerNotifications.helpers({
     }
 
     let userUrl  = FlowRouter.path('profile', { profile_name: userName });
-    console.log(notification)
+
     switch (notification.eventType) {
       case 'like':
         return `<a href="${userUrl}">${userDisplayName}</a> liked <a href="${haikuUrl}">your Haiku</a>.`
@@ -114,8 +121,10 @@ Template.headerNotifications.events({
   'click .mark-as-seen': (ev, instance) => {
     // Its parent <li> has a data-event-id attribute, which holds the event
     // we're dismissing.
-    let eventId = $(ev.target).closest('li').data('event-id');
+    let $li = $(ev.target).closest('li');
+    let sourceId = $li.data('source-id');
+    let sourceCollection = $li.data('source-name');
 
-    Meteor.call('markAsSeen', eventId);
+    Meteor.call('markAsSeen', sourceId, sourceCollection);
   }
 })
