@@ -11,7 +11,7 @@ Template.haikuFooter.helpers({
   },
   footerClasses: function() {
     // If this Haiku has a background image, it'll be styled differently in CSS.
-    if ( this.showBackground ) {
+    if ( this.backgroundImage ) {
       return "haiku-has-bg-image";
     } else {
       return "haiku-has-white-bg";

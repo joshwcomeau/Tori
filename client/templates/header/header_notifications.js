@@ -1,8 +1,62 @@
 Template.headerNotifications.onCreated(function() {
-  this.menuName = 'headerNotifications';
+  let instance = this;
 
-  this.autorun(() => {
-    this.subscribe('myNotifications')
+  instance.menuName = 'headerNotifications';
+
+  instance.autorun(() => {
+    instance.subscribe('myNotifications');
+
+    let eventQuery = {
+      seen: false, haikuAuthorId: Meteor.userId(), eventType: { $ne: 'haiku'}
+    };
+
+    let followQuery = {
+      seen: false, toUserId: Meteor.userId()
+    };
+
+    // `myNotifications` publishes both unseen Events and unseen Follows.
+    // We want to combine them into a local-only collection, Notifications,
+    // and sort by createdAt.
+
+    // We have a standardized
+    Follows.find( followQuery ).observe({
+      added:    (item) => {
+        let notification = _.extend(item, {
+          sourceCollection: 'follows',
+          eventType:        'follow'
+        });
+        Notifications.insert(notification);
+      },
+      removed:  (item) => Notifications.delete(item._id),
+      changed:  (newItem, oldItem) => {
+        let notification = _.extend(newItem, {
+          sourceCollection: 'follows',
+          eventType:        'follow'
+        });
+        Notifications.update(oldItem._id, notification);
+      }
+    });
+
+    // For Events, we're doing some modifications, so that they match the 'follow' syntax.
+    Events.find( eventQuery ).observe({
+      added:    (item) => {
+        let notification = _.extend(item, {
+          sourceCollection: 'events',
+          fromUserId:       item.userId,
+          toUserId:         item.haikuAuthorId
+        });
+        Notifications.insert(notification);
+      },
+      removed:  (item) => Notifications.delete(item._id),
+      changed:  (newItem, oldItem) => {
+        let notification = _.extend(newItem, {
+          sourceCollection: 'events',
+          fromUserId:       item.userId,
+          toUserId:         item.haikuAuthorId
+        });
+        Notifications.update(oldItem._id, notification);
+      }
+    });
   });
 });
 
@@ -12,45 +66,56 @@ Template.headerNotifications.helpers({
     return !!Events.findOne({ seen: false, haikuAuthorId: Meteor.userId() });
   },
   notifications: () => {
-    return Events.find({
-      seen: false,
-      haikuAuthorId: Meteor.userId()
-    }, {
+    return Notifications.find({}, {
       sort: { createdAt: -1 }
     });
   },
 
-  // These fields are called with the Notification context (an Event instance)
   avatar: function() {
-    return Meteor.users.findOne({ _id: this.userId }).profile.photo
+    let notification = Blaze.getData();
+    return Meteor.users.findOne({ _id: notification.fromUserId }).profile.photo
   },
   eventIcon: function() {
-    switch (this.eventType) {
+    let notification = Blaze.getData();
+    switch (notification.eventType) {
       case 'like':
         return 'heart';
       case 'share':
         return 'retweet';
       case 'reply':
         return 'reply';
+      case 'follow':
+        return 'user-plus'
     }
   },
   notificationText: function() {
-    let userName = Meteor.users.findOne({ _id: this.userId }).username;
-    let userDisplayName = Meteor.users.findOne({ _id: this.userId }).profile.displayName;
+    let notification = Blaze.getData();
 
-    let haikuUrl = FlowRouter.path('haiku', {
-      profile_name: Meteor.user().username,
-      haiku_id: this.haikuId
-    });
+    let userName = Meteor.users.findOne({
+      _id: notification.fromUserId
+    }).username;
+    let userDisplayName = Meteor.users.findOne({
+      _id: notification.fromUserId
+    }).profile.displayName;
+
+    if ( notification.haikuId ) {
+      var haikuUrl = FlowRouter.path('haiku', {
+        profile_name: Meteor.user().username,
+        haiku_id: notification.haikuId
+      });
+    }
+
     let userUrl  = FlowRouter.path('profile', { profile_name: userName });
-
-    switch (this.eventType) {
+    console.log(notification)
+    switch (notification.eventType) {
       case 'like':
         return `<a href="${userUrl}">${userDisplayName}</a> liked <a href="${haikuUrl}">your Haiku</a>.`
       case 'share':
         return `<a href="${userUrl}">${userDisplayName}</a> shared <a href="${haikuUrl}">your Haiku</a>.`
       case 'reply':
         return `<a href="${userUrl}">${userDisplayName}</a> has <a href="${haikuUrl}">replied</a> to your Haiku.`
+      case 'follow':
+        return `<a href="${userUrl}">${userDisplayName}</a> is now following you!`
     }
   }
 });

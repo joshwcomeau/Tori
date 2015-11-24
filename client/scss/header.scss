@@ -206,6 +206,14 @@ header {
           .fa-heart {
             color: $fuscia;
           }
+
+          .fa-user-plus {
+            color: darken($blue, 12%);
+          }
+
+          .fa-retweet {
+            color: darken($green, 12%);
+          }
         }
 
         &:hover {

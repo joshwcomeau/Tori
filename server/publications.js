@@ -60,7 +60,7 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 4) {
 
 
   addHaikuDependencyToEvents.call(this);
-  addUserDependencyToEvents.call(this, 'haikuAuthorId');
+  addUserDependencyToCollection.call(this, 'haikuAuthorId', 'events');
 
   return [
     Events.find(eventQuery, eventOptions)
@@ -93,7 +93,7 @@ Meteor.smartPublish('homeFeedHaikus', function(limit = 4) {
   let eventOptions = { sort: { createdAt: -1 }, limit: limit };
 
   addHaikuDependencyToEvents.call(this);
-  addUserDependencyToEvents.call(this, 'haikuAuthorId');
+  addUserDependencyToCollection.call(this, 'haikuAuthorId', 'events');
 
   return [
     Events.find(eventQuery, eventOptions)
@@ -111,7 +111,7 @@ Meteor.smartPublish('popularHaikus', function(limit = 4) {
   let haikuQuery    = {};
   let haikuOptions  = { sort: { likeCount: -1}, limit: limit };
 
-  addAuthorDependencyToHaikus.call(this);
+  addUserDependencyToCollection.call(this, 'userId', 'haikus');
 
   // Let's also send along my interactions with these top posts.
   this.addDependency('haikus', '_id', function(haiku) {
@@ -130,16 +130,22 @@ Meteor.smartPublish('myNotifications', function() {
     seen: false,
     haikuAuthorId: this.userId
   };
-  let eventOptions = {
+  let followQuery = {
+    seen: false,
+    toUserId: this.userId
+  };
+  let options = {
     sort: { createdAt: -1 },
     limit: 10
   };
 
   // We need to send some user info about the people sending these events.
-  addUserDependencyToEvents.call(this, 'userId');
+  addUserDependencyToCollection.call(this, 'userId', 'events');
+  addUserDependencyToCollection.call(this, 'fromUserId', 'follows');
 
   return [
-    Events.find(eventQuery, eventOptions)
+    Events.find(eventQuery, options),
+    Follows.find(followQuery, options)
   ];
 });
 
@@ -163,7 +169,7 @@ Meteor.smartPublish('activeHaiku', function(haikuId) {
   addAuthorDependencyToHaikus.call(this);
 
   // Get the users responsible for all likes/shares
-  addUserDependencyToEvents.call(this, 'userId');
+  addUserDependencyToCollection.call(this, 'userId', 'events');
 
   return [
     Haikus.find( haikuId ),
@@ -178,8 +184,8 @@ Meteor.smartPublish('activeHaiku', function(haikuId) {
 
 
 // HELPERS
-function addUserDependencyToEvents(userField) {
-  this.addDependency('events', userField, function(event) {
+function addUserDependencyToCollection(userField, collection) {
+  this.addDependency(collection, userField, function(event) {
     // Share the author of this Haiku! It isn't necessarily the same as the
     // user whose page we're visiting, if that user has Shared another user's
     // Haiku.
@@ -190,17 +196,10 @@ function addUserDependencyToEvents(userField) {
   });
 }
 
+
 function addHaikuDependencyToEvents() {
   this.addDependency('events', 'haikuId', function(event) {
     // Find the Haiku associated with this event.
     return Haikus.find(event.haikuId);
-  });
-}
-
-function addAuthorDependencyToHaikus() {
-  this.addDependency('haikus', 'userId', function(haiku) {
-    return Meteor.users.find(haiku.userId, { fields: {
-      profile: 1, username: 1
-    }});
   });
 }

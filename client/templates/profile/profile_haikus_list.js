@@ -1,6 +1,6 @@
 Template.profileHaikusList.onCreated(function() {
   this.limit = new ReactiveVar(4);
-  this.loading = new ReactiveVar(false);
+  this.loading = new ReactiveVar(true);
   let profileName = FlowRouter.getParam('profile_name');
 
   // Moved this out of the autorun because it doesn't need to be reactive.
