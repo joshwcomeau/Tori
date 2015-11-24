@@ -17,46 +17,19 @@ Template.headerNotifications.onCreated(function() {
     // `myNotifications` publishes both unseen Events and unseen Follows.
     // We want to combine them into a local-only collection, Notifications,
     // and sort by createdAt.
-
-    // We have a standardized
-    Follows.find( followQuery ).observe({
-      added:    (item) => {
-        let notification = _.extend(item, {
-          sourceCollection: 'follows',
-          eventType:        'follow'
-        });
-        Notifications.insert(notification);
-      },
-      removed:  (item) => Notifications.delete(item._id),
+    let observable = {
+      added:    (item) => Notifications.insert(item),
+      removed:  (item) => Notifications.remove(item._id),
       changed:  (newItem, oldItem) => {
-        let notification = _.extend(newItem, {
-          sourceCollection: 'follows',
-          eventType:        'follow'
-        });
-        Notifications.update(oldItem._id, notification);
+        // The only real 'update' I can think of is marking one as dismissed,
+        // by setting 'seen' to True. In this case, we actually just want to
+        // destroy the Notification.
+        if ( newItem.seen ) Notifications.remove(oldItem._id);
       }
-    });
+    };
 
-    // For Events, we're doing some modifications, so that they match the 'follow' syntax.
-    Events.find( eventQuery ).observe({
-      added:    (item) => {
-        let notification = _.extend(item, {
-          sourceCollection: 'events',
-          fromUserId:       item.userId,
-          toUserId:         item.haikuAuthorId
-        });
-        Notifications.insert(notification);
-      },
-      removed:  (item) => Notifications.delete(item._id),
-      changed:  (newItem, oldItem) => {
-        let notification = _.extend(newItem, {
-          sourceCollection: 'events',
-          fromUserId:       item.userId,
-          toUserId:         item.haikuAuthorId
-        });
-        Notifications.update(oldItem._id, notification);
-      }
-    });
+    Follows.find( followQuery ).observe(observable);
+    Events.find( eventQuery ).observe(observable);
   });
 });
 
@@ -85,7 +58,7 @@ Template.headerNotifications.helpers({
       case 'reply':
         return 'reply';
       case 'follow':
-        return 'user-plus'
+        return 'user-plus';
     }
   },
   notificationText: function() {
