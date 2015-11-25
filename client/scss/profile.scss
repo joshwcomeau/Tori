@@ -43,13 +43,64 @@
   }
 
   .followers, .following {
+    padding: 0.5rem 0;
     display: flex;
     flex-wrap: wrap;
   }
 
   .follow {
-    width: 33.333%;
+    width: 34%;
     float: left;
     display: flex;
+    padding: 0.5rem;
+
+    &:nth-child(3n+1) {
+      width: 33%;
+      padding-left: 0;
+    }
+
+    &:nth-child(3n+3) {
+      width: 33%;
+      padding-right: 0;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      min-height: 200px;
+      overflow: hidden;
+
+      .header {
+        position: relative;
+        height: 5rem;
+        background: $green;
+        color: $white;
+        padding: 0.5rem 0.5rem 0 0.5rem;
+        text-align: right;
+        overflow: hidden;
+
+        .profile-photo {
+          position: absolute;
+          top: -0.75rem;
+          left: -0.75rem;
+          height: 6rem;
+          width: 6rem;
+          background-size: cover;
+          background-position: center center;
+          border-radius: 100%;
+        }
+
+        h3 {
+          font-size: 1rem;
+          font-weight: 700;
+          margin: 0;
+        }
+        h5 {
+          font-size: 0.8rem;
+          font-weight: 300;
+          margin: 0;
+        }
+      }
+    }
   }
 }

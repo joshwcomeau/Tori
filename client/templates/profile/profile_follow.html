@@ -1,5 +1,11 @@
 <template name="profileFollow">
-  <div class="follow card">
-    {{username}}
+  <div class="follow">
+    <div class="card">
+      <div class="header">
+        <div class="profile-photo" style="background-image: url('{{profile.photo}}')"></div>
+        <h3>{{profile.displayName}} </h3>
+        <h5>@{{username}}</h5>
+      </div>
+    </div>
   </div>
 </template>
