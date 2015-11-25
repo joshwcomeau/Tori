@@ -1,7 +1,12 @@
 <template name="profileFollowers">
   <div class="followers">
-    {{#each follow}}
-      {{> profileFollow follower }}
-    {{/each}}
+    {{#if Template.subscriptionsReady}}
+      {{#each followers}}
+        <!-- At this point, the context is of a Follows object. -->
+        <!-- We actually want to pass down the User associated with that object -->
+        <!-- `follower` is a helper that fetches the user based on the context. -->
+        {{> profileFollow followerUser }}
+      {{/each}}
+    {{/if}}
   </div>
 </template>

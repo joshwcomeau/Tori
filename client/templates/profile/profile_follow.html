@@ -5,6 +5,21 @@
         <div class="profile-photo" style="background-image: url('{{profile.photo}}')"></div>
         <h3>{{profile.displayName}} </h3>
         <h5>@{{username}}</h5>
+
+        <button class="follow-button not-following"></button>
+      </div>
+      <div class="body">
+        <p class="summary">
+          {{profile.summary}}
+        </p>
+        {{#if profile.location}}
+          <p class="location">
+            <i class="fa fa-map-marker"></i> {{ profile.location }}
+          </p>
+        {{/if}}
+        <div class="joined">
+          {{ joinedOn}}
+        </div>
       </div>
     </div>
   </div>
