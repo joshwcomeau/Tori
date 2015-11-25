@@ -6,7 +6,7 @@
         <h3>{{profile.displayName}} </h3>
         <h5>@{{username}}</h5>
 
-        <button class="follow-button not-following"></button>
+        <button class="follow-button {{#if isFollowing}}following{{else}}not-following{{/if}}"></button>
       </div>
       <div class="body">
         <p class="summary">

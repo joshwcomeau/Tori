@@ -8,5 +8,17 @@ Template.profileFollow.helpers({
   },
   defaultSummary: (ev, instance) => {
     return 'No summary found.\nMaybe they will add one soon?\nKeep your fingers crossed.'
-  }
+  },
+  isFollowing: () => {
+    let profileName = FlowRouter.getParam('profile_name')
+    let profileUser = UserUtils.findUserByProfileName( profileName );
+    let followUser  = Blaze.getData();
+
+    // Check to see if a follow exists
+    return Follows.findOne({
+      fromUserId: profileUser._id,
+      toUserId:   followUser._id
+    });
+  },
+
 })
