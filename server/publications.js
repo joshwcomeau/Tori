@@ -1,12 +1,12 @@
-Meteor.publish('activeProfile', function(profile_name) {
+Meteor.publish('activeProfile', function(profileName) {
   // Return the active profile, and whether or not the current user is
   // following him/her
-  if (profile_name) profile_name = profile_name.toLowerCase();
+  if (profileName) profileName = profileName.toLowerCase();
 
-  let publications = [Meteor.users.find({ username: profile_name })]
+  let publications = [Meteor.users.find({ username: profileName })]
 
   if ( this.userId ) {
-    let user_profile = Meteor.users.findOne({ username: profile_name });
+    let user_profile = Meteor.users.findOne({ username: profileName });
     if ( user_profile ) {
       publications.push( Follows.find({
         fromUserId: this.userId,
@@ -18,7 +18,7 @@ Meteor.publish('activeProfile', function(profile_name) {
   return publications;
 });
 
-Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 4) {
+Meteor.smartPublish('activeProfileHaikus', function(profileName, limit = 4) {
   // This method returns the most recent Haikus written or shared by a given
   // user. This is a surprisingly complex process, because we want them ordered
   // by when the GIVEN USER posted or shared them.
@@ -48,7 +48,7 @@ Meteor.smartPublish('activeProfileHaikus', function(profile_name, limit = 4) {
   //    5) In that other publication, the server returns all the events needed.
   check(limit, Number);
 
-  let user = UserUtils.findUserByProfileName(profile_name);
+  let user = UserUtils.findUserByProfileName(profileName);
   if ( !user ) return false;
 
   // Find all Events of the right type by the user we're visiting.
@@ -174,15 +174,28 @@ Meteor.smartPublish('activeHaiku', function(haikuId) {
   ];
 });
 
+Meteor.smartPublish('activeProfileFollowers', function(profileName, limit = 4) {
+  let user = UserUtils.findUserByProfileName(profileName);
+  if ( !user ) return false;
+
+  // This is an easy one: simply publish all Follows, and associated Users
+  addUserDependencyToCollection.call(this, 'fromUserId', 'follows');
+
+  return [
+    Follows.find({ toUserId: user._id })
+  ];
+
+})
+
 
 
 
 // HELPERS
 function addUserDependencyToCollection(userField, collection) {
+  // addDependency is a method provided by SmartPublish. Whenever an item
+  // of collection is published, it runs this dependency function to find
+  // any associated users, and returns the correct fields (profile and username).
   this.addDependency(collection, userField, function(event) {
-    // Share the author of this Haiku! It isn't necessarily the same as the
-    // user whose page we're visiting, if that user has Shared another user's
-    // Haiku.
     return Meteor.users.find(event[userField], { fields: {
       profile: 1,
       username: 1

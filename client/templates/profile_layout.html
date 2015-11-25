@@ -1,0 +1,20 @@
+<template name="profileLayout">
+  {{> header}}
+
+  <div class="sidebar">
+    {{>Template.dynamic template=sidebar}}
+  </div>
+  <div class="main-content with-sidebar">
+    <div id="profile">
+      {{> profileStats }}
+
+      {{>Template.dynamic template=main}}
+
+    </div>
+
+  </div>
+
+  <!-- MODALS. Hidden by default -->
+  {{> compose}}
+
+</template>
