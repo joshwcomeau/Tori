@@ -1,3 +1,7 @@
 <template name="profileFollowers">
-  Hi!
+  <div class="followers">
+    {{#each follow}}
+      {{> profileFollow follower }}
+    {{/each}}
+  </div>
 </template>

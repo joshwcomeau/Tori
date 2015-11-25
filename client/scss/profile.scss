@@ -40,9 +40,16 @@
       // MOST haiku styles are in their own file, haiku.scss
 
     }
+  }
 
+  .followers, .following {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-
-
+  .follow {
+    width: 33.333%;
+    float: left;
+    display: flex;
   }
 }
