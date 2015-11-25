@@ -7,5 +7,12 @@ Template.profileStats.onCreated(function() {
 Template.profileStats.helpers({
   profile: function() {
     return UserUtils.findUserByProfileName( FlowRouter.getParam('profile_name') );
+  },
+  isSelected: (routeName) => {
+    if ( FlowRouter.getRouteName() === routeName ) return 'selected'
+  },
+  getLink: (routeName) => {
+    let profileName = FlowRouter.getParam('profile_name');
+    return FlowRouter.path(routeName, { profile_name: profileName });
   }
 });
