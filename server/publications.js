@@ -174,12 +174,30 @@ Meteor.smartPublish('activeHaiku', function(haikuId) {
   ];
 });
 
-Meteor.smartPublish('activeProfileFollowers', function(profileName, limit = 4) {
+Meteor.smartPublish('activeProfileFollowers', function(profileName, limit = 1) {
   let user = UserUtils.findUserByProfileName(profileName);
   if ( !user ) return false;
 
-  // This is an easy one: simply publish all Follows, and associated Users
-  addUserDependencyToCollection.call(this, 'fromUserId', 'follows');
+  // We need to publish the first LIMIT users following this profile, but also
+  // whether the profile user is following them. We need both sides, so we can
+  // update the 'follow' button as needed.
+  this.addDependency('follows', 'fromUserId', function(follow) {
+    return Follows.find({ toUserId: follow.fromUserId, fromUserId: user._id })
+  });
+
+  // We also need to grab the user data pertaining to the people following us.\
+  // We need slightly more info than usual, which is why I'm not using the
+  // helper method `addUserDependencyToCollection`.
+  this.addDependency('follows', 'fromUserId', function(follow) {
+    return Meteor.users.find(follow.fromUserId, { fields: {
+      profile: 1,
+      username: 1,
+      haikus: 1,
+      followers: 1,
+      following: 1,
+      createdAt: 1
+    } });
+  });
 
   return [
     Follows.find({ toUserId: user._id })

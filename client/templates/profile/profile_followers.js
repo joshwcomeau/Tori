@@ -14,7 +14,7 @@ Template.profileFollowers.helpers({
     let user = UserUtils.findUserByProfileName(profileName);
     if ( !user ) return;
 
-    return Follows.find({ toUserId: user._id });
+    return Follows.find({ toUserId: user._id }, { sort: { createdAt: -1 } });
   },
   followerUser: (ev, instance) => {
     let follow = Blaze.getData();

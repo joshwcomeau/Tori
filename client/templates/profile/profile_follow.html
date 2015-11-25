@@ -10,7 +10,11 @@
       </div>
       <div class="body">
         <p class="summary">
-          {{profile.summary}}
+          {{#if profile.summary}}
+            {{profile.summary}}
+          {{else}}
+            {{defaultSummary}}
+          {{/if}}
         </p>
         {{#if profile.location}}
           <p class="location">
