@@ -107,7 +107,9 @@
           position: absolute;
           bottom: 0.5rem;
           right: -1.25rem;
-          padding: 0.25rem 2rem;
+          padding: 0.25rem;
+          width: 7rem;
+          text-align: center;
           font-size: 0.75rem;
           font-weight: 500;
         }
@@ -127,11 +129,23 @@
           opacity: 0.85;
         }
 
+        .joined-spacer {
+          position: relative;
+          height: 4rem;
+        }
         .joined {
-          margin-top: 1rem;
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0.4rem;
+          padding: 0.5rem;
           font-size: 12px;
           opacity: 0.6;
           text-align: center;
+
+          .divider:before {
+            font-size: 10px;
+          }
         }
       }
     }

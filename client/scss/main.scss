@@ -115,6 +115,9 @@ ul {
     }
 
     &:before {
+      position: relative;
+      width: 100%;
+      text-align: center;
       content: 'Follow';
     }
   }
@@ -125,6 +128,9 @@ ul {
     font-weight: $fw-medium;
 
     &:before {
+      position: relative;
+      width: 100%;
+      text-align: center;
       content: 'Following';
     }
 
@@ -133,6 +139,9 @@ ul {
       transition: background 0.2s;
 
       &:before {
+        position: relative;
+        width: 100%;
+        text-align: center;
         content: 'Unfollow';
       }
     }
