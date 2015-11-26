@@ -2,9 +2,11 @@
   <div class="follow">
     <div class="card">
       <div class="header">
-        <div class="profile-photo" style="background-image: url('{{profile.photo}}')"></div>
-        <h3>{{profile.displayName}} </h3>
-        <h5>@{{username}}</h5>
+        <a href="{{profileLink}}">
+          <div class="profile-photo" style="background-image: url('{{profile.photo}}')"></div>
+          <h3>{{profile.displayName}} </h3>
+          <h5>@{{username}}</h5>
+        </a>
 
         <button class="follow-button {{#if isFollowing}}following{{else}}not-following{{/if}}"></button>
       </div>

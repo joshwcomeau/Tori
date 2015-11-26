@@ -20,5 +20,12 @@ Template.profileFollow.helpers({
       toUserId:   followUser._id
     });
   },
+  profileLink: () => '/'+Blaze.getData().username,
 
-})
+});
+
+Template.profileFollow.events({
+  "click button": function(ev, instance) {
+    Meteor.call('toggleFollowing', Blaze.getData().username);
+  }
+});
